@@ -11,40 +11,128 @@
    * @public
    */
   ns.PaletteController.prototype.init = function() {
-    $.subscribe(Events.SELECT_PRIMARY_COLOR, this.onColorSelected_.bind(this, {isPrimary : true}));
-    $.subscribe(Events.SELECT_SECONDARY_COLOR, this.onColorSelected_.bind(this, {isPrimary : false}));
+    $.subscribe(Events.SELECT_PRIMARY_COLOR,
+      this.onColorSelected_.bind(this, {isPrimary: true}));
+    $.subscribe(Events.SELECT_SECONDARY_COLOR,
+      this.onColorSelected_.bind(this, {isPrimary: false}));
+    $.subscribe(Events.NES_MODE_CHANGED,
+      this.onNESModeChanged_.bind(this));
 
     var shortcuts = pskl.service.keyboard.Shortcuts;
-    pskl.app.shortcutService.registerShortcut(shortcuts.COLOR.SWAP, this.swapColors.bind(this));
-    pskl.app.shortcutService.registerShortcut(shortcuts.COLOR.RESET, this.resetColors.bind(this));
+    pskl.app.shortcutService.registerShortcut(
+      shortcuts.COLOR.SWAP, this.swapColors.bind(this));
+    pskl.app.shortcutService.registerShortcut(
+      shortcuts.COLOR.RESET, this.resetColors.bind(this));
 
-    var spectrumCfg = {
+    this.initColorPickers_();
+
+    var swapColorsIcon = document.querySelector('.swap-colors-button');
+    swapColorsIcon.addEventListener('click', this.swapColors.bind(this));
+  };
+
+  /**
+   * Builds spectrum configuration based on current NES mode state.
+   * @return {Object} Spectrum configuration object
+   * @private
+   */
+  ns.PaletteController.prototype.getSpectrumConfig_ = function () {
+    var isNESMode = pskl.app.nesMode && pskl.app.nesMode.isEnabled();
+
+    var config = {
       showPalette: true,
       showButtons: false,
-      showInput: true,
-      palette: [
-        ['rgba(0,0,0,0)']
-      ],
-      clickoutFiresChange : true,
-
-      beforeShow : function(tinycolor) {
+      clickoutFiresChange: true,
+      beforeShow: function (tinycolor) {
         tinycolor.setAlpha(1);
       }
     };
 
-    // Initialize colorpickers:
+    if (isNESMode) {
+      // NES mode: restrict to NES palette only
+      config.showPaletteOnly = true;
+      config.showInput = false;
+      config.palette = this.getNESPaletteForSpectrum_();
+    } else {
+      // Standard mode: full color picker
+      config.showPaletteOnly = false;
+      config.showInput = true;
+      config.palette = [['rgba(0,0,0,0)']];
+    }
+
+    return config;
+  };
+
+  /**
+   * Formats NES palette for spectrum (2D array with rows of 14 colors).
+   * @return {Array} 2D array of color strings
+   * @private
+   */
+  ns.PaletteController.prototype.getNESPaletteForSpectrum_ = function () {
+    var nesPalette = pskl.nes.NESColors.PALETTE;
+    var rows = [];
+    var colorsPerRow = 14;
+
+    // Add transparent as first option
+    rows.push(['rgba(0,0,0,0)']);
+
+    // Split NES palette into rows of 14
+    for (var i = 0; i < nesPalette.length; i += colorsPerRow) {
+      rows.push(nesPalette.slice(i, i + colorsPerRow));
+    }
+
+    return rows;
+  };
+
+  /**
+   * Initializes or reinitializes the color pickers.
+   * @private
+   */
+  ns.PaletteController.prototype.initColorPickers_ = function () {
+    var spectrumCfg = this.getSpectrumConfig_();
+
     var colorPicker = $('#color-picker');
-    colorPicker.spectrum($.extend({color: Constants.DEFAULT_PEN_COLOR}, spectrumCfg));
-    colorPicker.change({isPrimary : true}, this.onPickerChange_.bind(this));
-    this.setTitleOnPicker_(Constants.DEFAULT_PEN_COLOR, colorPicker.get(0));
-
     var secondaryColorPicker = $('#secondary-color-picker');
-    secondaryColorPicker.spectrum($.extend({color: Constants.TRANSPARENT_COLOR}, spectrumCfg));
-    secondaryColorPicker.change({isPrimary : false}, this.onPickerChange_.bind(this));
-    this.setTitleOnPicker_(Constants.TRANSPARENT_COLOR, secondaryColorPicker.get(0));
 
-    var swapColorsIcon = document.querySelector('.swap-colors-button');
-    swapColorsIcon.addEventListener('click', this.swapColors.bind(this));
+    // Destroy existing spectrum instances if they exist
+    if (colorPicker.spectrum) {
+      try {
+        colorPicker.spectrum('destroy');
+        secondaryColorPicker.spectrum('destroy');
+      } catch (e) {
+        // Spectrum not initialized yet, ignore
+      }
+    }
+
+    // Get current colors or use defaults
+    var primaryColor = Constants.DEFAULT_PEN_COLOR;
+    var secondaryColor = Constants.TRANSPARENT_COLOR;
+    if (pskl.app.selectedColorsService) {
+      primaryColor = pskl.app.selectedColorsService.getPrimaryColor();
+      secondaryColor = pskl.app.selectedColorsService.getSecondaryColor();
+    }
+
+    // Initialize primary color picker
+    colorPicker.spectrum($.extend({color: primaryColor}, spectrumCfg));
+    colorPicker.off('change.palette');
+    colorPicker.on('change.palette', {isPrimary: true},
+      this.onPickerChange_.bind(this));
+    this.setTitleOnPicker_(primaryColor, colorPicker.get(0));
+
+    // Initialize secondary color picker
+    secondaryColorPicker.spectrum(
+      $.extend({color: secondaryColor}, spectrumCfg));
+    secondaryColorPicker.off('change.palette');
+    secondaryColorPicker.on('change.palette', {isPrimary: false},
+      this.onPickerChange_.bind(this));
+    this.setTitleOnPicker_(secondaryColor, secondaryColorPicker.get(0));
+  };
+
+  /**
+   * Handles NES mode toggle changes.
+   * @private
+   */
+  ns.PaletteController.prototype.onNESModeChanged_ = function () {
+    this.initColorPickers_();
   };
 
   /**

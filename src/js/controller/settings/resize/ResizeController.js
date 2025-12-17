@@ -61,10 +61,26 @@
   ns.ResizeController.prototype.onResizeFormSubmit_ = function (evt) {
     evt.preventDefault();
 
+    var width = parseInt(this.widthInput.value, 10);
+    var height = parseInt(this.heightInput.value, 10);
+
+    // NES mode dimension warning (soft constraint - warn but allow)
+    if (pskl.app.nesMode && pskl.app.nesMode.isEnabled()) {
+      var validation = pskl.app.nesMode.validateDimensions(width, height);
+      if (!validation.valid) {
+        $.publish(Events.SHOW_NOTIFICATION, [{
+          content: '⚠️ ' + validation.message
+        }]);
+        window.setTimeout(function () {
+          $.publish(Events.HIDE_NOTIFICATION);
+        }, 4000);
+      }
+    }
+
     var currentPiskel = this.piskelController.getPiskel();
     var piskel = pskl.utils.ResizeUtils.resizePiskel(currentPiskel, {
-      width :  parseInt(this.widthInput.value, 10),
-      height :  parseInt(this.heightInput.value, 10),
+      width: width,
+      height: height,
       origin: this.anchorWidget.getOrigin(),
       resizeContent: this.resizeContentCheckbox.checked
     });

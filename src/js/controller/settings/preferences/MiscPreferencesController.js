@@ -9,6 +9,10 @@
   pskl.utils.inherit(ns.MiscPreferencesController, pskl.controller.settings.AbstractSettingController);
 
   ns.MiscPreferencesController.prototype.init = function () {
+    // NES Mode toggle
+    var nesModeCheckbox = document.querySelector('.nes-mode-checkbox');
+    nesModeCheckbox.checked = pskl.UserSettings.get(pskl.UserSettings.NES_MODE);
+    this.addEventListener(nesModeCheckbox, 'change', this.onNESModeChange_);
 
     this.backgroundContainer = document.querySelector('.background-picker-wrapper');
     this.addEventListener(this.backgroundContainer, 'click', this.onBackgroundClick_);
@@ -84,5 +88,10 @@
   ns.MiscPreferencesController.prototype.updateLayerOpacityText_ = function (opacity) {
     var layerOpacityText = document.querySelector('.layer-opacity-text');
     layerOpacityText.innerHTML = (opacity * 1).toFixed(2);
+  };
+
+  ns.MiscPreferencesController.prototype.onNESModeChange_ = function (evt) {
+    var enabled = evt.target.checked;
+    pskl.UserSettings.set(pskl.UserSettings.NES_MODE, enabled);
   };
 })();
