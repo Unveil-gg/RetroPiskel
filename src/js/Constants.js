@@ -64,5 +64,12 @@ var Constants = {
   CONFIRM_OVERWRITE: 'This will replace your current animation, are you sure you want to continue?',
 
   // SERVICE URLS
-  APPENGINE_SAVE_URL : 'save'
+  APPENGINE_SAVE_URL : 'save',
+
+  // NES Mode defaults
+  NES: {
+    DEFAULT_WIDTH: 16,
+    DEFAULT_HEIGHT: 16,
+    TILE_SIZE: 8
+  }
 };

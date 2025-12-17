@@ -24,6 +24,7 @@
     COLOR_FORMAT: 'COLOR_FORMAT',
     TRANSFORM_SHOW_MORE: 'TRANSFORM_SHOW_MORE',
     PREFERENCES_TAB: 'PREFERENCES_TAB',
+    NES_MODE: 'NES_MODE',
     KEY_TO_DEFAULT_VALUE_MAP_ : {
       'GRID_COLOR' : Constants.TRANSPARENT_COLOR,
       'GRID_ENABLED' : false,
@@ -54,6 +55,7 @@
       COLOR_FORMAT: 'hex',
       TRANSFORM_SHOW_MORE: false,
       PREFERENCES_TAB: 'misc',
+      NES_MODE: false,
     },
 
     /**

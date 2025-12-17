@@ -69,6 +69,10 @@
   // Application libraries
   "js/rendering/DrawingLoop.js",
 
+  // NES Mode
+  "js/nes/NESColors.js",
+  "js/nes/NESMode.js",
+
   // Models
   "js/model/Frame.js",
   "js/model/Layer.js",

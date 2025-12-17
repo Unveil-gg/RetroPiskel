@@ -96,4 +96,7 @@ var Events = {
   // A piskel external to the editor has been loaded and attached
   // to window._externalPiskel to be applied.
   EXTERNAL_PISKEL_READY: 'EXTERNAL_PISKEL_READY',
+
+  // NES Mode toggle changed
+  NES_MODE_CHANGED: 'NES_MODE_CHANGED',
 };
