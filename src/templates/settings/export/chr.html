@@ -1,0 +1,48 @@
+<script type="text/html" id="templates/settings/export/chr.html">
+  <div class="export-panel-chr">
+    <div class="export-panel-header export-info">
+      Export as NES CHR format (2-bit tiles).
+      <a href="https://wiki.xxiivv.com/site/chr_format.html" 
+         target="_blank" class="chr-spec-link">Spec</a>
+    </div>
+
+    <div class="chr-export-validation">
+      <div class="chr-validation-item chr-validation-dimensions"></div>
+      <div class="chr-validation-item chr-validation-colors"></div>
+    </div>
+
+    <div class="export-panel-section">
+      <div class="chr-palette-assignment">
+        <div class="export-info" style="padding-bottom: 10px">
+          Color index mapping (0 = transparent):
+        </div>
+        <div class="chr-palette-slots">
+          <div class="chr-palette-slot">
+            <span class="chr-slot-label">0</span>
+            <div class="chr-slot-color chr-slot-transparent"></div>
+          </div>
+          <div class="chr-palette-slot">
+            <span class="chr-slot-label">1</span>
+            <div class="chr-slot-color" data-slot="1"></div>
+          </div>
+          <div class="chr-palette-slot">
+            <span class="chr-slot-label">2</span>
+            <div class="chr-slot-color" data-slot="2"></div>
+          </div>
+          <div class="chr-palette-slot">
+            <span class="chr-slot-label">3</span>
+            <div class="chr-slot-color" data-slot="3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="export-panel-section export-panel-row">
+      <button type="button" 
+              class="button button-primary chr-download-button">
+        Download .chr
+      </button>
+      <div class="export-info chr-download-info">Binary CHR tile data.</div>
+    </div>
+  </div>
+</script>

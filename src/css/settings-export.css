@@ -147,3 +147,83 @@
      aligned to the right. */
   padding-right: 0;
 }
+
+/*******************************/
+/* CHR Export Panel            */
+/*******************************/
+
+.export-panel-chr .chr-spec-link {
+  color: #3CBCFC;
+  text-decoration: none;
+}
+
+.export-panel-chr .chr-spec-link:hover {
+  text-decoration: underline;
+}
+
+.chr-export-validation {
+  margin: 10px 0;
+}
+
+.chr-validation-item {
+  padding: 8px 12px;
+  margin: 5px 0;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.chr-validation-item.valid {
+  background: linear-gradient(135deg, #1a472a 0%, #0d2818 100%);
+  color: #58D854;
+  border: 1px solid #58D854;
+}
+
+.chr-validation-item.invalid {
+  background: linear-gradient(135deg, #4a1a1a 0%, #2a0d0d 100%);
+  color: #F87858;
+  border: 1px solid #F87858;
+}
+
+.chr-palette-slots {
+  display: flex;
+  gap: 15px;
+  margin: 10px 0;
+  justify-content: flex-start;
+}
+
+.chr-palette-slot {
+  text-align: center;
+}
+
+.chr-slot-label {
+  display: block;
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.chr-slot-color {
+  width: 32px;
+  height: 32px;
+  border: 2px solid #666;
+  border-radius: 3px;
+  background: #333;
+}
+
+.chr-slot-transparent {
+  background: repeating-conic-gradient(#666 0% 25%, #444 0% 50%) 
+              50% / 8px 8px;
+}
+
+.chr-download-button {
+  margin-right: 10px;
+}
+
+.chr-download-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chr-download-info {
+  flex-grow: 1;
+}

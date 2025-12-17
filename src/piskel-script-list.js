@@ -140,6 +140,7 @@
   "js/controller/settings/exportimage/PngExportController.js",
   "js/controller/settings/exportimage/ZipExportController.js",
   "js/controller/settings/exportimage/MiscExportController.js",
+  "js/controller/settings/exportimage/ChrExportController.js",
   "js/controller/settings/exportimage/ExportController.js",
   "js/controller/settings/resize/ResizeController.js",
   "js/controller/settings/resize/DefaultSizeController.js",

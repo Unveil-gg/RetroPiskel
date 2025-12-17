@@ -10,6 +10,10 @@
       template : 'templates/settings/export/gif.html',
       controller : ns.GifExportController
     },
+    'chr' : {
+      template : 'templates/settings/export/chr.html',
+      controller : ns.ChrExportController
+    },
     'zip' : {
       template : 'templates/settings/export/zip.html',
       controller : ns.ZipExportController
