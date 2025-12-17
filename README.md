@@ -1,17 +1,23 @@
-Piskel 
-======
+RetroPiskel
+===========
 
-[![E2E Tests](https://github.com/piskelapp/piskel/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/piskelapp/piskel/actions/workflows/ci.yml)
+Retro console sprite editor - Based on [Piskel](https://github.com/piskelapp/piskel)
 
-Piskel is an easy-to-use sprite editor. It can be used to create game sprites, animations, pixel-art...
-It is the editor used in **[piskelapp.com](https://www.piskelapp.com)**.
+RetroPiskel is a fork of Piskel enhanced for creating sprites targeting retro game consoles.
+It maintains full compatibility with original Piskel functionality while adding specialized
+workflows for retro console development.
 
-<img
-  src="https://screenletstore.appspot.com/img/95aaa0f0-37a4-11e7-a652-7b8128ce3e3b.png"
-  title="Piskel editor screenshot"
-  width="500">
+## Retro Console Support
 
-## About Piskel
+### NES / Famicom
+- **CHR Export**: Export sprites directly to `.chr` format ([spec](https://wiki.xxiivv.com/site/chr_format.html))
+- **NES Mode**: Optional mode that constrains palette to official NES colors
+- **4-Color Validation**: Warns when sprites exceed 3 colors + transparent
+- **8×8 Tile Alignment**: Dimension validation for proper tile alignment
+
+*More consoles coming soon...*
+
+## About RetroPiskel
 
 ### Built with
 

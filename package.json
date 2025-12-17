@@ -1,7 +1,7 @@
 {
-  "name": "piskel",
-  "version": "0.15.2-SNAPSHOT",
-  "description": "Pixel art editor",
+  "name": "retropiskel",
+  "version": "0.1.0",
+  "description": "Retro console sprite editor - Based on Piskel",
   "author": "Julian Descottes <julian.descottes@gmail.com>",
   "contributors": [
     "Vincent Renaudin"
@@ -73,7 +73,7 @@
     "typescript": "^5.8.3"
   },
   "window": {
-    "title": "Piskel",
+    "title": "RetroPiskel",
     "icon": "dest/prod/logo.png",
     "toolbar": false,
     "width": 1000,
