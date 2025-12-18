@@ -84,6 +84,38 @@
   };
 
   /**
+   * Adds NES register tooltips to spectrum palette swatches.
+   * Called after spectrum initialization to enhance color swatches with
+   * PPU register info (e.g., "rgb(0,0,0) | $0F / $1F").
+   * @private
+   */
+  ns.PaletteController.prototype.addNESRegisterTooltips_ = function () {
+    var swatches = document.querySelectorAll('.sp-palette .sp-thumb-el');
+    var nesColors = pskl.nes.NESColors;
+
+    swatches.forEach(function (swatch) {
+      var innerEl = swatch.querySelector('.sp-thumb-inner');
+      if (!innerEl) {
+        return;
+      }
+
+      var bgColor = innerEl.style.backgroundColor;
+      if (!bgColor) {
+        return;
+      }
+
+      // Convert rgb(r,g,b) to hex for lookup
+      var hex = window.tinycolor(bgColor).toHexString().toUpperCase();
+      var register = nesColors.getRegister(hex);
+
+      if (register) {
+        // Format: "rgb(124,124,124) | $00"
+        swatch.title = bgColor + ' | ' + register;
+      }
+    });
+  };
+
+  /**
    * Initializes or reinitializes the color pickers.
    * @private
    */
@@ -125,6 +157,15 @@
     secondaryColorPicker.on('change.palette', {isPrimary: false},
       this.onPickerChange_.bind(this));
     this.setTitleOnPicker_(secondaryColor, secondaryColorPicker.get(0));
+
+    // Add NES register tooltips if in NES mode
+    if (pskl.app.nesMode && pskl.app.nesMode.isEnabled()) {
+      // Defer to allow spectrum to render palette swatches
+      var self = this;
+      setTimeout(function () {
+        self.addNESRegisterTooltips_();
+      }, 0);
+    }
   };
 
   /**
