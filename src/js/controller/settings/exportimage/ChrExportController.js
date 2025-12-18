@@ -24,102 +24,34 @@
     var downloadBtn = document.querySelector('.chr-download-button');
     this.addEventListener(downloadBtn, 'click', this.onDownloadClick_);
 
-    // Listen for color changes to update validation
+    // Listen for color changes to update color map
     $.subscribe(Events.CURRENT_COLORS_UPDATED,
       this.validateAndDisplay_.bind(this));
   };
 
   /**
-   * Validates current sprite and updates the UI.
+   * Updates color map and download info display.
    * @private
    */
   ns.ChrExportController.prototype.validateAndDisplay_ = function () {
     var width = this.piskelController.getWidth();
     var height = this.piskelController.getHeight();
+    var frameCount = this.piskelController.getFrameCount();
 
-    // Dimension validation
-    var dimContainer = document.querySelector('.chr-validation-dimensions');
-    var dimValid = width % 8 === 0 && height % 8 === 0;
-
-    if (dimValid) {
-      var tilesX = width / 8;
-      var tilesY = height / 8;
-      var totalTiles = tilesX * tilesY;
-      var tileSuffix = (totalTiles > 1 ? 's' : '');
-      dimContainer.innerHTML = '✓ ' + width + '×' + height +
-        ' (' + totalTiles + ' tile' + tileSuffix + ')';
-      dimContainer.className =
-        'chr-validation-item chr-validation-dimensions valid';
-    } else {
-      dimContainer.innerHTML = '✗ Dimensions must be multiples of 8';
-      dimContainer.className =
-        'chr-validation-item chr-validation-dimensions invalid';
-    }
-
-    // Color validation
+    // Build color map for export
     var colors = pskl.app.currentColorsService.getCurrentColors();
-    var colorContainer = document.querySelector('.chr-validation-colors');
-    var colorCount = colors.length;
-
-    if (colorCount <= 3) {
-      colorContainer.innerHTML = '✓ ' + colorCount + '/3 colors used';
-      colorContainer.className =
-        'chr-validation-item chr-validation-colors valid';
-    } else {
-      colorContainer.innerHTML = '✗ Too many colors: ' + colorCount +
-        '/3 (max 3 + transparent)';
-      colorContainer.className =
-        'chr-validation-item chr-validation-colors invalid';
-    }
-
-    // Update palette slot previews
-    this.updatePaletteSlots_(colors);
-
-    // Enable/disable download button
-    var downloadBtn = document.querySelector('.chr-download-button');
-    var canExport = dimValid && colorCount <= 3;
-    downloadBtn.disabled = !canExport;
-
-    // Update download info text
-    var downloadInfo = document.querySelector('.chr-download-info');
-    if (canExport) {
-      var frameCount = this.piskelController.getFrameCount();
-      var totalBytes = frameCount * (width / 8) * (height / 8) * 16;
-      downloadInfo.innerHTML = totalBytes + ' bytes' +
-        (frameCount > 1 ? ' (' + frameCount + ' frames)' : '');
-    } else {
-      downloadInfo.innerHTML = 'Fix validation errors to export.';
-    }
-  };
-
-  /**
-   * Updates the color slot UI to show current colors.
-   * @param {Array} colors - Array of hex color strings
-   * @private
-   */
-  ns.ChrExportController.prototype.updatePaletteSlots_ = function (colors) {
-    // Reset color map - index 0 is always transparent
     this.colorMap = {};
     this.colorMap[0] = 0;  // Transparent (alpha = 0) maps to index 0
-
-    // Map each color to an index 1-3
     for (var i = 0; i < Math.min(colors.length, 3); i++) {
-      var slot = document.querySelector('[data-slot="' + (i + 1) + '"]');
-      if (slot) {
-        slot.style.backgroundColor = colors[i];
-      }
-      // Store the int value for fast lookup during export
       var colorInt = pskl.utils.colorToInt(colors[i]);
       this.colorMap[colorInt] = i + 1;
     }
 
-    // Clear unused slots
-    for (var j = colors.length; j < 3; j++) {
-      var emptySlot = document.querySelector('[data-slot="' + (j + 1) + '"]');
-      if (emptySlot) {
-        emptySlot.style.backgroundColor = '#333';
-      }
-    }
+    // Update download info text
+    var totalBytes = frameCount * (width / 8) * (height / 8) * 16;
+    var downloadInfo = document.querySelector('.chr-download-info');
+    downloadInfo.innerHTML = totalBytes + ' bytes' +
+      (frameCount > 1 ? ' (' + frameCount + ' frames)' : '');
   };
 
   /**

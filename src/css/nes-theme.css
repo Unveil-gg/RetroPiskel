@@ -110,12 +110,3 @@ body.nes-mode .sp-container {
 body.nes-mode .cursor-coordinates {
   color: var(--nes-accent);
 }
-
-/* Validation messages in CHR export */
-body.nes-mode .chr-validation-item.valid {
-  color: #58D854;  /* NES green $2A */
-}
-
-body.nes-mode .chr-validation-item.invalid {
-  color: var(--nes-accent);
-}
