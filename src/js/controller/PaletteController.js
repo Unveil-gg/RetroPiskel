@@ -228,18 +228,25 @@
   };
 
   ns.PaletteController.prototype.setPrimaryColor_ = function (color) {
+    var picker = document.querySelector('#color-picker');
     if (!this.validateNESColorLimit_(color)) {
+      // Revert picker to current valid color to keep UI in sync
+      var currentColor = pskl.app.selectedColorsService.getPrimaryColor();
+      this.updateColorPicker_(currentColor, picker);
       return;
     }
-    this.updateColorPicker_(color, document.querySelector('#color-picker'));
+    this.updateColorPicker_(color, picker);
     $.publish(Events.PRIMARY_COLOR_SELECTED, [color]);
   };
 
   ns.PaletteController.prototype.setSecondaryColor_ = function (color) {
+    var picker = document.querySelector('#secondary-color-picker');
     if (!this.validateNESColorLimit_(color)) {
+      // Revert picker to current valid color to keep UI in sync
+      var currentColor = pskl.app.selectedColorsService.getSecondaryColor();
+      this.updateColorPicker_(currentColor, picker);
       return;
     }
-    var picker = document.querySelector('#secondary-color-picker');
     this.updateColorPicker_(color, picker);
     $.publish(Events.SECONDARY_COLOR_SELECTED, [color]);
   };
