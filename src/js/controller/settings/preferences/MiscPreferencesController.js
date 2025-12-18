@@ -14,7 +14,9 @@
     nesModeCheckbox.checked = pskl.UserSettings.get(pskl.UserSettings.NES_MODE);
     this.addEventListener(nesModeCheckbox, 'change', this.onNESModeChange_);
 
-    // NES Color Replace Prompt toggle
+    // NES Color Replace Prompt toggle (only visible in NES mode)
+    this.colorReplaceSetting_ = document.querySelector(
+      '.nes-color-replace-setting');
     var colorReplaceCheckbox = document.querySelector(
       '.nes-color-replace-prompt-checkbox');
     if (colorReplaceCheckbox) {
@@ -23,6 +25,8 @@
       this.addEventListener(
         colorReplaceCheckbox, 'change', this.onColorReplacePromptChange_);
     }
+    // Set initial visibility based on NES mode
+    this.updateColorReplaceSettingVisibility_();
 
     this.backgroundContainer = document.querySelector('.background-picker-wrapper');
     this.addEventListener(this.backgroundContainer, 'click', this.onBackgroundClick_);
@@ -113,6 +117,19 @@
     };
 
   /**
+   * Shows/hides the color replace prompt setting based on NES mode.
+   * @private
+   */
+  ns.MiscPreferencesController.prototype.updateColorReplaceSettingVisibility_ =
+    function () {
+      if (!this.colorReplaceSetting_) {
+        return;
+      }
+      var isNESMode = pskl.UserSettings.get(pskl.UserSettings.NES_MODE);
+      this.colorReplaceSetting_.style.display = isNESMode ? '' : 'none';
+    };
+
+  /**
    * Handles NES mode checkbox toggle with confirmation warning.
    * @param {Event} evt - Change event
    * @private
@@ -124,6 +141,8 @@
 
     if (confirmed) {
       pskl.UserSettings.set(pskl.UserSettings.NES_MODE, enabled);
+      // Update visibility of NES-only settings
+      this.updateColorReplaceSettingVisibility_();
     } else {
       // Revert checkbox to previous state
       checkbox.checked = !enabled;
