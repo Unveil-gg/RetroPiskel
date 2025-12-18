@@ -162,7 +162,7 @@
 }
 
 .chr-download-button {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .chr-download-button:disabled {
@@ -171,6 +171,5 @@
 }
 
 .chr-download-info {
-  margin-left: 10px;
   flex-grow: 1;
 }
