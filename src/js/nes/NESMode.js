@@ -22,6 +22,7 @@
    */
   ns.NESMode.prototype.init = function () {
     this.enabled = pskl.UserSettings.get(pskl.UserSettings.NES_MODE);
+    this.updateBodyClass_();
     $.subscribe(Events.USER_SETTINGS_CHANGED,
       this.onSettingsChange_.bind(this));
   };
@@ -36,7 +37,20 @@
   ns.NESMode.prototype.onSettingsChange_ = function (evt, name, value) {
     if (name === pskl.UserSettings.NES_MODE) {
       this.enabled = value;
+      this.updateBodyClass_();
       $.publish(Events.NES_MODE_CHANGED, [value]);
+    }
+  };
+
+  /**
+   * Updates body class to toggle NES mode theming.
+   * @private
+   */
+  ns.NESMode.prototype.updateBodyClass_ = function () {
+    if (this.enabled) {
+      document.body.classList.add('nes-mode');
+    } else {
+      document.body.classList.remove('nes-mode');
     }
   };
 

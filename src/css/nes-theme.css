@@ -1,0 +1,121 @@
+/**
+ * NES Mode Theme
+ *
+ * Applies a retro NES-inspired color scheme when NES mode is active.
+ * Colors inspired by the NES console hardware (gray shell, red accents).
+ */
+
+/* NES Mode CSS Variables */
+body.nes-mode {
+  --highlight-color: #E40058;  /* NES red from palette $15 */
+  --nes-bg-dark: #1a1a1e;
+  --nes-bg-medium: #252529;
+  --nes-bg-light: #35353a;
+  --nes-border: #4a4a52;
+  --nes-text: #c8c8c8;
+  --nes-accent: #E40058;
+  --nes-accent-dim: #a8003f;
+}
+
+/* Main background - darker, slightly blue-tinted like CRT */
+body.nes-mode {
+  background: var(--nes-bg-dark);
+}
+
+/* Toolbox and sidebar styling */
+body.nes-mode .tool-icon {
+  border-color: var(--nes-border);
+}
+
+body.nes-mode .tool-icon:hover {
+  background-color: var(--nes-bg-light);
+}
+
+body.nes-mode .tool-icon.selected {
+  background-color: var(--nes-accent-dim);
+  border-color: var(--nes-accent);
+}
+
+/* Settings drawer */
+body.nes-mode .settings-title {
+  color: var(--nes-accent);
+}
+
+body.nes-mode .drawer-content {
+  background-color: var(--nes-bg-medium);
+  border-color: var(--nes-border);
+}
+
+/* Right column panels */
+body.nes-mode .preview-container,
+body.nes-mode .layers-list-container,
+body.nes-mode .palettes-list-container,
+body.nes-mode .transformations-container {
+  border-color: var(--nes-border);
+}
+
+body.nes-mode .section-title {
+  color: var(--nes-accent);
+}
+
+/* Frames list (left column) */
+body.nes-mode .preview-list {
+  border-color: var(--nes-border);
+}
+
+body.nes-mode .preview-tile.selected {
+  box-shadow: 0 0 0 2px var(--nes-accent);
+}
+
+/* Buttons */
+body.nes-mode .button-primary {
+  background-color: var(--nes-accent);
+  border-color: var(--nes-accent);
+}
+
+body.nes-mode .button-primary:hover {
+  background-color: var(--nes-accent-dim);
+}
+
+/* Tab styling */
+body.nes-mode .tab-item.selected {
+  border-bottom-color: var(--nes-accent);
+  color: var(--nes-accent);
+}
+
+/* NES Mode indicator badge */
+body.nes-mode::after {
+  content: 'NES';
+  position: fixed;
+  bottom: 8px;
+  left: 8px;
+  background: var(--nes-accent);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  font-family: monospace;
+  padding: 2px 6px;
+  border-radius: 2px;
+  z-index: 9999;
+  letter-spacing: 1px;
+}
+
+/* Color picker adjustments */
+body.nes-mode .sp-container {
+  background-color: var(--nes-bg-medium);
+  border-color: var(--nes-border);
+}
+
+/* Cursor coordinates */
+body.nes-mode .cursor-coordinates {
+  color: var(--nes-accent);
+}
+
+/* Validation messages in CHR export */
+body.nes-mode .chr-validation-item.valid {
+  color: #58D854;  /* NES green $2A */
+}
+
+body.nes-mode .chr-validation-item.invalid {
+  color: var(--nes-accent);
+}

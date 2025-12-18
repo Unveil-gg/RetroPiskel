@@ -41,5 +41,6 @@
   "css/widgets-frame-picker.css",
   "css/widgets-size-picker.css",
   "css/widgets-tabs.css",
-  "css/widgets-wizard.css"
+  "css/widgets-wizard.css",
+  "css/nes-theme.css"
 ];
