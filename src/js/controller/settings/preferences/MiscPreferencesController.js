@@ -110,13 +110,19 @@
 
   /**
    * Shows confirmation dialog for NES mode switch.
+   * Skips dialog if canvas is empty (nothing drawn).
    * @param {boolean} enablingNES - True if switching TO NES mode
-   * @return {boolean} True if user confirmed the change
+   * @return {boolean} True if user confirmed or canvas is empty
    * @private
    */
   ns.MiscPreferencesController.prototype.confirmNESModeChange_ = function (
     enablingNES
   ) {
+    // Skip warning if nothing is drawn
+    if (this.piskelController.isEmpty()) {
+      return true;
+    }
+
     var msg;
     if (enablingNES) {
       // Regular -> NES: warn about non-NES colors
