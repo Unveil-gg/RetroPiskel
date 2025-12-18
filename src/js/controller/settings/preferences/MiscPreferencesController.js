@@ -90,8 +90,47 @@
     layerOpacityText.innerHTML = (opacity * 1).toFixed(2);
   };
 
+  /**
+   * Handles NES mode checkbox toggle with confirmation warning.
+   * @param {Event} evt - Change event
+   * @private
+   */
   ns.MiscPreferencesController.prototype.onNESModeChange_ = function (evt) {
-    var enabled = evt.target.checked;
-    pskl.UserSettings.set(pskl.UserSettings.NES_MODE, enabled);
+    var checkbox = evt.target;
+    var enabled = checkbox.checked;
+    var confirmed = this.confirmNESModeChange_(enabled);
+
+    if (confirmed) {
+      pskl.UserSettings.set(pskl.UserSettings.NES_MODE, enabled);
+    } else {
+      // Revert checkbox to previous state
+      checkbox.checked = !enabled;
+    }
+  };
+
+  /**
+   * Shows confirmation dialog for NES mode switch.
+   * @param {boolean} enablingNES - True if switching TO NES mode
+   * @return {boolean} True if user confirmed the change
+   * @private
+   */
+  ns.MiscPreferencesController.prototype.confirmNESModeChange_ = function (
+    enablingNES
+  ) {
+    var msg;
+    if (enablingNES) {
+      // Regular -> NES: warn about non-NES colors
+      msg = 'Switching to NES Mode.\n\n' +
+        'If your sprite uses colors not in the NES palette, they will ' +
+        'remain but won\'t be valid for CHR export.\n\n' +
+        'Continue?';
+    } else {
+      // NES -> Regular: mild warning
+      msg = 'Switching to Regular Mode.\n\n' +
+        'You will have access to the full color spectrum. ' +
+        'Your current colors will be preserved.\n\n' +
+        'Continue?';
+    }
+    return window.confirm(msg);
   };
 })();
