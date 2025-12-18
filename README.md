@@ -3,6 +3,8 @@ RetroPiskel
 
 Retro console sprite editor - Based on [Piskel](https://github.com/piskelapp/piskel)
 
+![RetroPiskel Screenshot](docs/screenshot.png)
+
 RetroPiskel is a fork of Piskel enhanced for creating sprites targeting retro game consoles.
 It maintains full compatibility with original Piskel functionality while adding specialized
 workflows for retro console development.
