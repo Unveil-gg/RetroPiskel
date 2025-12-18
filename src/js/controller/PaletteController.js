@@ -208,13 +208,67 @@
   };
 
   ns.PaletteController.prototype.setPrimaryColor_ = function (color) {
+    if (!this.validateNESColorLimit_(color)) {
+      return;
+    }
     this.updateColorPicker_(color, document.querySelector('#color-picker'));
     $.publish(Events.PRIMARY_COLOR_SELECTED, [color]);
   };
 
   ns.PaletteController.prototype.setSecondaryColor_ = function (color) {
-    this.updateColorPicker_(color, document.querySelector('#secondary-color-picker'));
+    if (!this.validateNESColorLimit_(color)) {
+      return;
+    }
+    var picker = document.querySelector('#secondary-color-picker');
+    this.updateColorPicker_(color, picker);
     $.publish(Events.SECONDARY_COLOR_SELECTED, [color]);
+  };
+
+  /**
+   * Validates if a color can be used in NES mode (max 3 + transparent).
+   * @param {string} color - The color to validate
+   * @return {boolean} True if color is allowed, false if blocked
+   * @private
+   */
+  ns.PaletteController.prototype.validateNESColorLimit_ = function (color) {
+    // Skip validation if not in NES mode
+    if (!pskl.app.nesMode || !pskl.app.nesMode.isEnabled()) {
+      return true;
+    }
+
+    // Transparent is always allowed
+    if (color === Constants.TRANSPARENT_COLOR ||
+        color === 'rgba(0, 0, 0, 0)') {
+      return true;
+    }
+
+    // Get current colors in the sprite
+    var currentColors = pskl.app.currentColorsService.getCurrentColors();
+    var maxColors = pskl.nes.NESColors.MAX_SPRITE_COLORS;
+
+    // Normalize color for comparison
+    var normalizedColor = window.tinycolor(color).toHexString().toUpperCase();
+
+    // Check if color is already in sprite (allowed)
+    var colorExists = currentColors.some(function (c) {
+      return window.tinycolor(c).toHexString().toUpperCase() === normalizedColor;
+    });
+
+    if (colorExists) {
+      return true;
+    }
+
+    // New color - check if we're at the limit
+    if (currentColors.length >= maxColors) {
+      $.publish(Events.SHOW_NOTIFICATION, [{
+        content: 'NES mode: Max ' + maxColors + ' colors allowed. ' +
+          'Remove a color from your sprite first.',
+        hideDelay: 4000
+      }]);
+      return false;
+    }
+
+    return true;
   };
 
   ns.PaletteController.prototype.swapColors = function () {
