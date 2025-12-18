@@ -426,8 +426,41 @@
       action: 'NES color replacement'
     }]);
 
-    // Refresh current colors
-    pskl.app.currentColorsService.updateCurrentColors();
+    // Synchronously update current colors list to avoid async race conditions
+    // (the async updateCurrentColors would cause stale data on rapid changes)
+    this.syncUpdateCurrentColors_(oldColor, newColor);
+  };
+
+  /**
+   * Synchronously updates the current colors list after a color replacement.
+   * Removes oldColor and adds newColor to the cached color list.
+   * @param {string} oldColor - The color that was replaced
+   * @param {string} newColor - The new color that replaced it
+   * @private
+   */
+  ns.PaletteController.prototype.syncUpdateCurrentColors_ = function (
+    oldColor, newColor
+  ) {
+    var currentColors = pskl.app.currentColorsService.getCurrentColors();
+    var normalizedOld = window.tinycolor(oldColor).toHexString().toUpperCase();
+    var normalizedNew = window.tinycolor(newColor).toHexString().toUpperCase();
+
+    // Build new color list: remove old color, add new color if not present
+    var newColors = currentColors.filter(function (c) {
+      return window.tinycolor(c).toHexString().toUpperCase() !== normalizedOld;
+    });
+
+    // Check if new color is already in the list
+    var newColorExists = newColors.some(function (c) {
+      return window.tinycolor(c).toHexString().toUpperCase() === normalizedNew;
+    });
+
+    if (!newColorExists) {
+      newColors.push(newColor);
+    }
+
+    // Directly set the updated color list (synchronous)
+    pskl.app.currentColorsService.setCurrentColors(newColors);
   };
 
   /**
