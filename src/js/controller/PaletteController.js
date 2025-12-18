@@ -85,33 +85,47 @@
 
   /**
    * Adds NES register tooltips to spectrum palette swatches.
-   * Called after spectrum initialization to enhance color swatches with
-   * PPU register info (e.g., "rgb(0,0,0) | $0F / $1F").
+   * Uses palette index position to correctly identify duplicate colors
+   * (like the two blacks at $0F and $1F).
    * @private
    */
   ns.PaletteController.prototype.addNESRegisterTooltips_ = function () {
-    var swatches = document.querySelectorAll('.sp-palette .sp-thumb-el');
-    var nesColors = pskl.nes.NESColors;
+    var paletteData = pskl.nes.NESColors.PALETTE_DATA;
+    var colorsPerRow = 14;
 
-    swatches.forEach(function (swatch) {
-      var innerEl = swatch.querySelector('.sp-thumb-inner');
-      if (!innerEl) {
-        return;
-      }
+    // Find all palette rows in the spectrum container
+    var paletteRows = document.querySelectorAll('.sp-palette .sp-palette-row');
 
-      var bgColor = innerEl.style.backgroundColor;
-      if (!bgColor) {
-        return;
-      }
+    paletteRows.forEach(function (row, rowIndex) {
+      var swatches = row.querySelectorAll('.sp-thumb-el');
 
-      // Convert rgb(r,g,b) to hex for lookup
-      var hex = window.tinycolor(bgColor).toHexString().toUpperCase();
-      var register = nesColors.getRegister(hex);
+      swatches.forEach(function (swatch, colIndex) {
+        var innerEl = swatch.querySelector('.sp-thumb-inner');
+        if (!innerEl) {
+          return;
+        }
 
-      if (register) {
-        // Format: "rgb(124,124,124) | $00"
-        swatch.title = bgColor + ' | ' + register;
-      }
+        var bgColor = innerEl.style.backgroundColor;
+        if (!bgColor) {
+          return;
+        }
+
+        // Row 0 is transparent, NES colors start at row 1
+        if (rowIndex === 0) {
+          swatch.title = 'Transparent';
+          return;
+        }
+
+        // Calculate index into PALETTE_DATA
+        // Row 1 = indices 0-13, Row 2 = indices 14-27, etc.
+        var paletteIndex = (rowIndex - 1) * colorsPerRow + colIndex;
+
+        if (paletteIndex < paletteData.length) {
+          var entry = paletteData[paletteIndex];
+          // Format: "rgb(0,0,0) | $0F"
+          swatch.title = bgColor + ' | ' + entry.register;
+        }
+      });
     });
   };
 
@@ -158,13 +172,19 @@
       this.onPickerChange_.bind(this));
     this.setTitleOnPicker_(secondaryColor, secondaryColorPicker.get(0));
 
-    // Add NES register tooltips if in NES mode
+    // Add NES register tooltips when picker is shown (palette is lazy-rendered)
     if (pskl.app.nesMode && pskl.app.nesMode.isEnabled()) {
-      // Defer to allow spectrum to render palette swatches
       var self = this;
-      setTimeout(function () {
-        self.addNESRegisterTooltips_();
-      }, 0);
+      var addTooltipsOnShow = function () {
+        // Small delay to ensure Spectrum has rendered the palette
+        setTimeout(function () {
+          self.addNESRegisterTooltips_();
+        }, 10);
+      };
+      colorPicker.off('show.spectrum');
+      colorPicker.on('show.spectrum', addTooltipsOnShow);
+      secondaryColorPicker.off('show.spectrum');
+      secondaryColorPicker.on('show.spectrum', addTooltipsOnShow);
     }
   };
 
