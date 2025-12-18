@@ -25,6 +25,10 @@
     this.updateBodyClass_();
     $.subscribe(Events.USER_SETTINGS_CHANGED,
       this.onSettingsChange_.bind(this));
+
+    // Publish initial state so listeners (e.g., PaletteController) can
+    // reinitialize with the correct NES mode config
+    $.publish(Events.NES_MODE_CHANGED, [this.enabled]);
   };
 
   /**
