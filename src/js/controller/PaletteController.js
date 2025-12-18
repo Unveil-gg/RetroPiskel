@@ -229,44 +229,68 @@
 
   ns.PaletteController.prototype.setPrimaryColor_ = function (color) {
     var picker = document.querySelector('#color-picker');
-    if (!this.validateNESColorLimit_(color)) {
+    var currentColor = pskl.app.selectedColorsService.getPrimaryColor();
+    var validationResult = this.validateNESColorLimit_(color, true);
+
+    if (validationResult === 'blocked') {
       // Revert picker to current valid color to keep UI in sync
-      var currentColor = pskl.app.selectedColorsService.getPrimaryColor();
       this.updateColorPicker_(currentColor, picker);
       return;
     }
+
+    if (validationResult === 'replace') {
+      // Trigger replacement flow - promptColorReplacement_ handles the rest
+      this.promptColorReplacement_(currentColor, color, true);
+      return;
+    }
+
+    // validationResult === 'allowed'
     this.updateColorPicker_(color, picker);
     $.publish(Events.PRIMARY_COLOR_SELECTED, [color]);
   };
 
   ns.PaletteController.prototype.setSecondaryColor_ = function (color) {
     var picker = document.querySelector('#secondary-color-picker');
-    if (!this.validateNESColorLimit_(color)) {
+    var currentColor = pskl.app.selectedColorsService.getSecondaryColor();
+    var validationResult = this.validateNESColorLimit_(color, false);
+
+    if (validationResult === 'blocked') {
       // Revert picker to current valid color to keep UI in sync
-      var currentColor = pskl.app.selectedColorsService.getSecondaryColor();
       this.updateColorPicker_(currentColor, picker);
       return;
     }
+
+    if (validationResult === 'replace') {
+      // Trigger replacement flow - promptColorReplacement_ handles the rest
+      this.promptColorReplacement_(currentColor, color, false);
+      return;
+    }
+
+    // validationResult === 'allowed'
     this.updateColorPicker_(color, picker);
     $.publish(Events.SECONDARY_COLOR_SELECTED, [color]);
   };
 
   /**
    * Validates if a color can be used in NES mode (max 3 + transparent).
+   * Returns 'allowed', 'blocked', or 'replace' to indicate the action.
    * @param {string} color - The color to validate
-   * @return {boolean} True if color is allowed, false if blocked
+   * @param {boolean} isPrimary - Whether this is the primary color picker
+   * @return {string} 'allowed', 'blocked', or 'replace'
    * @private
    */
-  ns.PaletteController.prototype.validateNESColorLimit_ = function (color) {
+  ns.PaletteController.prototype.validateNESColorLimit_ = function (
+    color, isPrimary
+  ) {
     // Skip validation if not in NES mode
     if (!pskl.app.nesMode || !pskl.app.nesMode.isEnabled()) {
-      return true;
+      return 'allowed';
     }
 
     // Transparent is always allowed
     if (color === Constants.TRANSPARENT_COLOR ||
         color === 'rgba(0, 0, 0, 0)') {
-      return true;
+      return 'allowed';
     }
 
     // Get current colors in the sprite
@@ -282,20 +306,50 @@
     });
 
     if (colorExists) {
-      return true;
+      return 'allowed';
     }
 
     // New color - check if we're at the limit
     if (currentColors.length >= maxColors) {
-      $.publish(Events.SHOW_NOTIFICATION, [{
-        content: 'NES mode: Max ' + maxColors + ' colors allowed. ' +
-          'Remove a color from your sprite first.',
-        hideDelay: 4000
-      }]);
-      return false;
+      // Check if the currently selected color is in the sprite palette
+      // If so, we can offer to replace it
+      var selectedColor = isPrimary ?
+        pskl.app.selectedColorsService.getPrimaryColor() :
+        pskl.app.selectedColorsService.getSecondaryColor();
+
+      // Don't offer replacement for transparent
+      if (selectedColor === Constants.TRANSPARENT_COLOR ||
+          selectedColor === 'rgba(0, 0, 0, 0)') {
+        $.publish(Events.SHOW_NOTIFICATION, [{
+          content: 'NES mode: Max ' + maxColors + ' colors allowed. ' +
+            'Select a non-transparent color to replace it.',
+          hideDelay: 4000
+        }]);
+        return 'blocked';
+      }
+
+      var normalizedSelected = window.tinycolor(selectedColor)
+        .toHexString().toUpperCase();
+      var selectedInSprite = currentColors.some(function (c) {
+        return window.tinycolor(c).toHexString().toUpperCase() ===
+          normalizedSelected;
+      });
+
+      if (selectedInSprite) {
+        // Selected color is in sprite - offer replacement
+        return 'replace';
+      } else {
+        // Selected color is not in sprite - can't replace
+        $.publish(Events.SHOW_NOTIFICATION, [{
+          content: 'NES mode: Max ' + maxColors + ' colors allowed. ' +
+            'Select an existing sprite color to replace it.',
+          hideDelay: 4000
+        }]);
+        return 'blocked';
+      }
     }
 
-    return true;
+    return 'allowed';
   };
 
   ns.PaletteController.prototype.swapColors = function () {
@@ -336,5 +390,92 @@
     var parent = colorPicker.parentNode;
     title = parent.dataset.initialTitle + '<br/>' + title;
     parent.dataset.originalTitle = title;
+  };
+
+  /**
+   * Replaces all pixels of oldColor with newColor across all layers/frames.
+   * Saves state for undo/redo.
+   * @param {string} oldColor - Hex color to replace
+   * @param {string} newColor - Hex color to use as replacement
+   * @private
+   */
+  ns.PaletteController.prototype.replaceColorInSprite_ = function (
+    oldColor, newColor
+  ) {
+    var oldColorInt = pskl.utils.colorToInt(oldColor);
+    var newColorInt = pskl.utils.colorToInt(newColor);
+
+    var piskelController = pskl.app.piskelController;
+    var layers = piskelController.getLayers();
+
+    // Replace color in all layers and frames
+    layers.forEach(function (layer) {
+      var frames = layer.getFrames();
+      frames.forEach(function (frame) {
+        frame.forEachPixel(function (color, col, row) {
+          if (color !== null && color === oldColorInt) {
+            frame.setPixel(col, row, newColorInt);
+          }
+        });
+      });
+    });
+
+    // Save state for undo
+    $.publish(Events.PISKEL_SAVE_STATE, [{
+      type: pskl.service.HistoryService.SNAPSHOT,
+      action: 'NES color replacement'
+    }]);
+
+    // Refresh current colors
+    pskl.app.currentColorsService.updateCurrentColors();
+  };
+
+  /**
+   * Prompts user to confirm color replacement (if enabled) and executes it.
+   * @param {string} oldColor - Currently selected color to replace
+   * @param {string} newColor - New color user is trying to use
+   * @param {boolean} isPrimary - Whether this is the primary color picker
+   * @private
+   */
+  ns.PaletteController.prototype.promptColorReplacement_ = function (
+    oldColor, newColor, isPrimary
+  ) {
+    var showPrompt = pskl.UserSettings.get(
+      pskl.UserSettings.NES_COLOR_REPLACE_PROMPT);
+
+    var doReplace = function () {
+      this.replaceColorInSprite_(oldColor, newColor);
+
+      // Update the selected color to the new color
+      if (isPrimary) {
+        this.updateColorPicker_(
+          newColor, document.querySelector('#color-picker'));
+        $.publish(Events.PRIMARY_COLOR_SELECTED, [newColor]);
+      } else {
+        this.updateColorPicker_(
+          newColor, document.querySelector('#secondary-color-picker'));
+        $.publish(Events.SECONDARY_COLOR_SELECTED, [newColor]);
+      }
+    }.bind(this);
+
+    if (showPrompt) {
+      var msg = 'Replace color in sprite?\n\n' +
+        'All pixels using ' + oldColor.toUpperCase() + ' will be changed to ' +
+        newColor.toUpperCase() + '.\n\n' +
+        'This applies to all frames and layers.\n\n' +
+        'Continue?';
+
+      if (window.confirm(msg)) {
+        doReplace();
+      } else {
+        // User cancelled - revert picker to current color
+        var picker = isPrimary ?
+          document.querySelector('#color-picker') :
+          document.querySelector('#secondary-color-picker');
+        this.updateColorPicker_(oldColor, picker);
+      }
+    } else {
+      doReplace();
+    }
   };
 })();

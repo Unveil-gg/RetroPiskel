@@ -14,6 +14,16 @@
     nesModeCheckbox.checked = pskl.UserSettings.get(pskl.UserSettings.NES_MODE);
     this.addEventListener(nesModeCheckbox, 'change', this.onNESModeChange_);
 
+    // NES Color Replace Prompt toggle
+    var colorReplaceCheckbox = document.querySelector(
+      '.nes-color-replace-prompt-checkbox');
+    if (colorReplaceCheckbox) {
+      colorReplaceCheckbox.checked = pskl.UserSettings.get(
+        pskl.UserSettings.NES_COLOR_REPLACE_PROMPT);
+      this.addEventListener(
+        colorReplaceCheckbox, 'change', this.onColorReplacePromptChange_);
+    }
+
     this.backgroundContainer = document.querySelector('.background-picker-wrapper');
     this.addEventListener(this.backgroundContainer, 'click', this.onBackgroundClick_);
 
@@ -89,6 +99,18 @@
     var layerOpacityText = document.querySelector('.layer-opacity-text');
     layerOpacityText.innerHTML = (opacity * 1).toFixed(2);
   };
+
+  /**
+   * Handles NES color replace prompt checkbox toggle.
+   * @param {Event} evt - Change event
+   * @private
+   */
+  ns.MiscPreferencesController.prototype.onColorReplacePromptChange_ =
+    function (evt) {
+      pskl.UserSettings.set(
+        pskl.UserSettings.NES_COLOR_REPLACE_PROMPT,
+        evt.target.checked);
+    };
 
   /**
    * Handles NES mode checkbox toggle with confirmation warning.
