@@ -55,7 +55,7 @@
       COLOR_FORMAT: 'hex',
       TRANSFORM_SHOW_MORE: false,
       PREFERENCES_TAB: 'misc',
-      NES_MODE: false,
+      NES_MODE: true,
     },
 
     /**
