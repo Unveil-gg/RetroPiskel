@@ -62,7 +62,7 @@ Help is always welcome !
 * **Issues** : Found a problem when using the application, want to request a feature, [open an issue](https://github.com/Unveil-gg/RetroPiskel/issues).
 * **Development** : Have a look at the [wiki](https://github.com/piskelapp/piskel/wiki) to set up the development environment (for now, same as original Piskel).
 
-> Note issues from the original Piskel apply to RetroPiskel. You may work on them if applicable, targeting issues below #1231.
+> Note: issues from the original Piskel apply to RetroPiskel. You may work on them if applicable, targeting issues below #1231.
 
 ## License
 
