@@ -59,12 +59,14 @@ Offline builds are available. More details in the [dedicated wiki page](https://
 
 Help is always welcome !
 
-* **Issues** : Found a problem when using the application, want to request a feature, [open an issue](https://github.com/piskelapp/piskel/issues).
-* **Development** : Have a look at the [wiki](https://github.com/piskelapp/piskel/wiki) to set up the development environment
+* **Issues** : Found a problem when using the application, want to request a feature, [open an issue](https://github.com/Unveil-gg/RetroPiskel/issues).
+* **Development** : Have a look at the [wiki](https://github.com/piskelapp/piskel/wiki) to set up the development environment (for now, same as original Piskel).
+
+> Note issues from the original Piskel apply to RetroPiskel. You may work on them if applicable, targeting issues below #1231.
 
 ## License
 
-Copyright 2017 Julian Descottes
+Copyright 2025 Unveil | Copyright 2017 Julian Descottes
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -77,4 +79,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
