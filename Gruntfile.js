@@ -270,40 +270,106 @@ module.exports = function (grunt) {
 
     /**
      * DESKTOP BUILDS
+     * Uses nw-builder 4.x API with NW.js 0.92.0
+     * Targets: Windows 10+, macOS 11+ (Intel & ARM), Linux x64
      */
 
     nwjs: {
-      windows: {
+      // Windows 10+ (x64)
+      win: {
         options: {
-          downloadUrl: 'https://dl.nwjs.io/',
-          version: "0.19.4",
-          build_dir: './dest/desktop/', // destination folder of releases.
-          win: true,
-          linux32: true,
-          linux64: true,
+          mode: "build",
+          version: "0.92.0",
+          platform: "win",
+          arch: "x64",
+          outDir: "./dest/desktop/",
           flavor: "normal",
+          glob: true,
+          app: {
+            name: "RetroPiskel",
+            icon: "./misc/desktop/logo.ico",
+            company: "Unveil",
+            fileDescription: "Retro console sprite editor",
+            productName: "RetroPiskel",
+            legalCopyright: "Copyright © 2025 Unveil"
+          }
         },
-        src: ['./dest/prod/**/*', "./package.json", "!./dest/desktop/"]
+        src: ['./dest/prod/**/*', "./package.json"]
       },
-      macos: {
+
+      // Linux x64
+      linux: {
         options: {
-          downloadUrl: 'https://dl.nwjs.io/',
-          osx64: true,
-          version: "0.19.4",
-          build_dir: './dest/desktop/',
+          mode: "build",
+          version: "0.92.0",
+          platform: "linux",
+          arch: "x64",
+          outDir: "./dest/desktop/",
           flavor: "normal",
+          glob: true,
+          app: {
+            name: "RetroPiskel",
+            genericName: "Sprite Editor",
+            comment: "Retro console sprite editor"
+          }
         },
-        src: ['./dest/prod/**/*', "./package.json", "!./dest/desktop/"]
+        src: ['./dest/prod/**/*', "./package.json"]
       },
-      macos_old: {
+
+      // macOS 11+ Intel (x64)
+      mac: {
         options: {
-          downloadUrl: 'https://dl.nwjs.io/',
-          osx64: true,
-          version: "0.12.3",
-          build_dir: './dest/desktop/old',
+          mode: "build",
+          version: "0.92.0",
+          platform: "osx",
+          arch: "x64",
+          outDir: "./dest/desktop/",
           flavor: "normal",
+          glob: true,
+          app: {
+            name: "RetroPiskel",
+            icon: "./misc/desktop/nw.icns",
+            LSApplicationCategoryType: "public.app-category.graphics-design",
+            CFBundleIdentifier: "com.unveil.retropiskel",
+            CFBundleName: "RetroPiskel",
+            CFBundleDisplayName: "RetroPiskel",
+            CFBundleSpokenName: "RetroPiskel",
+            CFBundleVersion: releaseVersion,
+            CFBundleShortVersionString: releaseVersion,
+            NSHumanReadableCopyright: "Copyright © 2025 Unveil",
+            NSLocalNetworkUsageDescription:
+              "RetroPiskel does not access the local network"
+          }
         },
-        src: ['./dest/prod/**/*', "./package.json", "!./dest/desktop/"]
+        src: ['./dest/prod/**/*', "./package.json"]
+      },
+
+      // macOS 11+ Apple Silicon (arm64)
+      macArm: {
+        options: {
+          mode: "build",
+          version: "0.92.0",
+          platform: "osx",
+          arch: "arm64",
+          outDir: "./dest/desktop/",
+          flavor: "normal",
+          glob: true,
+          app: {
+            name: "RetroPiskel",
+            icon: "./misc/desktop/nw.icns",
+            LSApplicationCategoryType: "public.app-category.graphics-design",
+            CFBundleIdentifier: "com.unveil.retropiskel",
+            CFBundleName: "RetroPiskel",
+            CFBundleDisplayName: "RetroPiskel",
+            CFBundleSpokenName: "RetroPiskel",
+            CFBundleVersion: releaseVersion,
+            CFBundleShortVersionString: releaseVersion,
+            NSHumanReadableCopyright: "Copyright © 2025 Unveil",
+            NSLocalNetworkUsageDescription:
+              "RetroPiskel does not access the local network"
+          }
+        },
+        src: ['./dest/prod/**/*', "./package.json"]
       }
     }
   });
@@ -321,9 +387,12 @@ module.exports = function (grunt) {
   grunt.registerTask('build-partials', ['replace:mainPartial', 'replace:piskelWebPartial', 'replace:piskelWebPartialKids']);
   grunt.registerTask('build', ['clean:prod', 'sprite', 'merge-statics', 'build-index.html', 'build-partials', 'replace:css', 'copy:prod']);
   grunt.registerTask('build-dev', ['clean:dev', 'sprite', 'build-index.html', 'copy:dev']);
-  grunt.registerTask('desktop', ['clean:desktop', 'default', 'nwjs:windows']);
-  grunt.registerTask('desktop-mac', ['clean:desktop', 'default', 'nwjs:macos']);
-  grunt.registerTask('desktop-mac-old', ['clean:desktop', 'default', 'replace:desktop', 'nwjs:macos_old']);
+  grunt.registerTask('desktop', ['clean:desktop', 'default', 'nwjs:win', 'nwjs:linux']);
+  grunt.registerTask('desktop-mac', ['clean:desktop', 'default', 'nwjs:mac']);
+  grunt.registerTask('desktop-mac-arm', ['clean:desktop', 'default', 'nwjs:macArm']);
+  grunt.registerTask('desktop-all', [
+    'clean:desktop', 'default', 'nwjs:win', 'nwjs:linux', 'nwjs:mac', 'nwjs:macArm'
+  ]);
 
   // SERVER TASKS
   // Start webserver and watch for changes

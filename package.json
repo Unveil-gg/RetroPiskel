@@ -1,16 +1,17 @@
 {
-  "name": "retropiskel",
+  "name": "RetroPiskel",
   "version": "0.1.0",
   "description": "Retro console sprite editor - Based on Piskel",
   "author": "Julian Descottes <julian.descottes@gmail.com>",
   "contributors": [
+    "Edgar San Martin, Jr",
     "Vincent Renaudin"
   ],
-  "homepage": "http://github.com/piskelapp/piskel",
+  "homepage": "http://github.com/unveil-gg/RetroPiskel",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "http://github.com/piskelapp/piskel.git"
+    "url": "http://github.com/unveil-gg/RetroPiskel.git"
   },
   "files": [
     "dest/prod",
@@ -32,6 +33,8 @@
     "release-piskel-web": "grunt && node ./bin/copy-to-piskel-web",
     "build:desktop": "grunt desktop",
     "build:mac": "grunt desktop-mac",
+    "build:mac-arm": "grunt desktop-mac-arm",
+    "build:all": "grunt desktop-all",
     "start:nw": "grunt build && nw",
     "e2e": "npx playwright test",
     "e2e:interactive": "npx playwright test --ui",
