@@ -28,11 +28,7 @@
       var dummyEl = ns.Template._getDummyEl();
       dummyEl.innerHTML = html;
       var element = dummyEl.children[0];
-
-      if (!pskl.utils.UserAgent.isIE11) {
-        dummyEl.innerHTML = '';
-      }
-
+      dummyEl.innerHTML = '';
       return element;
     },
 
@@ -56,7 +52,8 @@
             value = ns.Template.sanitize(value);
           }
 
-          template = template.replace(new RegExp('\\{\\{' + key + '\\}\\}', 'g'), value);
+          var regex = new RegExp('\\{\\{' + key + '\\}\\}', 'g');
+          template = template.replace(regex, value);
         }
       }
       return template;
@@ -76,29 +73,18 @@
      */
     sanitize : function (string) {
       var dummyEl = ns.Template._getDummyEl();
-
-      // Apply the unsafe string as text content and
+      // Apply the unsafe string as text content
       dummyEl.textContent = string;
       var sanitizedString = dummyEl.innerHTML;
-
-      if (!pskl.utils.UserAgent.isIE11) {
-        dummyEl.innerHTML = '';
-      }
-
+      dummyEl.innerHTML = '';
       return sanitizedString;
     },
 
-    _getDummyEl : pskl.utils.UserAgent.isIE11 ?
-      // IE11 specific implementation
-      function () {
-        return document.createElement('div');
-      } :
-      // Normal, sane browsers implementation.
-      function () {
-        if (!ns.Template._dummyEl) {
-          ns.Template._dummyEl = document.createElement('div');
-        }
-        return ns.Template._dummyEl;
+    _getDummyEl : function () {
+      if (!ns.Template._dummyEl) {
+        ns.Template._dummyEl = document.createElement('div');
       }
+      return ns.Template._dummyEl;
+    }
   };
 })();

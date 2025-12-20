@@ -229,18 +229,6 @@ module.exports = function (grunt) {
         ]
       },
 
-      css: {
-        options: {
-          patterns: [{
-            match: /var\(--highlight-color\)/g,
-            replacement: "gold",
-          }]
-        },
-        files: [{
-          src: ['dest/tmp/css/piskel-style-packaged' + version + '.css'],
-          dest: 'dest/prod/css/piskel-style-packaged' + version + '.css'
-        }]
-      }
     },
 
     copy: {
@@ -248,9 +236,9 @@ module.exports = function (grunt) {
         files: [
           // dest/js/piskel-packaged-min.js should have been created by the uglify task
           { src: ['dest/tmp/js/piskel-packaged-min.js'], dest: 'dest/prod/js/piskel-packaged-min' + version + '.js' },
+          { src: ['dest/tmp/css/piskel-style-packaged' + version + '.css'], dest: 'dest/prod/css/piskel-style-packaged' + version + '.css' },
           { src: ['dest/tmp/index.html'], dest: 'dest/prod/index.html' },
           { src: ['src/logo.png'], dest: 'dest/prod/logo.png' },
-          { src: ['src/js/lib/gif/gif.ie.worker.js'], dest: 'dest/prod/js/lib/gif/gif.ie.worker.js' },
           { expand: true, src: ['img/**'], cwd: 'src/', dest: 'dest/prod/', filter: 'isFile' },
           { expand: true, src: ['css/fonts/**'], cwd: 'src/', dest: 'dest/prod/', filter: 'isFile' }
         ]
@@ -385,7 +373,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build-index.html', ['includereplace']);
   grunt.registerTask('merge-statics', ['concat:js', 'concat:css', 'uglify']);
   grunt.registerTask('build-partials', ['replace:mainPartial', 'replace:piskelWebPartial', 'replace:piskelWebPartialKids']);
-  grunt.registerTask('build', ['clean:prod', 'sprite', 'merge-statics', 'build-index.html', 'build-partials', 'replace:css', 'copy:prod']);
+  grunt.registerTask('build', ['clean:prod', 'sprite', 'merge-statics', 'build-index.html', 'build-partials', 'copy:prod']);
   grunt.registerTask('build-dev', ['clean:dev', 'sprite', 'build-index.html', 'copy:dev']);
   grunt.registerTask('desktop', ['clean:desktop', 'default', 'nwjs:win', 'nwjs:linux']);
   grunt.registerTask('desktop-mac', ['clean:desktop', 'default', 'nwjs:mac']);
