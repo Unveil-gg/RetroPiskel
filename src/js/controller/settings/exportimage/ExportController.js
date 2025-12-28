@@ -54,9 +54,19 @@
     // Initialize tabs and panel
     var container = document.querySelector('.settings-section-export');
     this.tabsWidget.init(container);
+
+    // If NES mode is off and CHR tab was saved, switch to PNG
+    if (!pskl.app.nesMode.isEnabled() &&
+        this.tabsWidget.currentTab === 'chr') {
+      this.tabsWidget.selectTab('png');
+    }
+
+    // Listen for NES mode changes to handle CHR tab fallback
+    $.subscribe(Events.NES_MODE_CHANGED, this.onNesModeChanged_.bind(this));
   };
 
   ns.ExportController.prototype.destroy = function () {
+    $.unsubscribe(Events.NES_MODE_CHANGED, this.onNesModeChanged_);
     this.sizeInputWidget.destroy();
     this.tabsWidget.destroy();
     this.superclass.destroy.call(this);
@@ -95,5 +105,18 @@
 
   ns.ExportController.prototype.getExportZoom = function () {
     return parseInt(this.widthInput.value, 10) / this.piskelController.getWidth();
+  };
+
+  /**
+   * Handles NES mode toggle. Falls back to PNG if CHR tab is selected
+   * when NES mode is disabled.
+   * @param {Event} evt - The event object
+   * @param {boolean} enabled - Whether NES mode is now enabled
+   * @private
+   */
+  ns.ExportController.prototype.onNesModeChanged_ = function (evt, enabled) {
+    if (!enabled && this.tabsWidget.currentTab === 'chr') {
+      this.tabsWidget.selectTab('png');
+    }
   };
 })();
