@@ -5,6 +5,9 @@
  *   - Bytes 0-7: Channel 1 (bit 0 of color index)
  *   - Bytes 8-15: Channel 2 (bit 1 of color index)
  *
+ * Note: CHR exports ALL frames into a single .chr file. Tiles from each
+ * frame are concatenated sequentially (frame 0 tiles, then frame 1, etc.).
+ *
  * Reference: https://wiki.xxiivv.com/site/chr_format.html
  */
 (function () {
