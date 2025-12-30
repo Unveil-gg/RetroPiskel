@@ -25,7 +25,7 @@
     var savedModeId = pskl.UserSettings.get(pskl.UserSettings.CONSOLE_MODE);
     if (savedModeId && this.modes_[savedModeId]) {
       this.setActiveMode(savedModeId, true);
-    } else if (this.modes_['default']) {
+    } else if (this.modes_.default) {
       this.setActiveMode('default', true);
     }
 

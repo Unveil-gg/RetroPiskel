@@ -161,7 +161,7 @@
       if (legacyNesMode !== null && consoleMode === undefined) {
         var newConsoleMode = legacyNesMode ? 'nes' : 'default';
         this.writeToLocalStorage_('CONSOLE_MODE', newConsoleMode);
-        this.cache_['CONSOLE_MODE'] = newConsoleMode;
+        this.cache_.CONSOLE_MODE = newConsoleMode;
       }
 
       // Migrate legacy NES_COLOR_REPLACE_PROMPT to COLOR_REPLACE_PROMPT
@@ -170,7 +170,7 @@
 
       if (legacyPrompt !== null && newPrompt === undefined) {
         this.writeToLocalStorage_('COLOR_REPLACE_PROMPT', legacyPrompt);
-        this.cache_['COLOR_REPLACE_PROMPT'] = legacyPrompt;
+        this.cache_.COLOR_REPLACE_PROMPT = legacyPrompt;
       }
     }
   };
