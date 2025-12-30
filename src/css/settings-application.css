@@ -194,29 +194,3 @@
   padding-left: 10px;
   margin-bottom: 10px;
 }
-
-/* Legacy support for old class names */
-.nes-mode-setting {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  border: 1px solid #e94560;
-  border-radius: 4px;
-  padding: 10px;
-  margin-bottom: 15px;
-}
-
-.nes-mode-setting label {
-  color: #e94560;
-  font-weight: bold;
-}
-
-.nes-mode-checkbox {
-  margin-left: 10px;
-  vertical-align: middle;
-}
-
-.nes-mode-description {
-  display: block;
-  margin-top: 5px;
-  font-size: 11px;
-  color: #888;
-}

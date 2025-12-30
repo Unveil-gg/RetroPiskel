@@ -161,16 +161,6 @@
   display: none;
 }
 
-/* Legacy: Also hide CHR when using old nes-mode class but not active */
-body:not(.nes-mode):not(.console-nes) .export-tab[data-tab-id="chr"] {
-  display: none;
-}
-
-/* Legacy: Show CHR tab when old nes-mode class is active */
-body.nes-mode .export-tab[data-tab-id="chr"] {
-  display: block;
-}
-
 .export-panel-chr .chr-spec-link {
   color: #3CBCFC;
   text-decoration: none;
