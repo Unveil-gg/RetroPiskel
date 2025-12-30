@@ -69,9 +69,15 @@
   // Application libraries
   "js/rendering/DrawingLoop.js",
 
-  // NES Mode
+  // NES Mode (legacy, kept for backward compatibility)
   "js/nes/NESColors.js",
   "js/nes/NESMode.js",
+
+  // Console Mode System
+  "js/consoles/ConsoleMode.js",
+  "js/consoles/ConsoleModeRegistry.js",
+  "js/consoles/default/DefaultConsoleMode.js",
+  "js/consoles/nes/NESConsoleMode.js",
 
   // Models
   "js/model/Frame.js",

@@ -97,6 +97,12 @@ var Events = {
   // to window._externalPiskel to be applied.
   EXTERNAL_PISKEL_READY: 'EXTERNAL_PISKEL_READY',
 
-  // NES Mode toggle changed
+  // NES Mode toggle changed (deprecated, use CONSOLE_MODE_CHANGED)
   NES_MODE_CHANGED: 'NES_MODE_CHANGED',
+
+  /**
+   * Fired when console mode changes.
+   * Payload: {previous: ConsoleMode|null, current: ConsoleMode}
+   */
+  CONSOLE_MODE_CHANGED: 'CONSOLE_MODE_CHANGED',
 };

@@ -25,8 +25,10 @@
     COLOR_FORMAT: 'COLOR_FORMAT',
     TRANSFORM_SHOW_MORE: 'TRANSFORM_SHOW_MORE',
     PREFERENCES_TAB: 'PREFERENCES_TAB',
-    NES_MODE: 'NES_MODE',
+    NES_MODE: 'NES_MODE',  // Deprecated, use CONSOLE_MODE
     NES_COLOR_REPLACE_PROMPT: 'NES_COLOR_REPLACE_PROMPT',
+    CONSOLE_MODE: 'CONSOLE_MODE',
+    COLOR_REPLACE_PROMPT: 'COLOR_REPLACE_PROMPT',
     KEY_TO_DEFAULT_VALUE_MAP_ : {
       'GRID_COLOR' : Constants.TRANSPARENT_COLOR,
       'GRID_ENABLED' : false,
@@ -58,8 +60,10 @@
       COLOR_FORMAT: 'hex',
       TRANSFORM_SHOW_MORE: false,
       PREFERENCES_TAB: 'misc',
-      NES_MODE: true,
+      NES_MODE: true,  // Deprecated, use CONSOLE_MODE
       NES_COLOR_REPLACE_PROMPT: true,
+      CONSOLE_MODE: 'nes',  // Default to NES mode for RetroPiskel
+      COLOR_REPLACE_PROMPT: true,
     },
 
     /**
