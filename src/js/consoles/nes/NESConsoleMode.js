@@ -99,6 +99,7 @@
       palette: NES_PALETTE,
       maxColors: 3,        // 3 colors + transparent
       tileSize: 8,         // 8x8 tiles for CHR
+      defaultSize: {width: 16, height: 16},  // Common NES sprite size
       exportTabs: ['chr'],
       themeVariables: {
         '--highlight-color': '#E40058',

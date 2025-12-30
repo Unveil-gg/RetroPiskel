@@ -56,6 +56,12 @@
     this.themeVariables = config.themeVariables || {};
 
     /**
+     * @type {Object|null}
+     * Recommended default sprite size {width, height}. Null for no preference.
+     */
+    this.defaultSize = config.defaultSize || null;
+
+    /**
      * @type {string|null}
      * Badge text to display in corner (e.g., 'NES'). Null hides badge.
      */

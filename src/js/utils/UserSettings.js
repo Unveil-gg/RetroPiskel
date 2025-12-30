@@ -103,10 +103,15 @@
      */
     readFromLocalStorage_ : function (key) {
       var value = window.localStorage[key];
-      if (typeof value != 'undefined') {
-        value = JSON.parse(value);
+      if (typeof value === 'undefined' || value === 'undefined') {
+        return undefined;
       }
-      return value;
+      try {
+        return JSON.parse(value);
+      } catch (e) {
+        console.warn('Invalid JSON in localStorage for key:', key, value);
+        return undefined;
+      }
     },
 
     /**
