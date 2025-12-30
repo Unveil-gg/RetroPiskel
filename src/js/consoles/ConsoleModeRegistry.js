@@ -179,4 +179,3 @@
     return this.activeMode_ && this.activeMode_.hasRestrictions();
   };
 })();
-

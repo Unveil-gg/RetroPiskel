@@ -173,4 +173,3 @@
     return !!(this.palette || this.maxColors || this.tileSize);
   };
 })();
-

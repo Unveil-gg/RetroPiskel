@@ -14,7 +14,7 @@
   ns.createDefaultMode = function () {
     return new pskl.consoles.ConsoleMode({
       id: 'default',
-      name: 'Standard (No Restrictions)',
+      name: 'Original Piskel',
       bodyClass: 'console-default',
       palette: null,      // Unrestricted
       maxColors: null,    // Unlimited
