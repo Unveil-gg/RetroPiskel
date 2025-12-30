@@ -1,3 +1,19 @@
+/**
+ * Global CSS Variables
+ *
+ * Default values for theming. Console-specific themes override these
+ * when a console mode is active.
+ */
 html, body {
+  /* Primary accent color - used for highlights, selections, active states */
   --highlight-color: gold;
+
+  /* Console theme variables with defaults */
+  --console-accent: gold;
+  --console-accent-dim: #c9a600;
+  --console-bg-dark: #3a3a3a;
+  --console-bg-medium: #444;
+  --console-bg-light: #555;
+  --console-border: #666;
+  --console-text: #ccc;
 }

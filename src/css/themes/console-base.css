@@ -1,0 +1,114 @@
+/**
+ * Console Mode Base Theme
+ *
+ * Defines the base styling that applies to all console modes.
+ * Uses CSS custom properties that are set by each console theme.
+ *
+ * Required variables from console themes:
+ *   --highlight-color: Main accent color
+ *   --console-accent: Primary accent (usually same as highlight)
+ *   --console-accent-dim: Darker accent for hover states
+ *   --console-bg-dark: Darkest background
+ *   --console-bg-medium: Medium background
+ *   --console-bg-light: Lightest background
+ *   --console-border: Border color
+ *   --console-text: Text color
+ */
+
+/* Console mode badge - uses data-console attribute for text */
+body[data-console]::after {
+  content: attr(data-console);
+  position: fixed;
+  bottom: 8px;
+  left: 8px;
+  background: var(--console-accent, var(--highlight-color));
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  font-family: monospace;
+  padding: 2px 6px;
+  border-radius: 2px;
+  z-index: 9999;
+  letter-spacing: 1px;
+}
+
+/* Apply console-specific backgrounds when console mode is active */
+body.console-nes,
+body.console-gameboy,
+body.console-gbc,
+body.console-msx {
+  background: var(--console-bg-dark);
+}
+
+/* Toolbox styling for console modes */
+body[data-console] .tool-icon {
+  border-color: var(--console-border);
+}
+
+body[data-console] .tool-icon:hover {
+  background-color: var(--console-bg-light);
+}
+
+body[data-console] .tool-icon.selected {
+  background-color: var(--console-accent-dim);
+  border-color: var(--console-accent);
+}
+
+/* Settings drawer for console modes */
+body[data-console] .settings-title {
+  color: var(--console-accent);
+}
+
+body[data-console] .drawer-content {
+  background-color: var(--console-bg-medium);
+  border-color: var(--console-border);
+}
+
+/* Right column panels for console modes */
+body[data-console] .preview-container,
+body[data-console] .layers-list-container,
+body[data-console] .palettes-list-container,
+body[data-console] .transformations-container {
+  border-color: var(--console-border);
+}
+
+body[data-console] .section-title {
+  color: var(--console-accent);
+}
+
+/* Frames list for console modes */
+body[data-console] .preview-list {
+  border-color: var(--console-border);
+}
+
+body[data-console] .preview-tile.selected {
+  box-shadow: 0 0 0 2px var(--console-accent);
+}
+
+/* Buttons for console modes */
+body[data-console] .button-primary {
+  background-color: var(--console-accent);
+  border-color: var(--console-accent);
+}
+
+body[data-console] .button-primary:hover {
+  background-color: var(--console-accent-dim);
+}
+
+/* Tab styling for console modes */
+body[data-console] .tab-item.selected {
+  border-bottom-color: var(--console-accent);
+  color: var(--console-accent);
+}
+
+/* Color picker for console modes */
+body[data-console] .sp-container {
+  background-color: var(--console-bg-medium);
+  border-color: var(--console-border);
+}
+
+/* Cursor coordinates for console modes */
+body[data-console] .cursor-coordinates {
+  color: var(--console-accent);
+}
+

@@ -152,9 +152,23 @@
 /* CHR Export Panel            */
 /*******************************/
 
-/* Hide CHR tab when NES mode is disabled */
-body:not(.nes-mode) .export-tab[data-tab-id="chr"] {
+/**
+ * CHR tab visibility is controlled by console mode.
+ * By default, CHR tab is hidden. Console-specific CSS shows it.
+ * See: css/themes/console-nes.css
+ */
+.export-tab[data-tab-id="chr"] {
   display: none;
+}
+
+/* Legacy: Also hide CHR when using old nes-mode class but not active */
+body:not(.nes-mode):not(.console-nes) .export-tab[data-tab-id="chr"] {
+  display: none;
+}
+
+/* Legacy: Show CHR tab when old nes-mode class is active */
+body.nes-mode .export-tab[data-tab-id="chr"] {
+  display: block;
 }
 
 .export-panel-chr .chr-spec-link {

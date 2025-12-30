@@ -1,0 +1,18 @@
+/**
+ * Default Console Theme (Standard Piskel)
+ *
+ * The default theme with no console restrictions.
+ * Uses gold/yellow accent color.
+ */
+
+body.console-default {
+  --highlight-color: gold;
+  --console-accent: gold;
+  --console-accent-dim: #c9a600;
+  --console-bg-dark: #3a3a3a;
+  --console-bg-medium: #444;
+  --console-bg-light: #555;
+  --console-border: #666;
+  --console-text: #ccc;
+}
+
