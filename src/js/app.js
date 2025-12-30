@@ -174,10 +174,7 @@
       this.clipboardService = new pskl.service.ClipboardService(this.piskelController);
       this.clipboardService.init();
 
-      this.nesMode = new pskl.nes.NESMode();
-      this.nesMode.init();
-
-      // Console Mode System - new extensible architecture
+      // Console Mode System - extensible architecture for retro consoles
       this.consoleRegistry = new pskl.consoles.ConsoleModeRegistry();
       this.consoleRegistry.register(pskl.consoles.createDefaultMode());
       this.consoleRegistry.register(pskl.consoles.createNESMode());

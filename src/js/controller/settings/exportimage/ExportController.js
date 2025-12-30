@@ -120,13 +120,10 @@
     // Listen for console mode changes
     $.subscribe(Events.CONSOLE_MODE_CHANGED,
       this.onConsoleModeChanged_.bind(this));
-    // Legacy: also listen for NES_MODE_CHANGED for backward compatibility
-    $.subscribe(Events.NES_MODE_CHANGED, this.onNesModeChanged_.bind(this));
   };
 
   ns.ExportController.prototype.destroy = function () {
     $.unsubscribe(Events.CONSOLE_MODE_CHANGED, this.onConsoleModeChanged_);
-    $.unsubscribe(Events.NES_MODE_CHANGED, this.onNesModeChanged_);
     this.sizeInputWidget.destroy();
     this.tabsWidget.destroy();
     this.superclass.destroy.call(this);
@@ -190,18 +187,6 @@
     this.tabsWidget.tabs = getTabsForCurrentMode();
 
     // Validate current tab is still available
-    this.validateCurrentTab_();
-  };
-
-  /**
-   * Handles legacy NES mode toggle for backward compatibility.
-   * @param {Event} evt - The event object
-   * @param {boolean} enabled - Whether NES mode is now enabled
-   * @private
-   */
-  ns.ExportController.prototype.onNesModeChanged_ = function (evt, enabled) {
-    // This is now handled by onConsoleModeChanged_, but we keep this
-    // for any legacy code that might still fire NES_MODE_CHANGED
     this.validateCurrentTab_();
   };
 })();

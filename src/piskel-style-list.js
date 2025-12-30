@@ -46,8 +46,5 @@
   // Console mode themes
   "css/themes/console-base.css",
   "css/themes/console-default.css",
-  "css/themes/console-nes.css",
-
-  // Legacy NES theme (deprecated, kept for backward compatibility)
-  "css/nes-theme.css"
+  "css/themes/console-nes.css"
 ];

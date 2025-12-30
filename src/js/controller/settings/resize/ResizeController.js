@@ -77,17 +77,6 @@
           $.publish(Events.HIDE_NOTIFICATION);
         }, 4000);
       }
-    } else if (pskl.app.nesMode && pskl.app.nesMode.isEnabled()) {
-      // Legacy fallback for NES mode
-      var nesValidation = pskl.app.nesMode.validateDimensions(width, height);
-      if (!nesValidation.valid) {
-        $.publish(Events.SHOW_NOTIFICATION, [{
-          content: '⚠️ ' + nesValidation.message
-        }]);
-        window.setTimeout(function () {
-          $.publish(Events.HIDE_NOTIFICATION);
-        }, 4000);
-      }
     }
 
     var currentPiskel = this.piskelController.getPiskel();

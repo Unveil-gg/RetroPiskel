@@ -31,8 +31,6 @@
     COLOR_FORMAT: 'COLOR_FORMAT',
     TRANSFORM_SHOW_MORE: 'TRANSFORM_SHOW_MORE',
     PREFERENCES_TAB: 'PREFERENCES_TAB',
-    NES_MODE: 'NES_MODE',  // Deprecated, use CONSOLE_MODE
-    NES_COLOR_REPLACE_PROMPT: 'NES_COLOR_REPLACE_PROMPT',
     CONSOLE_MODE: 'CONSOLE_MODE',
     COLOR_REPLACE_PROMPT: 'COLOR_REPLACE_PROMPT',
     KEY_TO_DEFAULT_VALUE_MAP_ : {
@@ -66,8 +64,6 @@
       COLOR_FORMAT: 'hex',
       TRANSFORM_SHOW_MORE: false,
       PREFERENCES_TAB: 'misc',
-      NES_MODE: true,  // Deprecated, use CONSOLE_MODE
-      NES_COLOR_REPLACE_PROMPT: true,
       CONSOLE_MODE: 'nes',  // Default to NES mode for RetroPiskel
       COLOR_REPLACE_PROMPT: true,
     },
@@ -98,9 +94,6 @@
       this.checkKeyValidity_(key);
       this.cache_[key] = value;
       this.writeToLocalStorage_(key, value);
-
-      // Keep legacy and new settings in sync
-      this.syncLegacySettings_(key, value);
 
       $.publish(Events.USER_SETTINGS_CHANGED, [key, value]);
     },
@@ -155,7 +148,7 @@
       }
       migrationComplete_ = true;
 
-      // Migrate NES_MODE (boolean) to CONSOLE_MODE (string)
+      // Migrate legacy NES_MODE (boolean) to CONSOLE_MODE (string)
       var legacyNesMode = this.readFromLocalStorage_('NES_MODE');
       var consoleMode = this.readFromLocalStorage_('CONSOLE_MODE');
 
@@ -166,42 +159,13 @@
         this.cache_['CONSOLE_MODE'] = newConsoleMode;
       }
 
-      // Migrate NES_COLOR_REPLACE_PROMPT to COLOR_REPLACE_PROMPT
+      // Migrate legacy NES_COLOR_REPLACE_PROMPT to COLOR_REPLACE_PROMPT
       var legacyPrompt = this.readFromLocalStorage_('NES_COLOR_REPLACE_PROMPT');
       var newPrompt = this.readFromLocalStorage_('COLOR_REPLACE_PROMPT');
 
       if (legacyPrompt !== null && newPrompt === undefined) {
         this.writeToLocalStorage_('COLOR_REPLACE_PROMPT', legacyPrompt);
         this.cache_['COLOR_REPLACE_PROMPT'] = legacyPrompt;
-      }
-    },
-
-    /**
-     * Syncs legacy NES_MODE with new CONSOLE_MODE when either changes.
-     * Keeps both in sync for backward compatibility with existing code.
-     * @param {string} key - The setting that changed
-     * @param {*} value - The new value
-     * @private
-     */
-    syncLegacySettings_ : function (key, value) {
-      if (key === 'CONSOLE_MODE') {
-        // Update legacy NES_MODE to match
-        var isNes = (value === 'nes');
-        this.cache_['NES_MODE'] = isNes;
-        this.writeToLocalStorage_('NES_MODE', isNes);
-      } else if (key === 'NES_MODE') {
-        // Update new CONSOLE_MODE to match
-        var mode = value ? 'nes' : 'default';
-        this.cache_['CONSOLE_MODE'] = mode;
-        this.writeToLocalStorage_('CONSOLE_MODE', mode);
-      } else if (key === 'COLOR_REPLACE_PROMPT') {
-        // Sync to legacy setting
-        this.cache_['NES_COLOR_REPLACE_PROMPT'] = value;
-        this.writeToLocalStorage_('NES_COLOR_REPLACE_PROMPT', value);
-      } else if (key === 'NES_COLOR_REPLACE_PROMPT') {
-        // Sync to new setting
-        this.cache_['COLOR_REPLACE_PROMPT'] = value;
-        this.writeToLocalStorage_('COLOR_REPLACE_PROMPT', value);
       }
     }
   };
