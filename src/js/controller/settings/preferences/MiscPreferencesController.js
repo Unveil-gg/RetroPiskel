@@ -9,23 +9,23 @@
   pskl.utils.inherit(ns.MiscPreferencesController, pskl.controller.settings.AbstractSettingController);
 
   ns.MiscPreferencesController.prototype.init = function () {
-    // NES Mode toggle
-    var nesModeCheckbox = document.querySelector('.nes-mode-checkbox');
-    nesModeCheckbox.checked = pskl.UserSettings.get(pskl.UserSettings.NES_MODE);
-    this.addEventListener(nesModeCheckbox, 'change', this.onNESModeChange_);
+    // Console Mode selector
+    this.consoleModeSelect_ = document.querySelector('.console-mode-select');
+    this.populateConsoleModeOptions_();
+    this.addEventListener(
+      this.consoleModeSelect_, 'change', this.onConsoleModeChange_);
 
-    // NES Color Replace Prompt toggle (only visible in NES mode)
-    this.colorReplaceSetting_ = document.querySelector(
-      '.nes-color-replace-setting');
+    // Color Replace Prompt toggle (visible when console has restrictions)
+    this.colorReplaceSetting_ = document.querySelector('.color-replace-setting');
     var colorReplaceCheckbox = document.querySelector(
-      '.nes-color-replace-prompt-checkbox');
+      '.color-replace-prompt-checkbox');
     if (colorReplaceCheckbox) {
       colorReplaceCheckbox.checked = pskl.UserSettings.get(
-        pskl.UserSettings.NES_COLOR_REPLACE_PROMPT);
+        pskl.UserSettings.COLOR_REPLACE_PROMPT);
       this.addEventListener(
         colorReplaceCheckbox, 'change', this.onColorReplacePromptChange_);
     }
-    // Set initial visibility based on NES mode
+    // Set initial visibility based on console mode
     this.updateColorReplaceSettingVisibility_();
 
     this.backgroundContainer = document.querySelector('.background-picker-wrapper');
@@ -105,19 +105,72 @@
   };
 
   /**
-   * Handles NES color replace prompt checkbox toggle.
+   * Populates the console mode dropdown with available modes.
+   * @private
+   */
+  ns.MiscPreferencesController.prototype.populateConsoleModeOptions_ =
+    function () {
+      if (!this.consoleModeSelect_ || !pskl.app.consoleRegistry) {
+        return;
+      }
+
+      var select = this.consoleModeSelect_;
+      var currentModeId = pskl.UserSettings.get(pskl.UserSettings.CONSOLE_MODE);
+      var modes = pskl.app.consoleRegistry.getAll();
+
+      // Clear existing options
+      select.innerHTML = '';
+
+      // Add an option for each registered console mode
+      modes.forEach(function (mode) {
+        var option = document.createElement('option');
+        option.value = mode.id;
+        option.textContent = mode.name;
+        if (mode.id === currentModeId) {
+          option.selected = true;
+        }
+        select.appendChild(option);
+      });
+    };
+
+  /**
+   * Handles console mode selection change.
+   * @param {Event} evt - Change event
+   * @private
+   */
+  ns.MiscPreferencesController.prototype.onConsoleModeChange_ = function (evt) {
+    var newModeId = evt.target.value;
+    var currentModeId = pskl.UserSettings.get(pskl.UserSettings.CONSOLE_MODE);
+
+    if (newModeId === currentModeId) {
+      return;
+    }
+
+    var confirmed = this.confirmConsoleModeChange_(currentModeId, newModeId);
+
+    if (confirmed) {
+      pskl.UserSettings.set(pskl.UserSettings.CONSOLE_MODE, newModeId);
+      this.updateColorReplaceSettingVisibility_();
+    } else {
+      // Revert selection to previous mode
+      evt.target.value = currentModeId;
+    }
+  };
+
+  /**
+   * Handles color replace prompt checkbox toggle.
    * @param {Event} evt - Change event
    * @private
    */
   ns.MiscPreferencesController.prototype.onColorReplacePromptChange_ =
     function (evt) {
       pskl.UserSettings.set(
-        pskl.UserSettings.NES_COLOR_REPLACE_PROMPT,
+        pskl.UserSettings.COLOR_REPLACE_PROMPT,
         evt.target.checked);
     };
 
   /**
-   * Shows/hides the color replace prompt setting based on NES mode.
+   * Shows/hides color replace setting based on console mode restrictions.
    * @private
    */
   ns.MiscPreferencesController.prototype.updateColorReplaceSettingVisibility_ =
@@ -125,55 +178,46 @@
       if (!this.colorReplaceSetting_) {
         return;
       }
-      var isNESMode = pskl.UserSettings.get(pskl.UserSettings.NES_MODE);
-      this.colorReplaceSetting_.style.display = isNESMode ? '' : 'none';
+      var consoleMode = pskl.app.consoleRegistry &&
+                        pskl.app.consoleRegistry.getActive();
+      var hasRestrictions = consoleMode && consoleMode.hasRestrictions();
+      this.colorReplaceSetting_.style.display = hasRestrictions ? '' : 'none';
     };
 
   /**
-   * Handles NES mode checkbox toggle with confirmation warning.
-   * @param {Event} evt - Change event
-   * @private
-   */
-  ns.MiscPreferencesController.prototype.onNESModeChange_ = function (evt) {
-    var checkbox = evt.target;
-    var enabled = checkbox.checked;
-    var confirmed = this.confirmNESModeChange_(enabled);
-
-    if (confirmed) {
-      pskl.UserSettings.set(pskl.UserSettings.NES_MODE, enabled);
-      // Update visibility of NES-only settings
-      this.updateColorReplaceSettingVisibility_();
-    } else {
-      // Revert checkbox to previous state
-      checkbox.checked = !enabled;
-    }
-  };
-
-  /**
-   * Shows confirmation dialog for NES mode switch.
+   * Shows confirmation dialog for console mode switch.
    * Skips dialog if canvas is empty (nothing drawn).
-   * @param {boolean} enablingNES - True if switching TO NES mode
+   * @param {string} fromModeId - Current mode ID
+   * @param {string} toModeId - Target mode ID
    * @return {boolean} True if user confirmed or canvas is empty
    * @private
    */
-  ns.MiscPreferencesController.prototype.confirmNESModeChange_ = function (
-    enablingNES
+  ns.MiscPreferencesController.prototype.confirmConsoleModeChange_ = function (
+    fromModeId, toModeId
   ) {
     // Skip warning if nothing is drawn
     if (this.piskelController.isEmpty()) {
       return true;
     }
 
+    var registry = pskl.app.consoleRegistry;
+    var fromMode = registry.get(fromModeId);
+    var toMode = registry.get(toModeId);
+
+    var fromName = fromMode ? fromMode.name : fromModeId;
+    var toName = toMode ? toMode.name : toModeId;
+    var toHasRestrictions = toMode && toMode.hasRestrictions();
+
     var msg;
-    if (enablingNES) {
-      // Regular -> NES: warn about non-NES colors
-      msg = 'Switching to NES Mode.\n\n' +
-        'If your sprite uses colors not in the NES palette, they will ' +
-        'remain but won\'t be valid for CHR export.\n\n' +
+    if (toHasRestrictions) {
+      // Switching TO a restricted mode
+      msg = 'Switching to ' + toName + '.\n\n' +
+        'If your sprite uses colors not in this console\'s palette, they ' +
+        'will remain but won\'t be valid for console-specific export.\n\n' +
         'Continue?';
     } else {
-      // NES -> Regular: mild warning
-      msg = 'Switching to Regular Mode.\n\n' +
+      // Switching TO unrestricted mode
+      msg = 'Switching to ' + toName + '.\n\n' +
         'You will have access to the full color spectrum. ' +
         'Your current colors will be preserved.\n\n' +
         'Continue?';

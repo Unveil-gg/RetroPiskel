@@ -1,21 +1,23 @@
 <script type="text/html" id="templates/settings/preferences/misc.html">
   <div class="preferences-panel-misc">
-    <div class="settings-item nes-mode-setting">
-      <label for="nes-mode-checkbox">NES Mode</label>
-      <input type="checkbox" id="nes-mode-checkbox" class="nes-mode-checkbox checkbox-fix"/>
-      <span class="nes-mode-description">
-        Restricts palette to NES colors, validates dimensions for CHR export.
+    <div class="settings-item console-mode-setting">
+      <label for="console-mode-select">Console Target</label>
+      <select id="console-mode-select" class="console-mode-select">
+        <!-- Options populated dynamically from ConsoleRegistry -->
+      </select>
+      <span class="console-mode-description">
+        Sets palette restrictions and export options for target console.
       </span>
     </div>
 
-    <div class="settings-item nes-color-replace-setting">
-      <label for="nes-color-replace-prompt-checkbox">
+    <div class="settings-item color-replace-setting">
+      <label for="color-replace-prompt-checkbox">
         Confirm color replacement
       </label>
-      <input type="checkbox" id="nes-color-replace-prompt-checkbox"
-             class="nes-color-replace-prompt-checkbox checkbox-fix"/>
-      <span class="nes-mode-description">
-        Ask before replacing colors in NES mode (when at 3-color limit).
+      <input type="checkbox" id="color-replace-prompt-checkbox"
+             class="color-replace-prompt-checkbox checkbox-fix"/>
+      <span class="console-mode-description">
+        Ask before replacing colors when at color limit.
       </span>
     </div>
 

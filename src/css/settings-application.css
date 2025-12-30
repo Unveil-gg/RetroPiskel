@@ -145,9 +145,57 @@
 }
 
 /********************************/
-/*  NES Mode Setting            */
+/*  Console Mode Setting        */
 /********************************/
 
+.console-mode-setting {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid var(--highlight-color, #e94560);
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.console-mode-setting label {
+  color: var(--highlight-color, #e94560);
+  font-weight: bold;
+}
+
+.console-mode-select {
+  margin-left: 10px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  border: 1px solid #666;
+  background: #333;
+  color: #ccc;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.console-mode-select:hover {
+  border-color: var(--highlight-color, #e94560);
+}
+
+.console-mode-select:focus {
+  outline: none;
+  border-color: var(--highlight-color, #e94560);
+  box-shadow: 0 0 0 2px rgba(228, 0, 88, 0.2);
+}
+
+.console-mode-description {
+  display: block;
+  margin-top: 5px;
+  font-size: 11px;
+  color: #888;
+}
+
+/* Color replace setting - only visible with restricted modes */
+.color-replace-setting {
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+/* Legacy support for old class names */
 .nes-mode-setting {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   border: 1px solid #e94560;
