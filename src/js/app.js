@@ -18,6 +18,9 @@
       // This id is used to keep track of sessions in the BackupService.
       this.sessionId = pskl.utils.Uuid.generate();
 
+      // Migrate legacy settings before any are read
+      pskl.UserSettings.migrateSettings();
+
       this.shortcutService = new pskl.service.keyboard.ShortcutService();
       this.shortcutService.init();
 

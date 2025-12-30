@@ -1,6 +1,12 @@
 (function () {
   var ns = $.namespace('pskl');
 
+  /**
+   * Flag to track if migration has been run this session.
+   * @private
+   */
+  var migrationComplete_ = false;
+
   ns.UserSettings = {
     GRID_COLOR : 'GRID_COLOR',
     GRID_ENABLED : 'GRID_ENABLED',
@@ -93,6 +99,9 @@
       this.cache_[key] = value;
       this.writeToLocalStorage_(key, value);
 
+      // Keep legacy and new settings in sync
+      this.syncLegacySettings_(key, value);
+
       $.publish(Events.USER_SETTINGS_CHANGED, [key, value]);
     },
 
@@ -133,6 +142,66 @@
       var isValidKey = key in this.KEY_TO_DEFAULT_VALUE_MAP_;
       if (!isValidKey) {
         console.error('UserSettings key <' + key + '> not found in supported keys.');
+      }
+    },
+
+    /**
+     * Migrates legacy NES_MODE settings to new CONSOLE_MODE format.
+     * Should be called once during app initialization.
+     */
+    migrateSettings : function () {
+      if (migrationComplete_) {
+        return;
+      }
+      migrationComplete_ = true;
+
+      // Migrate NES_MODE (boolean) to CONSOLE_MODE (string)
+      var legacyNesMode = this.readFromLocalStorage_('NES_MODE');
+      var consoleMode = this.readFromLocalStorage_('CONSOLE_MODE');
+
+      // Only migrate if legacy exists and new doesn't
+      if (legacyNesMode !== null && consoleMode === undefined) {
+        var newConsoleMode = legacyNesMode ? 'nes' : 'default';
+        this.writeToLocalStorage_('CONSOLE_MODE', newConsoleMode);
+        this.cache_['CONSOLE_MODE'] = newConsoleMode;
+      }
+
+      // Migrate NES_COLOR_REPLACE_PROMPT to COLOR_REPLACE_PROMPT
+      var legacyPrompt = this.readFromLocalStorage_('NES_COLOR_REPLACE_PROMPT');
+      var newPrompt = this.readFromLocalStorage_('COLOR_REPLACE_PROMPT');
+
+      if (legacyPrompt !== null && newPrompt === undefined) {
+        this.writeToLocalStorage_('COLOR_REPLACE_PROMPT', legacyPrompt);
+        this.cache_['COLOR_REPLACE_PROMPT'] = legacyPrompt;
+      }
+    },
+
+    /**
+     * Syncs legacy NES_MODE with new CONSOLE_MODE when either changes.
+     * Keeps both in sync for backward compatibility with existing code.
+     * @param {string} key - The setting that changed
+     * @param {*} value - The new value
+     * @private
+     */
+    syncLegacySettings_ : function (key, value) {
+      if (key === 'CONSOLE_MODE') {
+        // Update legacy NES_MODE to match
+        var isNes = (value === 'nes');
+        this.cache_['NES_MODE'] = isNes;
+        this.writeToLocalStorage_('NES_MODE', isNes);
+      } else if (key === 'NES_MODE') {
+        // Update new CONSOLE_MODE to match
+        var mode = value ? 'nes' : 'default';
+        this.cache_['CONSOLE_MODE'] = mode;
+        this.writeToLocalStorage_('CONSOLE_MODE', mode);
+      } else if (key === 'COLOR_REPLACE_PROMPT') {
+        // Sync to legacy setting
+        this.cache_['NES_COLOR_REPLACE_PROMPT'] = value;
+        this.writeToLocalStorage_('NES_COLOR_REPLACE_PROMPT', value);
+      } else if (key === 'NES_COLOR_REPLACE_PROMPT') {
+        // Sync to new setting
+        this.cache_['COLOR_REPLACE_PROMPT'] = value;
+        this.writeToLocalStorage_('COLOR_REPLACE_PROMPT', value);
       }
     }
   };
