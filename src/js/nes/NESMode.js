@@ -1,17 +1,20 @@
 /**
- * NES Mode service - manages NES mode state and validation.
+ * NES Mode service - LEGACY wrapper for backward compatibility.
  *
- * When NES mode is enabled, the editor provides soft constraints
- * to help users create valid NES/CHR sprites:
- * - Palette restricted to official NES colors
- * - Color count validation (max 3 + transparent)
- * - Dimension validation (multiples of 8)
+ * This module is deprecated. New code should use pskl.app.consoleRegistry
+ * and the CONSOLE_MODE_CHANGED event instead.
+ *
+ * This legacy wrapper:
+ * - Maintains the old nesMode.isEnabled() API
+ * - Publishes NES_MODE_CHANGED for legacy listeners
+ * - Syncs with the new ConsoleRegistry system
  */
 (function () {
   var ns = $.namespace('pskl.nes');
 
   /**
-   * NESMode constructor.
+   * NESMode constructor (legacy).
+   * @deprecated Use pskl.app.consoleRegistry instead
    */
   ns.NESMode = function () {
     this.enabled = false;
@@ -19,20 +22,26 @@
 
   /**
    * Initializes NES mode from user settings.
+   * Syncs with new CONSOLE_MODE setting via UserSettings bridge.
    */
   ns.NESMode.prototype.init = function () {
     this.enabled = pskl.UserSettings.get(pskl.UserSettings.NES_MODE);
     this.updateBodyClass_();
+
+    // Listen for both old and new setting changes
     $.subscribe(Events.USER_SETTINGS_CHANGED,
       this.onSettingsChange_.bind(this));
 
-    // Publish initial state so listeners (e.g., PaletteController) can
-    // reinitialize with the correct NES mode config
+    // Listen to new console mode changes to stay in sync
+    $.subscribe(Events.CONSOLE_MODE_CHANGED,
+      this.onConsoleModeChanged_.bind(this));
+
+    // Publish initial state for legacy listeners
     $.publish(Events.NES_MODE_CHANGED, [this.enabled]);
   };
 
   /**
-   * Handles user settings changes.
+   * Handles user settings changes (legacy path).
    * @param {Event} evt - The event object
    * @param {string} name - Setting name
    * @param {*} value - New setting value
@@ -47,7 +56,24 @@
   };
 
   /**
-   * Updates body class to toggle NES mode theming.
+   * Handles new console mode changes to keep legacy state in sync.
+   * @param {Event} evt - The event object
+   * @param {Object} data - {previous, current} console modes
+   * @private
+   */
+  ns.NESMode.prototype.onConsoleModeChanged_ = function (evt, data) {
+    var newEnabled = data.current && data.current.id === 'nes';
+    if (this.enabled !== newEnabled) {
+      this.enabled = newEnabled;
+      this.updateBodyClass_();
+      // Don't publish NES_MODE_CHANGED here to avoid double-firing
+      // The UserSettings sync will handle it
+    }
+  };
+
+  /**
+   * Updates body class to toggle NES mode theming (legacy).
+   * The new system uses console-nes class instead.
    * @private
    */
   ns.NESMode.prototype.updateBodyClass_ = function () {
@@ -60,6 +86,7 @@
 
   /**
    * Returns whether NES mode is currently enabled.
+   * @deprecated Use pskl.app.consoleRegistry.isActive('nes') instead
    * @return {boolean}
    */
   ns.NESMode.prototype.isEnabled = function () {
@@ -68,6 +95,7 @@
 
   /**
    * Enables or disables NES mode.
+   * @deprecated Use pskl.UserSettings.set(CONSOLE_MODE, 'nes'/'default')
    * @param {boolean} enabled
    */
   ns.NESMode.prototype.setEnabled = function (enabled) {
@@ -76,6 +104,7 @@
 
   /**
    * Validates that dimensions are multiples of 8 (for CHR tiles).
+   * @deprecated Use consoleMode.validateDimensions() instead
    * @param {number} width - Canvas width
    * @param {number} height - Canvas height
    * @return {Object} {valid: boolean, message: string}
@@ -101,6 +130,7 @@
 
   /**
    * Validates color count (max 3 non-transparent colors).
+   * @deprecated Use consoleMode.validateColors() instead
    * @param {Array} colors - Array of hex color strings
    * @return {Object} {valid: boolean, message: string, count: number}
    */
@@ -125,6 +155,7 @@
 
   /**
    * Checks if a color is in the official NES palette.
+   * @deprecated Use consoleMode.isValidColor() instead
    * @param {string} color - Hex color string
    * @return {boolean}
    */

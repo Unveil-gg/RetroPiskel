@@ -97,12 +97,30 @@ var Events = {
   // to window._externalPiskel to be applied.
   EXTERNAL_PISKEL_READY: 'EXTERNAL_PISKEL_READY',
 
-  // NES Mode toggle changed (deprecated, use CONSOLE_MODE_CHANGED)
+  /**
+   * DEPRECATED: Use CONSOLE_MODE_CHANGED instead.
+   *
+   * Fired when NES mode is toggled via the legacy system.
+   * Payload: boolean (true = NES mode enabled)
+   *
+   * Note: This event is still fired for backward compatibility,
+   * but new code should use CONSOLE_MODE_CHANGED.
+   */
   NES_MODE_CHANGED: 'NES_MODE_CHANGED',
 
   /**
    * Fired when console mode changes.
+   *
+   * This is the preferred event for detecting console mode changes.
    * Payload: {previous: ConsoleMode|null, current: ConsoleMode}
+   *
+   * Example usage:
+   *   $.subscribe(Events.CONSOLE_MODE_CHANGED, function(evt, data) {
+   *     console.log('Switched from', data.previous, 'to', data.current);
+   *     if (data.current.id === 'nes') {
+   *       // Handle NES-specific logic
+   *     }
+   *   });
    */
   CONSOLE_MODE_CHANGED: 'CONSOLE_MODE_CHANGED',
 };
