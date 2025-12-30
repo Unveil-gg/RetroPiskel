@@ -64,12 +64,25 @@
     var width = parseInt(this.widthInput.value, 10);
     var height = parseInt(this.heightInput.value, 10);
 
-    // NES mode dimension warning (soft constraint - warn but allow)
-    if (pskl.app.nesMode && pskl.app.nesMode.isEnabled()) {
-      var validation = pskl.app.nesMode.validateDimensions(width, height);
+    // Console mode dimension warning (soft constraint - warn but allow)
+    var consoleMode = pskl.app.consoleRegistry &&
+                      pskl.app.consoleRegistry.getActive();
+    if (consoleMode && consoleMode.tileSize) {
+      var validation = consoleMode.validateDimensions(width, height);
       if (!validation.valid) {
         $.publish(Events.SHOW_NOTIFICATION, [{
           content: '⚠️ ' + validation.message
+        }]);
+        window.setTimeout(function () {
+          $.publish(Events.HIDE_NOTIFICATION);
+        }, 4000);
+      }
+    } else if (pskl.app.nesMode && pskl.app.nesMode.isEnabled()) {
+      // Legacy fallback for NES mode
+      var nesValidation = pskl.app.nesMode.validateDimensions(width, height);
+      if (!nesValidation.valid) {
+        $.publish(Events.SHOW_NOTIFICATION, [{
+          content: '⚠️ ' + nesValidation.message
         }]);
         window.setTimeout(function () {
           $.publish(Events.HIDE_NOTIFICATION);

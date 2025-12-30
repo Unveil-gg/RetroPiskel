@@ -15,6 +15,10 @@
       this.onColorSelected_.bind(this, {isPrimary: true}));
     $.subscribe(Events.SELECT_SECONDARY_COLOR,
       this.onColorSelected_.bind(this, {isPrimary: false}));
+    // Listen to new console mode system
+    $.subscribe(Events.CONSOLE_MODE_CHANGED,
+      this.onConsoleModeChanged_.bind(this));
+    // Legacy: keep NES_MODE_CHANGED for backward compatibility
     $.subscribe(Events.NES_MODE_CHANGED,
       this.onNESModeChanged_.bind(this));
 
@@ -31,12 +35,39 @@
   };
 
   /**
-   * Builds spectrum configuration based on current NES mode state.
+   * Gets the active console mode, with fallback for when registry isn't ready.
+   * @return {Object|null} Active console mode or null
+   * @private
+   */
+  ns.PaletteController.prototype.getActiveConsoleMode_ = function () {
+    if (pskl.app.consoleRegistry) {
+      return pskl.app.consoleRegistry.getActive();
+    }
+    return null;
+  };
+
+  /**
+   * Checks if the active console mode has palette restrictions.
+   * @return {boolean}
+   * @private
+   */
+  ns.PaletteController.prototype.hasConsoleRestrictions_ = function () {
+    var mode = this.getActiveConsoleMode_();
+    if (mode && mode.hasRestrictions()) {
+      return true;
+    }
+    // Fallback to legacy NES mode check
+    return pskl.app.nesMode && pskl.app.nesMode.isEnabled();
+  };
+
+  /**
+   * Builds spectrum configuration based on current console mode.
    * @return {Object} Spectrum configuration object
    * @private
    */
   ns.PaletteController.prototype.getSpectrumConfig_ = function () {
-    var isNESMode = pskl.app.nesMode && pskl.app.nesMode.isEnabled();
+    var consoleMode = this.getActiveConsoleMode_();
+    var hasPaletteRestriction = consoleMode && consoleMode.palette;
 
     var config = {
       showPalette: true,
@@ -47,11 +78,11 @@
       }
     };
 
-    if (isNESMode) {
-      // NES mode: restrict to NES palette only
+    if (hasPaletteRestriction) {
+      // Console mode with restricted palette
       config.showPaletteOnly = true;
       config.showInput = false;
-      config.palette = this.getNESPaletteForSpectrum_();
+      config.palette = this.getConsolePaletteForSpectrum_(consoleMode);
     } else {
       // Standard mode: full color picker
       config.showPaletteOnly = false;
@@ -63,7 +94,31 @@
   };
 
   /**
-   * Formats NES palette for spectrum (2D array with rows of 14 colors).
+   * Formats console palette for spectrum (2D array with rows of colors).
+   * @param {Object} consoleMode - The active console mode
+   * @return {Array} 2D array of color strings
+   * @private
+   */
+  ns.PaletteController.prototype.getConsolePaletteForSpectrum_ = function (
+    consoleMode
+  ) {
+    var colorsPerRow = 14;
+    var rows = [];
+
+    // Add transparent as first option
+    rows.push(['rgba(0,0,0,0)']);
+
+    // Use console mode's palette formatting if available
+    var paletteRows = consoleMode.getPaletteForSpectrum(colorsPerRow);
+    if (paletteRows) {
+      rows = rows.concat(paletteRows);
+    }
+
+    return rows;
+  };
+
+  /**
+   * Formats NES palette for spectrum (legacy, kept for backward compat).
    * @return {Array} 2D array of color strings
    * @private
    */
@@ -172,13 +227,14 @@
       this.onPickerChange_.bind(this));
     this.setTitleOnPicker_(secondaryColor, secondaryColorPicker.get(0));
 
-    // Add NES register tooltips when picker is shown (palette is lazy-rendered)
-    if (pskl.app.nesMode && pskl.app.nesMode.isEnabled()) {
+    // Add palette tooltips when picker is shown (palette is lazy-rendered)
+    var consoleMode = this.getActiveConsoleMode_();
+    if (consoleMode && consoleMode.palette) {
       var self = this;
       var addTooltipsOnShow = function () {
         // Small delay to ensure Spectrum has rendered the palette
         setTimeout(function () {
-          self.addNESRegisterTooltips_();
+          self.addPaletteTooltips_(consoleMode);
         }, 10);
       };
       colorPicker.off('show.spectrum');
@@ -189,11 +245,32 @@
   };
 
   /**
-   * Handles NES mode toggle changes.
+   * Handles console mode changes.
+   * @private
+   */
+  ns.PaletteController.prototype.onConsoleModeChanged_ = function () {
+    this.initColorPickers_();
+  };
+
+  /**
+   * Handles legacy NES mode toggle changes.
    * @private
    */
   ns.PaletteController.prototype.onNESModeChanged_ = function () {
     this.initColorPickers_();
+  };
+
+  /**
+   * Adds tooltips to palette swatches based on console mode.
+   * @param {Object} consoleMode - The active console mode
+   * @private
+   */
+  ns.PaletteController.prototype.addPaletteTooltips_ = function (consoleMode) {
+    // For NES mode, use the register-based tooltips
+    if (consoleMode.id === 'nes') {
+      this.addNESRegisterTooltips_();
+    }
+    // Future: add tooltips for other console modes here
   };
 
   /**
@@ -272,7 +349,7 @@
   };
 
   /**
-   * Validates if a color can be used in NES mode (max 3 + transparent).
+   * Validates if a color can be used with current console mode limits.
    * Returns 'allowed', 'blocked', or 'replace' to indicate the action.
    * @param {string} color - The color to validate
    * @param {boolean} isPrimary - Whether this is the primary color picker
@@ -282,9 +359,17 @@
   ns.PaletteController.prototype.validateNESColorLimit_ = function (
     color, isPrimary
   ) {
-    // Skip validation if not in NES mode
-    if (!pskl.app.nesMode || !pskl.app.nesMode.isEnabled()) {
-      return 'allowed';
+    // Check for console mode restrictions
+    var consoleMode = this.getActiveConsoleMode_();
+    var maxColors = consoleMode ? consoleMode.maxColors : null;
+
+    // Fallback to legacy NES mode check
+    if (!maxColors) {
+      if (pskl.app.nesMode && pskl.app.nesMode.isEnabled()) {
+        maxColors = pskl.nes.NESColors.MAX_SPRITE_COLORS;
+      } else {
+        return 'allowed';  // No restrictions
+      }
     }
 
     // Transparent is always allowed
@@ -295,7 +380,7 @@
 
     // Get current colors in the sprite
     var currentColors = pskl.app.currentColorsService.getCurrentColors();
-    var maxColors = pskl.nes.NESColors.MAX_SPRITE_COLORS;
+    var consoleName = consoleMode ? consoleMode.name : 'Console';
 
     // Normalize color for comparison
     var normalizedColor = window.tinycolor(color).toHexString().toUpperCase();
@@ -321,7 +406,7 @@
       if (selectedColor === Constants.TRANSPARENT_COLOR ||
           selectedColor === 'rgba(0, 0, 0, 0)') {
         $.publish(Events.SHOW_NOTIFICATION, [{
-          content: 'NES mode: Max ' + maxColors + ' colors allowed. ' +
+          content: consoleName + ': Max ' + maxColors + ' colors allowed. ' +
             'Select a non-transparent color to replace it.',
           hideDelay: 4000
         }]);
@@ -341,7 +426,7 @@
       } else {
         // Selected color is not in sprite - can't replace
         $.publish(Events.SHOW_NOTIFICATION, [{
-          content: 'NES mode: Max ' + maxColors + ' colors allowed. ' +
+          content: consoleName + ': Max ' + maxColors + ' colors allowed. ' +
             'Select an existing sprite color to replace it.',
           hideDelay: 4000
         }]);
@@ -423,7 +508,7 @@
     // Save state for undo
     $.publish(Events.PISKEL_SAVE_STATE, [{
       type: pskl.service.HistoryService.SNAPSHOT,
-      action: 'NES color replacement'
+      action: 'Color replacement'
     }]);
 
     // Synchronously update current colors list to avoid async race conditions
@@ -473,8 +558,9 @@
   ns.PaletteController.prototype.promptColorReplacement_ = function (
     oldColor, newColor, isPrimary
   ) {
+    // Use new setting, fall back to legacy
     var showPrompt = pskl.UserSettings.get(
-      pskl.UserSettings.NES_COLOR_REPLACE_PROMPT);
+      pskl.UserSettings.COLOR_REPLACE_PROMPT);
 
     var doReplace = function () {
       this.replaceColorInSprite_(oldColor, newColor);
