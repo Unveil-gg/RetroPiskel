@@ -5,6 +5,25 @@
     </div>
     <div class="export-panel-section">
       <div style="padding-bottom: 5px">
+        <span class="highlight">Export as SVG: </span>
+        <span class="export-info">
+          Scalable vector graphic. Animated if multiple frames.
+        </span>
+      </div>
+      <div class="export-panel-row svg-loop-row" style="padding-bottom: 5px">
+        <input id="svg-loop-checkbox" class="svg-loop-checkbox checkbox-fix"
+               type="checkbox" />
+        <label for="svg-loop-checkbox"
+               title="Check to loop the animation indefinitely."
+               rel="tooltip"
+               data-placement="top">Loop animation</label>
+      </div>
+      <button type="button" class="button button-primary svg-download-button">
+        Download SVG
+      </button>
+    </div>
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
         <span class="highlight">Export as BMP: </span>
         <span class="export-info">
           All frames as 32-bit bitmaps with transparency.

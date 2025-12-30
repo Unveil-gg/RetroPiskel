@@ -19,6 +19,7 @@
     EXPORT_SCALE: 'EXPORT_SCALE',
     EXPORT_TAB: 'EXPORT_TAB',
     EXPORT_GIF_REPEAT: 'EXPORT_GIF_REPEAT',
+    EXPORT_SVG_LOOP: 'EXPORT_SVG_LOOP',
     PEN_SIZE : 'PEN_SIZE',
     RESIZE_SETTINGS: 'RESIZE_SETTINGS',
     COLOR_FORMAT: 'COLOR_FORMAT',
@@ -47,6 +48,7 @@
       'EXPORT_SCALE' : 1,
       'EXPORT_TAB' : 'gif',
       'EXPORT_GIF_REPEAT' : true,
+      'EXPORT_SVG_LOOP' : false,
       'PEN_SIZE' : 1,
       'RESIZE_SETTINGS': {
         maintainRatio : true,
