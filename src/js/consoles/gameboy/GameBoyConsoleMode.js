@@ -46,14 +46,14 @@
       defaultSize: {width: 8, height: 16},  // Common GB sprite size
       exportTabs: ['gb2bpp'],
       themeVariables: {
-        '--highlight-color': '#9BBC0F',
-        '--console-accent': '#9BBC0F',
-        '--console-accent-dim': '#8BAC0F',
-        '--console-bg-dark': '#0F380F',
-        '--console-bg-medium': '#1a4a1a',
-        '--console-bg-light': '#306230',
-        '--console-border': '#4a6a4a',
-        '--console-text': '#9BBC0F'
+        '--highlight-color': '#8B1C62',
+        '--console-accent': '#8B1C62',
+        '--console-accent-dim': '#5C1341',
+        '--console-bg-dark': '#2A2A28',
+        '--console-bg-medium': '#3D3D38',
+        '--console-bg-light': '#4A4A44',
+        '--console-border': '#5A5A52',
+        '--console-text': '#C4C4A4'
       },
       badgeText: 'GB'
     });

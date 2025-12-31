@@ -1,19 +1,28 @@
 /**
  * Game Boy (DMG) Console Theme
  *
- * Classic green-tint LCD aesthetic inspired by the original Game Boy.
- * Uses the iconic green shades that defined the handheld experience.
+ * Inspired by the original Game Boy hardware aesthetic:
+ * - Gray/cream plastic shell (#8B8B7A, #C4C4A4)
+ * - Deep purple/maroon buttons and accents (#4B1D52, #8B1C62)
+ * - The iconic green LCD as a subtle accent, not the whole UI
+ *
+ * This creates a nostalgic feel without overwhelming green.
  */
 
 body.console-gameboy {
-  --highlight-color: #9BBC0F;
-  --console-accent: #9BBC0F;
-  --console-accent-dim: #8BAC0F;
-  --console-bg-dark: #0F380F;
-  --console-bg-medium: #1a4a1a;
-  --console-bg-light: #306230;
-  --console-border: #4a6a4a;
-  --console-text: #9BBC0F;
+  /* Purple/magenta accent inspired by DMG buttons and power LED */
+  --highlight-color: #8B1C62;
+  --console-accent: #8B1C62;
+  --console-accent-dim: #5C1341;
+
+  /* Warm gray tones inspired by the DMG plastic shell */
+  --console-bg-dark: #2A2A28;
+  --console-bg-medium: #3D3D38;
+  --console-bg-light: #4A4A44;
+  --console-border: #5A5A52;
+
+  /* Cream-tinted text like the shell highlights */
+  --console-text: #C4C4A4;
 }
 
 /**
@@ -25,26 +34,41 @@ body.console-gameboy .export-tab[data-tab-id="gb2bpp"] {
 }
 
 /**
- * Game Boy mode enhancements - LCD-style pixel feel
+ * Drawing canvas gets a subtle LCD-green tint to evoke the screen
  */
 body.console-gameboy .drawing-canvas-container {
-  background: #0F380F;
+  background: #1A1D12;
 }
 
+/**
+ * Frame list and preview styling
+ */
 body.console-gameboy .frames-list-container {
-  border-color: #306230;
+  border-color: var(--console-border);
 }
 
 body.console-gameboy .preview-tile {
-  border-color: #306230;
+  border-color: var(--console-border);
 }
 
 body.console-gameboy .preview-tile.selected {
-  box-shadow: 0 0 0 2px #9BBC0F;
+  box-shadow: 0 0 0 2px var(--console-accent);
 }
 
-/* Palette display styling for GB's limited palette */
+/**
+ * Palette colors get a subtle LCD-green border as a nod to the screen
+ */
 body.console-gameboy .palettes-list-container .palette-color {
-  border-color: #306230;
+  border-color: #4A5A3A;
 }
 
+/**
+ * LCD-style green accent for specific elements
+ */
+body.console-gameboy .cursor-coordinates {
+  color: #9BBC0F;
+}
+
+body.console-gameboy .export-panel-gb2bpp .gb2bpp-spec-link {
+  color: #9BBC0F;
+}
