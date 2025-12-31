@@ -22,6 +22,15 @@
         return pskl.utils.serialization.Serializer.serializeLayer(l);
       });
 
+      // Get current console mode (null if default/none)
+      var consoleMode = null;
+      if (pskl.app.consoleRegistry) {
+        var activeMode = pskl.app.consoleRegistry.getActive();
+        if (activeMode && activeMode.id !== 'default') {
+          consoleMode = activeMode.id;
+        }
+      }
+
       return JSON.stringify({
         modelVersion : Constants.MODEL_VERSION,
         piskel : {
@@ -32,6 +41,7 @@
           width : piskel.getWidth(),
           layers : serializedLayers,
           hiddenFrames : piskel.hiddenFrames,
+          consoleMode : consoleMode
         }
       });
     },

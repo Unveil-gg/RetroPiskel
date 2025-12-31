@@ -38,6 +38,7 @@
     var descriptor = new pskl.model.piskel.Descriptor(name, description);
     this.piskel_ = new pskl.model.Piskel(piskelData.width, piskelData.height, fps, descriptor);
     this.hiddenFrames = piskelData.hiddenFrames || [];
+    this.consoleMode_ = piskelData.consoleMode || null;
 
     this.layersToLoad_ = piskelData.layers.length;
     piskelData.layers.forEach(this.deserializeLayer.bind(this));
@@ -95,6 +96,15 @@
         this.piskel_.addLayer(layer);
       }.bind(this));
       this.piskel_.hiddenFrames = this.hiddenFrames;
+
+      // Activate saved console mode if present and valid
+      if (this.consoleMode_ && pskl.app.consoleRegistry) {
+        var mode = pskl.app.consoleRegistry.get(this.consoleMode_);
+        if (mode) {
+          pskl.app.consoleRegistry.setActiveMode(this.consoleMode_);
+        }
+      }
+
       this.callback_(this.piskel_);
     }
   };
