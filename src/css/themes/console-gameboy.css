@@ -51,10 +51,6 @@ body.console-gameboy .preview-tile {
   border-color: var(--console-border);
 }
 
-body.console-gameboy .preview-tile.selected {
-  box-shadow: 0 0 0 2px var(--console-accent);
-}
-
 /**
  * Palette colors get a subtle LCD-green border as a nod to the screen
  */

@@ -136,7 +136,7 @@
 }
 
 .preview-tile .tile-overlay.tile-count.toggled {
-  background-color: gold;
+  background-color: var(--highlight-color);
   color: black;
 }
 

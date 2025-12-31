@@ -41,17 +41,12 @@ body.console-msx {
 }
 
 /* Toolbox styling for console modes */
-body[data-console] .tool-icon {
-  border-color: var(--console-border);
-}
-
 body[data-console] .tool-icon:hover {
   background-color: var(--console-bg-light);
 }
 
 body[data-console] .tool-icon.selected {
   background-color: var(--console-accent-dim);
-  border-color: var(--console-accent);
 }
 
 /* Settings drawer for console modes */
@@ -79,10 +74,6 @@ body[data-console] .section-title {
 /* Frames list for console modes */
 body[data-console] .preview-list {
   border-color: var(--console-border);
-}
-
-body[data-console] .preview-tile.selected {
-  box-shadow: 0 0 0 2px var(--console-accent);
 }
 
 /* Buttons for console modes */
