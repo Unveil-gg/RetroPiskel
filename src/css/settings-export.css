@@ -149,15 +149,16 @@
 }
 
 /*******************************/
-/* CHR Export Panel            */
+/* Console-Specific Export Tabs */
 /*******************************/
 
 /**
- * CHR tab visibility is controlled by console mode.
- * By default, CHR tab is hidden. Console-specific CSS shows it.
- * See: css/themes/console-nes.css
+ * Console-specific export tabs are hidden by default.
+ * Each console theme CSS shows its relevant tabs.
+ * See: css/themes/console-nes.css, css/themes/console-gameboy.css
  */
-.export-tab[data-tab-id="chr"] {
+.export-tab[data-tab-id="chr"],
+.export-tab[data-tab-id="gb2bpp"] {
   display: none;
 }
 
@@ -180,6 +181,33 @@
 }
 
 .chr-download-info {
+  flex-grow: 1;
+  margin-left: 3px;
+}
+
+/*******************************/
+/* 2BPP Export Panel (Game Boy)*/
+/*******************************/
+
+.export-panel-gb2bpp .gb2bpp-spec-link {
+  color: #9BBC0F;
+  text-decoration: none;
+}
+
+.export-panel-gb2bpp .gb2bpp-spec-link:hover {
+  text-decoration: underline;
+}
+
+.gb2bpp-download-button {
+  margin-right: 5px;
+}
+
+.gb2bpp-download-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.gb2bpp-download-info {
   flex-grow: 1;
   margin-left: 3px;
 }
