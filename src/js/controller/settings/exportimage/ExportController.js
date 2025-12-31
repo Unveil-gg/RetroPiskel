@@ -31,6 +31,11 @@
       template : 'templates/settings/export/chr.html',
       controller : ns.ChrExportController,
       consoles : ['nes']  // Only available in NES mode
+    },
+    'gb2bpp' : {
+      template : 'templates/settings/export/gb2bpp.html',
+      controller : ns.Gb2bppExportController,
+      consoles : ['gameboy']  // Only available in Game Boy mode
     }
   };
 

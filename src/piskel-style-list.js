@@ -46,5 +46,6 @@
   // Console mode themes
   "css/themes/console-base.css",
   "css/themes/console-default.css",
-  "css/themes/console-nes.css"
+  "css/themes/console-nes.css",
+  "css/themes/console-gameboy.css"
 ];

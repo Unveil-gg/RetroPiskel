@@ -1,0 +1,50 @@
+/**
+ * Game Boy (DMG) Console Theme
+ *
+ * Classic green-tint LCD aesthetic inspired by the original Game Boy.
+ * Uses the iconic green shades that defined the handheld experience.
+ */
+
+body.console-gameboy {
+  --highlight-color: #9BBC0F;
+  --console-accent: #9BBC0F;
+  --console-accent-dim: #8BAC0F;
+  --console-bg-dark: #0F380F;
+  --console-bg-medium: #1a4a1a;
+  --console-bg-light: #306230;
+  --console-border: #4a6a4a;
+  --console-text: #9BBC0F;
+}
+
+/**
+ * Game Boy-specific export tab visibility.
+ * Show 2BPP tab only when Game Boy mode is active.
+ */
+body.console-gameboy .export-tab[data-tab-id="gb2bpp"] {
+  display: block;
+}
+
+/**
+ * Game Boy mode enhancements - LCD-style pixel feel
+ */
+body.console-gameboy .drawing-canvas-container {
+  background: #0F380F;
+}
+
+body.console-gameboy .frames-list-container {
+  border-color: #306230;
+}
+
+body.console-gameboy .preview-tile {
+  border-color: #306230;
+}
+
+body.console-gameboy .preview-tile.selected {
+  box-shadow: 0 0 0 2px #9BBC0F;
+}
+
+/* Palette display styling for GB's limited palette */
+body.console-gameboy .palettes-list-container .palette-color {
+  border-color: #306230;
+}
+
