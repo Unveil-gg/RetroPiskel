@@ -179,6 +179,7 @@
       this.consoleRegistry.register(pskl.consoles.createDefaultMode());
       this.consoleRegistry.register(pskl.consoles.createNESMode());
       this.consoleRegistry.register(pskl.consoles.createGameBoyMode());
+      this.consoleRegistry.register(pskl.consoles.createGBCMode());
       this.consoleRegistry.init();
 
       this.drawingLoop = new pskl.rendering.DrawingLoop();

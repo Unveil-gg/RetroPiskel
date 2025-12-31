@@ -86,6 +86,35 @@
   };
 
   /**
+   * Checks if the active console mode uses RGB555 color snapping.
+   * @return {boolean}
+   * @private
+   */
+  ns.PaletteController.prototype.isRGB555Mode_ = function () {
+    var mode = this.getActiveConsoleMode_();
+    return mode && mode.paletteType === 'rgb555';
+  };
+
+  /**
+   * Snaps a color to RGB555 if in GBC mode.
+   * @param {string} color - Hex color string
+   * @return {string} Snapped color (or original if not RGB555 mode)
+   * @private
+   */
+  ns.PaletteController.prototype.snapColorIfNeeded_ = function (color) {
+    if (color === Constants.TRANSPARENT_COLOR ||
+        color === 'rgba(0, 0, 0, 0)') {
+      return color;
+    }
+
+    var mode = this.getActiveConsoleMode_();
+    if (mode && mode.paletteType === 'rgb555' && mode.snapColorToRGB555) {
+      return mode.snapColorToRGB555(color);
+    }
+    return color;
+  };
+
+  /**
    * Formats console palette for spectrum (2D array with rows of colors).
    * @param {Object} consoleMode - The active console mode
    * @return {Array} 2D array of color strings
@@ -254,7 +283,32 @@
     if (consoleMode.id === 'nes') {
       this.addNESRegisterTooltips_();
     }
-    // Future: add tooltips for other console modes here
+    // GBC mode doesn't use palette swatches - it uses the full picker
+  };
+
+  /**
+   * Gets RGB555 info string for a color.
+   * @param {string} color - Hex color string
+   * @return {string} RGB555 info (e.g., "R:31 G:20 B:9")
+   * @private
+   */
+  ns.PaletteController.prototype.getRGB555Info_ = function (color) {
+    var mode = this.getActiveConsoleMode_();
+    if (!mode || !mode.to5Bit) {
+      return '';
+    }
+
+    var tc = window.tinycolor(color);
+    if (!tc.isValid()) {
+      return '';
+    }
+
+    var rgb = tc.toRgb();
+    var r5 = mode.to5Bit(rgb.r);
+    var g5 = mode.to5Bit(rgb.g);
+    var b5 = mode.to5Bit(rgb.b);
+
+    return 'R:' + r5 + ' G:' + g5 + ' B:' + b5;
   };
 
   /**
@@ -268,6 +322,18 @@
       // Unless the color is TRANSPARENT_COLOR, format it to hexstring, as
       // expected by the rest of the application.
       color = window.tinycolor(color).toHexString();
+
+      // Snap to RGB555 if in GBC mode
+      var originalColor = color;
+      color = this.snapColorIfNeeded_(color);
+
+      // Show notification if color was snapped
+      if (this.isRGB555Mode_() && originalColor !== color) {
+        $.publish(Events.SHOW_NOTIFICATION, [{
+          content: 'Color snapped to GBC RGB555: ' + color.toUpperCase(),
+          hideDelay: 2000
+        }]);
+      }
     }
 
     if (evt.data.isPrimary) {
@@ -453,8 +519,18 @@
 
   ns.PaletteController.prototype.setTitleOnPicker_ = function (title, colorPicker) {
     var parent = colorPicker.parentNode;
-    title = parent.dataset.initialTitle + '<br/>' + title;
-    parent.dataset.originalTitle = title;
+    var displayTitle = parent.dataset.initialTitle + '<br/>' + title;
+
+    // Add RGB555 info for GBC mode
+    if (this.isRGB555Mode_() && title !== Constants.TRANSPARENT_COLOR) {
+      var rgb555Info = this.getRGB555Info_(title);
+      if (rgb555Info) {
+        displayTitle += '<br/><span class="rgb555-info">' + rgb555Info +
+          '</span>';
+      }
+    }
+
+    parent.dataset.originalTitle = displayTitle;
   };
 
   /**

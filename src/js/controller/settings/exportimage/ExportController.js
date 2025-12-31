@@ -36,6 +36,11 @@
       template : 'templates/settings/export/gb2bpp.html',
       controller : ns.Gb2bppExportController,
       consoles : ['gameboy']  // Only available in Game Boy mode
+    },
+    'gbc2bpp' : {
+      template : 'templates/settings/export/gbc2bpp.html',
+      controller : ns.Gbc2bppExportController,
+      consoles : ['gbc']  // Only available in GBC mode
     }
   };
 

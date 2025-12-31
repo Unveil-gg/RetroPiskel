@@ -155,10 +155,11 @@
 /**
  * Console-specific export tabs are hidden by default.
  * Each console theme CSS shows its relevant tabs.
- * See: css/themes/console-nes.css, css/themes/console-gameboy.css
+ * See: css/themes/console-nes.css, console-gameboy.css, console-gbc.css
  */
 .export-tab[data-tab-id="chr"],
-.export-tab[data-tab-id="gb2bpp"] {
+.export-tab[data-tab-id="gb2bpp"],
+.export-tab[data-tab-id="gbc2bpp"] {
   display: none;
 }
 

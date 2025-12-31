@@ -1,0 +1,138 @@
+/**
+ * Game Boy Color Console Theme
+ *
+ * Inspired by the GBC hardware aesthetic:
+ * - Purple/indigo tones reflecting the GBC shell colors
+ * - Vibrant accents representing the colorful LCD capabilities
+ * - Deeper, richer colors than the original DMG
+ *
+ * The GBC era was about bringing color to portable gaming,
+ * so this theme uses more saturated, vibrant accents.
+ */
+
+body.console-gbc {
+  /* Purple/violet accent inspired by the GBC shell and era */
+  --highlight-color: #8B5CF6;
+  --console-accent: #8B5CF6;
+  --console-accent-dim: #6D28D9;
+
+  /* Deep blue/purple tones inspired by GBC aesthetics */
+  --console-bg-dark: #1a1a2e;
+  --console-bg-medium: #16213e;
+  --console-bg-light: #0f3460;
+  --console-border: #533483;
+
+  /* Bright text for visibility against dark backgrounds */
+  --console-text: #e8e8e8;
+}
+
+/**
+ * Game Boy Color-specific export tab visibility.
+ * Show GBC 2BPP tab only when GBC mode is active.
+ */
+body.console-gbc .export-tab[data-tab-id="gbc2bpp"] {
+  display: block;
+}
+
+/**
+ * Drawing canvas gets a subtle tint
+ */
+body.console-gbc .drawing-canvas-container {
+  background: #0d0d1a;
+}
+
+/**
+ * Frame list and preview styling
+ */
+body.console-gbc .frames-list-container {
+  border-color: var(--console-border);
+}
+
+body.console-gbc .preview-tile {
+  border-color: var(--console-border);
+}
+
+/**
+ * Palette colors styling
+ */
+body.console-gbc .palettes-list-container .palette-color {
+  border-color: #6D28D9;
+}
+
+/**
+ * GBC accent for specific elements
+ */
+body.console-gbc .cursor-coordinates {
+  color: #A78BFA;
+}
+
+body.console-gbc .export-panel-gbc2bpp .gbc2bpp-spec-link {
+  color: #A78BFA;
+}
+
+/**
+ * GBC Export Panel Styling
+ */
+.export-panel-gbc2bpp {
+  padding: 10px;
+}
+
+.export-panel-gbc2bpp .gbc2bpp-section-title {
+  font-weight: bold;
+  color: #8B5CF6;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.export-panel-gbc2bpp .gbc2bpp-palette-preview {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.export-panel-gbc2bpp .gbc2bpp-palette-swatch {
+  width: 32px;
+  height: 32px;
+  border: 2px solid #533483;
+  border-radius: 3px;
+}
+
+.export-panel-gbc2bpp .gbc2bpp-palette-swatch.transparent {
+  background: repeating-linear-gradient(
+    45deg,
+    #333 0px,
+    #333 4px,
+    #555 4px,
+    #555 8px
+  );
+}
+
+.export-panel-gbc2bpp .gbc2bpp-palette-note {
+  font-size: 11px;
+  color: #888;
+  font-style: italic;
+  margin-bottom: 15px;
+}
+
+.export-panel-gbc2bpp .gbc2bpp-tiles-info,
+.export-panel-gbc2bpp .gbc2bpp-pal-info {
+  margin-left: 10px;
+  color: #aaa;
+}
+
+/**
+ * RGB555 info display in color picker tooltip
+ */
+.rgb555-info {
+  font-family: monospace;
+  font-size: 10px;
+  color: #A78BFA;
+}
+
+/**
+ * Color snapped notification styling for GBC
+ */
+body.console-gbc .notification {
+  border-left-color: #8B5CF6;
+}
+
