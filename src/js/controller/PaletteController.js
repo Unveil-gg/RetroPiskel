@@ -299,7 +299,7 @@
     }
 
     var tc = window.tinycolor(color);
-    if (!tc.isValid()) {
+    if (!tc.ok) {
       return '';
     }
 

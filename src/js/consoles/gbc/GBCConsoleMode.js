@@ -73,7 +73,7 @@
    */
   GBCConsoleMode.prototype.snapColorToRGB555 = function (hexColor) {
     var tc = window.tinycolor(hexColor);
-    if (!tc.isValid()) {
+    if (!tc.ok) {
       return hexColor;
     }
 
