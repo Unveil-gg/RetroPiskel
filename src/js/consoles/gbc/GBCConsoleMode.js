@@ -30,6 +30,7 @@
       themeVariables: {
         '--highlight-color': '#8B5CF6',
         '--console-accent': '#8B5CF6',
+        '--console-accent-text': '#A78BFA',
         '--console-accent-dim': '#6D28D9',
         '--console-bg-dark': '#1a1a2e',
         '--console-bg-medium': '#16213e',

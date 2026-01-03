@@ -6,7 +6,9 @@
  *
  * Required variables from console themes:
  *   --highlight-color: Main accent color
- *   --console-accent: Primary accent (usually same as highlight)
+ *   --console-accent: Primary accent (decorative: badges, borders, buttons)
+ *   --console-accent-text: Lighter accent for text on dark backgrounds
+ *                          (must have 4.5:1 contrast on --console-bg-medium)
  *   --console-accent-dim: Darker accent for hover states
  *   --console-bg-dark: Darkest background
  *   --console-bg-medium: Medium background
@@ -51,7 +53,7 @@ body[data-console] .tool-icon.selected {
 
 /* Settings drawer for console modes */
 body[data-console] .settings-title {
-  color: var(--console-accent);
+  color: var(--console-accent-text, var(--console-accent));
 }
 
 body[data-console] .drawer-content {
@@ -68,7 +70,7 @@ body[data-console] .transformations-container {
 }
 
 body[data-console] .section-title {
-  color: var(--console-accent);
+  color: var(--console-accent-text, var(--console-accent));
 }
 
 /* Frames list for console modes */
@@ -89,7 +91,7 @@ body[data-console] .button-primary:hover {
 /* Tab styling for console modes */
 body[data-console] .tab-item.selected {
   border-bottom-color: var(--console-accent);
-  color: var(--console-accent);
+  color: var(--console-accent-text, var(--console-accent));
 }
 
 /* Color picker for console modes */
@@ -100,6 +102,6 @@ body[data-console] .sp-container {
 
 /* Cursor coordinates for console modes */
 body[data-console] .cursor-coordinates {
-  color: var(--console-accent);
+  color: var(--console-accent-text, var(--console-accent));
 }
 

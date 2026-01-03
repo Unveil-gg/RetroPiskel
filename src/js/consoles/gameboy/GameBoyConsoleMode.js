@@ -48,6 +48,7 @@
       themeVariables: {
         '--highlight-color': '#8B1C62',
         '--console-accent': '#8B1C62',
+        '--console-accent-text': '#D45A9A',
         '--console-accent-dim': '#5C1341',
         '--console-bg-dark': '#2A2A28',
         '--console-bg-medium': '#3D3D38',

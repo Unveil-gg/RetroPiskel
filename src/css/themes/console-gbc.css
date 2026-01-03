@@ -14,6 +14,7 @@ body.console-gbc {
   /* Purple/violet accent inspired by the GBC shell and era */
   --highlight-color: #8B5CF6;
   --console-accent: #8B5CF6;
+  --console-accent-text: #A78BFA;
   --console-accent-dim: #6D28D9;
 
   /* Deep blue/purple tones inspired by GBC aesthetics */

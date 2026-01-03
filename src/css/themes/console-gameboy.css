@@ -13,6 +13,7 @@ body.console-gameboy {
   /* Purple/magenta accent inspired by DMG buttons and power LED */
   --highlight-color: #8B1C62;
   --console-accent: #8B1C62;
+  --console-accent-text: #D45A9A;
   --console-accent-dim: #5C1341;
 
   /* Warm gray tones inspired by the DMG plastic shell */

@@ -58,7 +58,17 @@
 
     /**
      * @type {Object}
-     * CSS custom properties for theming (e.g., --highlight-color).
+     * CSS custom properties for theming. Expected properties:
+     *   --highlight-color: Main accent color
+     *   --console-accent: Primary accent (decorative: badges, borders)
+     *   --console-accent-text: Lighter accent for text on dark backgrounds
+     *                          (must have 4.5:1 contrast ratio on bg-medium)
+     *   --console-accent-dim: Darker accent for hover/pressed states
+     *   --console-bg-dark: Darkest background
+     *   --console-bg-medium: Medium background
+     *   --console-bg-light: Lightest background
+     *   --console-border: Border color
+     *   --console-text: Text color
      */
     this.themeVariables = config.themeVariables || {};
 

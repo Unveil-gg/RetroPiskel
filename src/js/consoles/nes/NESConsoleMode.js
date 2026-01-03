@@ -104,6 +104,7 @@
       themeVariables: {
         '--highlight-color': '#E40058',
         '--console-accent': '#E40058',
+        '--console-accent-text': '#FF6B8A',
         '--console-accent-dim': '#a8003f',
         '--console-bg-dark': '#1a1a1e',
         '--console-bg-medium': '#252529',
