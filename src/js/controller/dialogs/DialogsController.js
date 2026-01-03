@@ -29,6 +29,10 @@
     'browse-backups' : {
       template : 'templates/dialogs/browse-backups.html',
       controller : ns.backups.BrowseBackups
+    },
+    'replace-color' : {
+      template : 'templates/dialogs/replace-color.html',
+      controller : ns.ReplaceColorController
     }
   };
 

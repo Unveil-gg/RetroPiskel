@@ -174,6 +174,7 @@
   "js/controller/dialogs/importwizard/steps/SelectMode.js",
   "js/controller/dialogs/importwizard/ImportWizard.js",
   "js/controller/dialogs/PerformanceInfoController.js",
+  "js/controller/dialogs/ReplaceColorController.js",
   "js/controller/dialogs/UnsupportedBrowserController.js",
 
   // Dialogs controller

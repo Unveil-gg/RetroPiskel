@@ -442,42 +442,8 @@
 
     // New color - check if we're at the limit
     if (currentColors.length >= maxColors) {
-      // Check if the currently selected color is in the sprite palette
-      // If so, we can offer to replace it
-      var selectedColor = isPrimary ?
-        pskl.app.selectedColorsService.getPrimaryColor() :
-        pskl.app.selectedColorsService.getSecondaryColor();
-
-      // Don't offer replacement for transparent
-      if (selectedColor === Constants.TRANSPARENT_COLOR ||
-          selectedColor === 'rgba(0, 0, 0, 0)') {
-        $.publish(Events.SHOW_NOTIFICATION, [{
-          content: consoleName + ': Max ' + maxColors + ' colors allowed. ' +
-            'Select a non-transparent color to replace it.',
-          hideDelay: 4000
-        }]);
-        return 'blocked';
-      }
-
-      var normalizedSelected = window.tinycolor(selectedColor)
-        .toHexString().toUpperCase();
-      var selectedInSprite = currentColors.some(function (c) {
-        return window.tinycolor(c).toHexString().toUpperCase() ===
-          normalizedSelected;
-      });
-
-      if (selectedInSprite) {
-        // Selected color is in sprite - offer replacement
-        return 'replace';
-      } else {
-        // Selected color is not in sprite - can't replace
-        $.publish(Events.SHOW_NOTIFICATION, [{
-          content: consoleName + ': Max ' + maxColors + ' colors allowed. ' +
-            'Select an existing sprite color to replace it.',
-          hideDelay: 4000
-        }]);
-        return 'blocked';
-      }
+      // At the limit - show replacement dialog to let user choose
+      return 'replace';
     }
 
     return 'allowed';
@@ -605,52 +571,102 @@
   };
 
   /**
-   * Prompts user to confirm color replacement (if enabled) and executes it.
-   * @param {string} oldColor - Currently selected color to replace
+   * Shows the replace color dialog for user to choose which color to replace.
+   * @param {string} currentColor - Currently selected color (may not be used)
    * @param {string} newColor - New color user is trying to use
    * @param {boolean} isPrimary - Whether this is the primary color picker
    * @private
    */
   ns.PaletteController.prototype.promptColorReplacement_ = function (
-    oldColor, newColor, isPrimary
+    currentColor, newColor, isPrimary
   ) {
-    // Use new setting, fall back to legacy
-    var showPrompt = pskl.UserSettings.get(
-      pskl.UserSettings.COLOR_REPLACE_PROMPT);
+    var self = this;
 
-    var doReplace = function () {
-      this.replaceColorInSprite_(oldColor, newColor);
+    // Get the picker element
+    var pickerSelector = isPrimary ? '#color-picker' : '#secondary-color-picker';
+    var picker = document.querySelector(pickerSelector);
+    var $picker = $(picker);
+
+    // Hide the spectrum picker immediately to prevent further interactions
+    $picker.spectrum('hide');
+
+    // Revert picker to current color
+    this.updateColorPicker_(currentColor, picker);
+
+    // Callback when user selects a color to replace
+    var onColorSelected = function (oldColor, replacementColor, primary) {
+      self.replaceColorInSprite_(oldColor, replacementColor);
 
       // Update the selected color to the new color
-      if (isPrimary) {
-        this.updateColorPicker_(
-          newColor, document.querySelector('#color-picker'));
-        $.publish(Events.PRIMARY_COLOR_SELECTED, [newColor]);
+      if (primary) {
+        self.updateColorPicker_(
+          replacementColor, document.querySelector('#color-picker'));
+        $.publish(Events.PRIMARY_COLOR_SELECTED, [replacementColor]);
       } else {
-        this.updateColorPicker_(
-          newColor, document.querySelector('#secondary-color-picker'));
-        $.publish(Events.SECONDARY_COLOR_SELECTED, [newColor]);
+        self.updateColorPicker_(
+          replacementColor, document.querySelector('#secondary-color-picker'));
+        $.publish(Events.SECONDARY_COLOR_SELECTED, [replacementColor]);
       }
-    }.bind(this);
+    };
 
-    if (showPrompt) {
-      var msg = 'Replace color in sprite?\n\n' +
-        'All pixels using ' + oldColor.toUpperCase() + ' will be changed to ' +
-        newColor.toUpperCase() + '.\n\n' +
-        'This applies to all frames and layers.\n\n' +
-        'Continue?';
+    // Callback when user cancels - restore to a valid color state
+    var onCancel = function (primary) {
+      self.restoreValidColorState_(primary);
+    };
 
-      if (window.confirm(msg)) {
-        doReplace();
+    // Show the replace color dialog
+    $.publish(Events.DIALOG_SHOW, {
+      dialogId: 'replace-color',
+      initArgs: {
+        newColor: newColor,
+        isPrimary: isPrimary,
+        onColorSelected: onColorSelected,
+        onCancel: onCancel
+      }
+    });
+  };
+
+  /**
+   * Restores picker to a valid color state after dialog cancel.
+   * Falls back to first sprite color if current selection is invalid.
+   * @param {boolean} isPrimary - Whether to restore primary or secondary
+   * @private
+   */
+  ns.PaletteController.prototype.restoreValidColorState_ = function (
+    isPrimary
+  ) {
+    var pickerSelector = isPrimary ? '#color-picker' : '#secondary-color-picker';
+    var picker = document.querySelector(pickerSelector);
+
+    // Get current selected color
+    var selectedColor = isPrimary ?
+      pskl.app.selectedColorsService.getPrimaryColor() :
+      pskl.app.selectedColorsService.getSecondaryColor();
+
+    // Check if it's a valid non-transparent color
+    var isValid = selectedColor &&
+      selectedColor !== Constants.TRANSPARENT_COLOR &&
+      selectedColor !== 'rgba(0, 0, 0, 0)';
+
+    var restoreColor = selectedColor;
+
+    if (!isValid) {
+      // Fall back to first color in sprite palette
+      var currentColors = pskl.app.currentColorsService.getCurrentColors();
+      if (currentColors && currentColors.length > 0) {
+        restoreColor = currentColors[0];
       } else {
-        // User cancelled - revert picker to current color
-        var picker = isPrimary ?
-          document.querySelector('#color-picker') :
-          document.querySelector('#secondary-color-picker');
-        this.updateColorPicker_(oldColor, picker);
+        // Ultimate fallback
+        restoreColor = Constants.DEFAULT_PEN_COLOR;
       }
+    }
+
+    // Update picker and publish event to sync app state
+    this.updateColorPicker_(restoreColor, picker);
+    if (isPrimary) {
+      $.publish(Events.PRIMARY_COLOR_SELECTED, [restoreColor]);
     } else {
-      doReplace();
+      $.publish(Events.SECONDARY_COLOR_SELECTED, [restoreColor]);
     }
   };
 })();

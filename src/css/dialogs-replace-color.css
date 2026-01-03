@@ -1,0 +1,188 @@
+/**
+ * Replace Color Dialog Styles
+ *
+ * Modal dialog for choosing which color to replace when hitting
+ * the console mode color limit.
+ */
+
+/* Dialog container sizing - compact modal, vertically centered */
+#dialog-container.replace-color {
+  max-width: 420px;
+  max-height: 400px;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+}
+
+.replace-color-dialog .dialog-content {
+  position: relative;
+  top: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Limit reached text */
+.replace-color-limit-text {
+  margin: 0;
+  color: #ccc;
+  font-size: 0.95em;
+  text-align: center;
+}
+
+/* Prompt with new color preview */
+.replace-color-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 1.1em;
+  color: #fff;
+}
+
+.replace-color-new-preview {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.replace-color-new-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.replace-color-new-hex {
+  font-family: monospace;
+  font-size: 0.9em;
+  color: var(--console-accent-text, var(--highlight-color));
+}
+
+/* Color grid - the main selection area */
+.replace-color-grid {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+
+/* Individual color cards */
+.replace-color-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-width: 80px;
+}
+
+.replace-color-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--console-accent, var(--highlight-color));
+  transform: translateY(-2px);
+}
+
+.replace-color-card:active {
+  transform: translateY(0);
+}
+
+/* Color swatch in card */
+.replace-color-swatch {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.15s;
+}
+
+.replace-color-card:hover .replace-color-swatch {
+  border-color: var(--console-accent, var(--highlight-color));
+}
+
+/* Color info (hex + pixel count) */
+.replace-color-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.replace-color-hex {
+  font-family: monospace;
+  font-size: 0.75em;
+  color: #aaa;
+}
+
+.replace-color-count {
+  font-size: 0.7em;
+  color: #888;
+}
+
+/* Tip at bottom */
+.replace-color-tip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  font-size: 0.85em;
+  color: #999;
+}
+
+.replace-color-tip-icon {
+  font-size: 1.1em;
+}
+
+/* Actions (cancel button) */
+.replace-color-actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 5px;
+}
+
+.replace-color-cancel {
+  padding: 8px 24px;
+}
+
+/* Console theme integration */
+body[data-console] .replace-color-dialog .dialog-content {
+  background: var(--console-bg-medium);
+}
+
+body[data-console] .replace-color-card:hover {
+  border-color: var(--console-accent);
+}
+
+body[data-console] .replace-color-card:hover .replace-color-swatch {
+  border-color: var(--console-accent);
+}
+
+body[data-console] .replace-color-new-hex {
+  color: var(--console-accent-text);
+}
+
+/* Light color card adjustment for readability */
+.replace-color-card.light-color .replace-color-swatch {
+  border-color: rgba(0, 0, 0, 0.3);
+}

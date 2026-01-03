@@ -1,0 +1,36 @@
+<script type="text/template" id="templates/dialogs/replace-color.html">
+  <div class="dialog-wrapper replace-color-dialog">
+    <h3 class="dialog-head">
+      <span class="dialog-title">Replace a Color</span>
+      <span class="dialog-close">X</span>
+    </h3>
+    <div class="dialog-content replace-color-content">
+      <p class="replace-color-limit-text">
+        You've reached the color limit.
+      </p>
+
+      <div class="replace-color-prompt">
+        <span>Replace which color with</span>
+        <span class="replace-color-new-preview">
+          <span class="replace-color-new-swatch"></span>
+          <span class="replace-color-new-hex">#000000</span>
+        </span>
+        <span>?</span>
+      </div>
+
+      <div class="replace-color-grid">
+        <!-- Color cards will be populated by JavaScript -->
+      </div>
+
+      <div class="replace-color-tip">
+        <span class="replace-color-tip-icon">💡</span>
+        <span>Click a color to replace all its pixels with the new color.</span>
+      </div>
+
+      <div class="replace-color-actions">
+        <button type="button" class="button replace-color-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+</script>
+

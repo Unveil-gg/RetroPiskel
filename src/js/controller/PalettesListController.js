@@ -14,6 +14,7 @@
 
     this.colorListContainer_ = document.querySelector('.palettes-list-colors');
     this.colorPaletteSelect_ = document.querySelector('.palettes-list-select');
+    this.colorLimitBadge_ = document.querySelector('.color-limit-badge');
 
     var createPaletteButton_ = document.querySelector('.create-palette-button');
     var editPaletteButton_ = document.querySelector('.edit-palette-button');
@@ -26,10 +27,11 @@
     editPaletteButton_.addEventListener('click', this.onEditPaletteClick_.bind(this));
 
     $.subscribe(Events.PALETTE_LIST_UPDATED, this.onPaletteListUpdated.bind(this));
-    $.subscribe(Events.CURRENT_COLORS_UPDATED, this.fillColorListContainer.bind(this));
+    $.subscribe(Events.CURRENT_COLORS_UPDATED, this.onCurrentColorsUpdated_.bind(this));
     $.subscribe(Events.PRIMARY_COLOR_SELECTED, this.highlightSelectedColors.bind(this));
     $.subscribe(Events.SECONDARY_COLOR_SELECTED, this.highlightSelectedColors.bind(this));
     $.subscribe(Events.USER_SETTINGS_CHANGED, this.onUserSettingsChange_.bind(this));
+    $.subscribe(Events.CONSOLE_MODE_CHANGED, this.updateColorLimitBadge_.bind(this));
 
     var shortcuts = pskl.service.keyboard.Shortcuts;
     pskl.app.shortcutService.registerShortcut(shortcuts.COLOR.PREVIOUS_COLOR, this.selectPreviousColor_.bind(this));
@@ -39,6 +41,66 @@
     this.fillPaletteList();
     this.updateFromUserSettings();
     this.fillColorListContainer();
+    this.updateColorLimitBadge_();
+  };
+
+  /**
+   * Handles current colors update - refreshes list and badge.
+   * @private
+   */
+  ns.PalettesListController.prototype.onCurrentColorsUpdated_ = function () {
+    this.fillColorListContainer();
+    this.updateColorLimitBadge_();
+  };
+
+  /**
+   * Updates the color limit badge based on console mode and current colors.
+   * @private
+   */
+  ns.PalettesListController.prototype.updateColorLimitBadge_ = function () {
+    if (!this.colorLimitBadge_) {
+      return;
+    }
+
+    // Get console mode
+    var consoleMode = pskl.app.consoleRegistry ?
+      pskl.app.consoleRegistry.getActive() : null;
+    var maxColors = consoleMode ? consoleMode.maxColors : null;
+
+    // Hide badge if no color limit
+    if (!maxColors) {
+      this.colorLimitBadge_.style.display = 'none';
+      return;
+    }
+
+    // Get current color count
+    var currentColors = pskl.app.currentColorsService ?
+      pskl.app.currentColorsService.getCurrentColors() : [];
+    var colorCount = currentColors.length;
+
+    // Show badge
+    this.colorLimitBadge_.style.display = '';
+
+    // Update text
+    var textEl = this.colorLimitBadge_.querySelector('.color-limit-text');
+    if (textEl) {
+      textEl.textContent = colorCount + '/' + maxColors;
+    }
+
+    // Update dots
+    var dotsEl = this.colorLimitBadge_.querySelector('.color-limit-dots');
+    if (dotsEl) {
+      var dotsHtml = '';
+      for (var i = 0; i < maxColors; i++) {
+        var filled = i < colorCount;
+        dotsHtml += '<span class="color-limit-dot' +
+          (filled ? ' filled' : '') + '"></span>';
+      }
+      dotsEl.innerHTML = dotsHtml;
+    }
+
+    // Add warning class if at limit
+    this.colorLimitBadge_.classList.toggle('at-limit', colorCount >= maxColors);
   };
 
   ns.PalettesListController.prototype.fillPaletteList = function () {

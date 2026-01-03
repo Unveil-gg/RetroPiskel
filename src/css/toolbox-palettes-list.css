@@ -9,6 +9,62 @@
   background-size: 22px;
   background-repeat: no-repeat;
   background-position: 97%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/**
+ * Color limit badge - shows current/max colors for console modes
+ */
+
+.color-limit-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.7em;
+  font-weight: normal;
+  margin-right: 4px;
+}
+
+.color-limit-dots {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.color-limit-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.color-limit-dot.filled {
+  background: var(--console-accent, var(--highlight-color));
+  border-color: var(--console-accent, var(--highlight-color));
+}
+
+.color-limit-text {
+  color: #aaa;
+  font-family: monospace;
+}
+
+/* Warning state when at limit */
+.color-limit-badge.at-limit {
+  background: rgba(255, 150, 0, 0.2);
+}
+
+.color-limit-badge.at-limit .color-limit-text {
+  color: #ffaa00;
+}
+
+.color-limit-badge.at-limit .color-limit-dot.filled {
+  background: #ffaa00;
+  border-color: #ffaa00;
 }
 
 /**

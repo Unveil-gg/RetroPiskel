@@ -25,6 +25,7 @@
   "css/dialogs-import.css",
   "css/dialogs-performance-info.css",
   "css/dialogs-unsupported-browser.css",
+  "css/dialogs-replace-color.css",
   "css/notifications.css",
   "css/toolbox.css",
   "css/toolbox-layers-list.css",
