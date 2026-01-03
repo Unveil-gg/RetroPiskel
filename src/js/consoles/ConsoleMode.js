@@ -31,6 +31,13 @@
     this.palette = config.palette || null;
 
     /**
+     * @type {string|null}
+     * Palette type identifier for special handling (e.g., 'rgb555' for GBC).
+     * Null means standard palette behavior.
+     */
+    this.paletteType = config.paletteType || null;
+
+    /**
      * @type {number|null}
      * Maximum non-transparent colors per sprite, or null for unlimited.
      */
