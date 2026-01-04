@@ -150,4 +150,3 @@
     BITS_PER_PIXEL: 4         // 4bpp tile format
   };
 })();
-

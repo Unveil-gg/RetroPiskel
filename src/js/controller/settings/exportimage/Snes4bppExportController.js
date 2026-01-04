@@ -339,4 +339,3 @@
     return this.piskelController.getPiskel().getDescriptor().name;
   };
 })();
-

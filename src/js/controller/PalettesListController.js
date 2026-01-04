@@ -54,6 +54,14 @@
   };
 
   /**
+   * Max colors before switching from dots to text-only display.
+   * Dots work well for small limits (NES/GB/GBC: 3), but overflow for
+   * larger limits (SNES: 15).
+   * @const {number}
+   */
+  var MAX_COLORS_FOR_DOTS = 6;
+
+  /**
    * Updates the color limit badge based on console mode and current colors.
    * @private
    */
@@ -87,16 +95,23 @@
       textEl.textContent = colorCount + '/' + maxColors;
     }
 
-    // Update dots
+    // Update dots - only show for small color limits to avoid overflow
     var dotsEl = this.colorLimitBadge_.querySelector('.color-limit-dots');
     if (dotsEl) {
-      var dotsHtml = '';
-      for (var i = 0; i < maxColors; i++) {
-        var filled = i < colorCount;
-        dotsHtml += '<span class="color-limit-dot' +
-          (filled ? ' filled' : '') + '"></span>';
+      if (maxColors <= MAX_COLORS_FOR_DOTS) {
+        var dotsHtml = '';
+        for (var i = 0; i < maxColors; i++) {
+          var filled = i < colorCount;
+          dotsHtml += '<span class="color-limit-dot' +
+            (filled ? ' filled' : '') + '"></span>';
+        }
+        dotsEl.innerHTML = dotsHtml;
+        dotsEl.style.display = '';
+      } else {
+        // Hide dots for larger limits, show text only
+        dotsEl.innerHTML = '';
+        dotsEl.style.display = 'none';
       }
-      dotsEl.innerHTML = dotsHtml;
     }
 
     // Add warning class if at limit
