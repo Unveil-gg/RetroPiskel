@@ -76,6 +76,7 @@
   "js/consoles/nes/NESConsoleMode.js",
   "js/consoles/gameboy/GameBoyConsoleMode.js",
   "js/consoles/gbc/GBCConsoleMode.js",
+  "js/consoles/snes/SNESConsoleMode.js",
 
   // Models
   "js/model/Frame.js",
@@ -150,6 +151,7 @@
   "js/controller/settings/exportimage/ChrExportController.js",
   "js/controller/settings/exportimage/Gb2bppExportController.js",
   "js/controller/settings/exportimage/Gbc2bppExportController.js",
+  "js/controller/settings/exportimage/Snes4bppExportController.js",
   "js/controller/settings/exportimage/ExportController.js",
   "js/controller/settings/resize/ResizeController.js",
   "js/controller/settings/resize/DefaultSizeController.js",

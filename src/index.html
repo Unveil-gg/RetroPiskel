@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>RetroPiskel</title>
-  <meta name="description" content="Retro console sprite editor by Unveil. Create pixel-perfect sprites for NES, Game Boy, GBC and more with authentic palette constraints, tile validation, and native asset exports like CHR and 2BPP.">
+  <meta name="description" content="Retro console sprite editor by Unveil. Create pixel-perfect sprites for NES, Game Boy, GBC, SNES and more with authentic palette constraints, tile validation, and native asset exports like CHR, 2BPP and 4BPP.">
   <meta name="author" content="Unveil">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1a1a2e">
@@ -17,7 +17,7 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="RetroPiskel - Retro Console Sprite Editor">
-  <meta property="og:description" content="Retro console sprite editor by Unveil. Create pixel-perfect sprites for NES, Game Boy, GBC and more with authentic palette constraints, tile validation, and native asset exports like CHR and 2BPP.">
+  <meta property="og:description" content="Retro console sprite editor by Unveil. Create pixel-perfect sprites for NES, Game Boy, GBC, SNES and more with authentic palette constraints, tile validation, and native asset exports like CHR, 2BPP and 4BPP.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://retropiskel.com/logo.png">
   <meta property="og:image:width" content="512">
@@ -26,7 +26,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="RetroPiskel - Retro Console Sprite Editor">
-  <meta name="twitter:description" content="Create pixel-perfect sprites for NES, Game Boy, GBC and more. Authentic palettes, tile validation, native exports. By Unveil.">
+  <meta name="twitter:description" content="Create pixel-perfect sprites for NES, Game Boy, GBC, SNES and more. Authentic palettes, tile validation, native exports. By Unveil.">
   <meta name="twitter:image" content="https://retropiskel.com/logo.png">
 </head>
 <body>
@@ -119,6 +119,8 @@
   @@include('templates/settings/export/gif.html', {})
   @@include('templates/settings/export/chr.html', {})
   @@include('templates/settings/export/gb2bpp.html', {})
+  @@include('templates/settings/export/gbc2bpp.html', {})
+  @@include('templates/settings/export/snes4bpp.html', {})
   @@include('templates/settings/export/zip.html', {})
   @@include('templates/settings/export/misc.html', {})
 

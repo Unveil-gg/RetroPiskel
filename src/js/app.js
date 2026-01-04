@@ -180,6 +180,7 @@
       this.consoleRegistry.register(pskl.consoles.createNESMode());
       this.consoleRegistry.register(pskl.consoles.createGameBoyMode());
       this.consoleRegistry.register(pskl.consoles.createGBCMode());
+      this.consoleRegistry.register(pskl.consoles.createSNESMode());
       this.consoleRegistry.init();
 
       this.drawingLoop = new pskl.rendering.DrawingLoop();

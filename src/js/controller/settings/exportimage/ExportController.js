@@ -41,6 +41,11 @@
       template : 'templates/settings/export/gbc2bpp.html',
       controller : ns.Gbc2bppExportController,
       consoles : ['gbc']  // Only available in GBC mode
+    },
+    'snes4bpp' : {
+      template : 'templates/settings/export/snes4bpp.html',
+      controller : ns.Snes4bppExportController,
+      consoles : ['snes']  // Only available in SNES mode
     }
   };
 

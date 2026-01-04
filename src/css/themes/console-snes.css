@@ -1,0 +1,132 @@
+/**
+ * SNES / Super Famicom Console Theme
+ *
+ * Inspired by the Super Famicom/SNES hardware aesthetic:
+ * - Purple/magenta tones from the iconic SNES controller buttons
+ * - Deep, rich colors reflecting the 16-bit era
+ * - More vibrant than 8-bit consoles, matching SNES capabilities
+ *
+ * The SNES era brought richer color palettes and more detailed sprites,
+ * so this theme uses saturated purples with warm undertones.
+ */
+
+body.console-snes {
+  /* Purple/magenta accent inspired by SNES controller buttons */
+  --highlight-color: #CC66FF;
+  --console-accent: #9933CC;
+  --console-accent-text: #DDA0DD;
+  --console-accent-dim: #6B238E;
+
+  /* Deep purple tones inspired by SNES aesthetics */
+  --console-bg-dark: #1a1520;
+  --console-bg-medium: #251d2e;
+  --console-bg-light: #362a42;
+  --console-border: #5a4670;
+
+  /* Light lavender text for visibility */
+  --console-text: #e0d8e8;
+}
+
+/**
+ * SNES-specific export tab visibility.
+ * Show 4BPP tab only when SNES mode is active.
+ */
+body.console-snes .export-tab[data-tab-id="snes4bpp"] {
+  display: block;
+}
+
+/**
+ * Drawing canvas gets a subtle purple tint
+ */
+body.console-snes .drawing-canvas-container {
+  background: #150d1a;
+}
+
+/**
+ * Frame list and preview styling
+ */
+body.console-snes .frames-list-container {
+  border-color: var(--console-border);
+}
+
+body.console-snes .preview-tile {
+  border-color: var(--console-border);
+}
+
+/**
+ * Palette colors styling
+ */
+body.console-snes .palettes-list-container .palette-color {
+  border-color: #6B238E;
+}
+
+/**
+ * SNES accent for specific elements
+ */
+body.console-snes .cursor-coordinates {
+  color: #DDA0DD;
+}
+
+/**
+ * SNES Export Panel Styling
+ */
+.export-panel-snes4bpp {
+  padding: 10px;
+}
+
+.export-panel-snes4bpp .snes4bpp-section-title {
+  font-weight: bold;
+  color: #9933CC;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.export-panel-snes4bpp .snes4bpp-palette-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-bottom: 8px;
+  max-width: 280px;
+}
+
+.export-panel-snes4bpp .snes4bpp-palette-swatch {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #5a4670;
+  border-radius: 3px;
+}
+
+.export-panel-snes4bpp .snes4bpp-palette-swatch.transparent {
+  background: repeating-linear-gradient(
+    45deg,
+    #333 0px,
+    #333 4px,
+    #555 4px,
+    #555 8px
+  );
+}
+
+.export-panel-snes4bpp .snes4bpp-palette-note {
+  font-size: 11px;
+  color: #888;
+  font-style: italic;
+  margin-bottom: 15px;
+}
+
+.export-panel-snes4bpp .snes4bpp-tiles-info,
+.export-panel-snes4bpp .snes4bpp-pal-info {
+  margin-left: 10px;
+  color: #aaa;
+}
+
+.export-panel-snes4bpp .snes4bpp-spec-link {
+  color: #DDA0DD;
+}
+
+/**
+ * Color snapped notification styling for SNES
+ */
+body.console-snes .notification {
+  border-left-color: #9933CC;
+}
+
