@@ -46,6 +46,11 @@
       template : 'templates/settings/export/snes4bpp.html',
       controller : ns.Snes4bppExportController,
       consoles : ['snes']  // Only available in SNES mode
+    },
+    'genesis4bpp' : {
+      template : 'templates/settings/export/genesis4bpp.html',
+      controller : ns.Genesis4bppExportController,
+      consoles : ['genesis']  // Only available in Genesis mode
     }
   };
 

@@ -1,0 +1,110 @@
+/**
+ * Sega Genesis / Mega Drive Console Theme
+ *
+ * Inspired by the Sega Genesis hardware and branding aesthetic:
+ * - Classic Sega blue from the logo and console design
+ * - Deep blacks and rich blues reflecting the 16-bit era
+ * - Bold, vibrant colors matching Sega's marketing style
+ *
+ * The Genesis era was known for edgy, cool aesthetics,
+ * so this theme uses deep blues with electric accents.
+ */
+
+body.console-genesis {
+  /* Classic Sega blue accent */
+  --highlight-color: #0066CC;
+  --console-accent: #0066CC;
+  --console-accent-text: #66B3FF;
+  --console-accent-dim: #004C99;
+
+  /* Deep dark blues inspired by Genesis aesthetics */
+  --console-bg-dark: #0a0a12;
+  --console-bg-medium: #12121e;
+  --console-bg-light: #1e1e2e;
+  --console-border: #2a4080;
+
+  /* Light blue-gray text for visibility */
+  --console-text: #e0e0e8;
+}
+
+/**
+ * Genesis-specific export tab visibility.
+ * Show 4BPP tab only when Genesis mode is active.
+ */
+body.console-genesis .export-tab[data-tab-id="genesis4bpp"] {
+  display: block;
+}
+
+/**
+ * Drawing canvas gets a subtle blue tint
+ */
+body.console-genesis .drawing-canvas-container {
+  background: #08080e;
+}
+
+/**
+ * Frame list and preview styling
+ */
+body.console-genesis .frames-list-container {
+  border-color: var(--console-border);
+}
+
+body.console-genesis .preview-tile {
+  border-color: var(--console-border);
+}
+
+/**
+ * Palette colors styling
+ */
+body.console-genesis .palettes-list-container .palette-color {
+  border-color: #004C99;
+}
+
+/**
+ * Genesis accent for specific elements
+ */
+body.console-genesis .cursor-coordinates {
+  color: #66B3FF;
+}
+
+/**
+ * Genesis Export Panel Styling
+ */
+.export-panel-genesis4bpp {
+  padding: 10px;
+}
+
+.export-panel-genesis4bpp .export-info {
+  margin-left: 6px;
+}
+
+.export-panel-genesis4bpp .genesis4bpp-spec-link {
+  color: #66B3FF;
+}
+
+/**
+ * Genesis color warning (too many colors)
+ */
+.genesis4bpp-color-warning {
+  display: none;
+  align-items: center;
+  border: 1px solid red;
+  padding: 5px;
+  margin: 5px 0;
+}
+
+.genesis4bpp-warning-icon {
+  flex-shrink: 0;
+  margin-right: 5px;
+}
+
+.genesis4bpp-warning-message {
+  font-weight: normal;
+}
+
+/**
+ * Color snapped notification styling for Genesis
+ */
+body.console-genesis .notification {
+  border-left-color: #0066CC;
+}

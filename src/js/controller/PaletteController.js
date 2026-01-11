@@ -96,9 +96,29 @@
   };
 
   /**
-   * Snaps a color to RGB555 if in GBC mode.
+   * Checks if the active console mode uses RGB333 color snapping.
+   * @return {boolean}
+   * @private
+   */
+  ns.PaletteController.prototype.isRGB333Mode_ = function () {
+    var mode = this.getActiveConsoleMode_();
+    return mode && mode.paletteType === 'rgb333';
+  };
+
+  /**
+   * Checks if the active console mode uses any quantized color space.
+   * @return {boolean}
+   * @private
+   */
+  ns.PaletteController.prototype.isQuantizedColorMode_ = function () {
+    return this.isRGB555Mode_() || this.isRGB333Mode_();
+  };
+
+  /**
+   * Snaps a color to the active console mode's color space.
+   * Handles RGB555 (GBC/SNES) and RGB333 (Genesis).
    * @param {string} color - Hex color string
-   * @return {string} Snapped color (or original if not RGB555 mode)
+   * @return {string} Snapped color (or original if not quantized mode)
    * @private
    */
   ns.PaletteController.prototype.snapColorIfNeeded_ = function (color) {
@@ -110,6 +130,9 @@
     var mode = this.getActiveConsoleMode_();
     if (mode && mode.paletteType === 'rgb555' && mode.snapColorToRGB555) {
       return mode.snapColorToRGB555(color);
+    }
+    if (mode && mode.paletteType === 'rgb333' && mode.snapColorToRGB333) {
+      return mode.snapColorToRGB333(color);
     }
     return color;
   };
@@ -312,6 +335,47 @@
   };
 
   /**
+   * Gets RGB333 info string for a color.
+   * @param {string} color - Hex color string
+   * @return {string} RGB333 info (e.g., "R:7 G:4 B:2")
+   * @private
+   */
+  ns.PaletteController.prototype.getRGB333Info_ = function (color) {
+    var mode = this.getActiveConsoleMode_();
+    if (!mode || !mode.to3Bit) {
+      return '';
+    }
+
+    var tc = window.tinycolor(color);
+    if (!tc.ok) {
+      return '';
+    }
+
+    var rgb = tc.toRgb();
+    var r3 = mode.to3Bit(rgb.r);
+    var g3 = mode.to3Bit(rgb.g);
+    var b3 = mode.to3Bit(rgb.b);
+
+    return 'R:' + r3 + ' G:' + g3 + ' B:' + b3;
+  };
+
+  /**
+   * Gets quantized color info string based on active mode.
+   * @param {string} color - Hex color string
+   * @return {string} Color space info string or empty
+   * @private
+   */
+  ns.PaletteController.prototype.getQuantizedColorInfo_ = function (color) {
+    if (this.isRGB555Mode_()) {
+      return this.getRGB555Info_(color);
+    }
+    if (this.isRGB333Mode_()) {
+      return this.getRGB333Info_(color);
+    }
+    return '';
+  };
+
+  /**
    * @private
    */
   ns.PaletteController.prototype.onPickerChange_ = function(evt) {
@@ -323,14 +387,15 @@
       // expected by the rest of the application.
       color = window.tinycolor(color).toHexString();
 
-      // Snap to RGB555 if in GBC mode
+      // Snap to console color space if needed
       var originalColor = color;
       color = this.snapColorIfNeeded_(color);
 
       // Show notification if color was snapped
-      if (this.isRGB555Mode_() && originalColor !== color) {
+      if (this.isQuantizedColorMode_() && originalColor !== color) {
+        var modeName = this.isRGB555Mode_() ? 'RGB555' : 'RGB333';
         $.publish(Events.SHOW_NOTIFICATION, [{
-          content: 'Color snapped to GBC RGB555: ' + color.toUpperCase(),
+          content: 'Color snapped to ' + modeName + ': ' + color.toUpperCase(),
           hideDelay: 2000
         }]);
       }
@@ -487,11 +552,11 @@
     var parent = colorPicker.parentNode;
     var displayTitle = parent.dataset.initialTitle + '<br/>' + title;
 
-    // Add RGB555 info for GBC mode
-    if (this.isRGB555Mode_() && title !== Constants.TRANSPARENT_COLOR) {
-      var rgb555Info = this.getRGB555Info_(title);
-      if (rgb555Info) {
-        displayTitle += '<br/><span class="rgb555-info">' + rgb555Info +
+    // Add quantized color info for GBC/SNES/Genesis modes
+    if (this.isQuantizedColorMode_() && title !== Constants.TRANSPARENT_COLOR) {
+      var colorInfo = this.getQuantizedColorInfo_(title);
+      if (colorInfo) {
+        displayTitle += '<br/><span class="rgb555-info">' + colorInfo +
           '</span>';
       }
     }
