@@ -78,47 +78,28 @@ body.console-gbc .export-panel-gbc2bpp .gbc2bpp-spec-link {
   padding: 10px;
 }
 
-.export-panel-gbc2bpp .gbc2bpp-section-title {
-  font-weight: bold;
-  color: #8B5CF6;
-  margin-bottom: 8px;
-  font-size: 12px;
+.export-panel-gbc2bpp .export-info {
+  margin-left: 6px;
 }
 
-.export-panel-gbc2bpp .gbc2bpp-palette-preview {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 8px;
+/**
+ * GBC color warning (too many colors)
+ */
+.gbc2bpp-color-warning {
+  display: none;
+  align-items: center;
+  border: 1px solid red;
+  padding: 5px;
+  margin: 5px 0;
 }
 
-.export-panel-gbc2bpp .gbc2bpp-palette-swatch {
-  width: 32px;
-  height: 32px;
-  border: 2px solid #533483;
-  border-radius: 3px;
+.gbc2bpp-warning-icon {
+  flex-shrink: 0;
+  margin-right: 5px;
 }
 
-.export-panel-gbc2bpp .gbc2bpp-palette-swatch.transparent {
-  background: repeating-linear-gradient(
-    45deg,
-    #333 0px,
-    #333 4px,
-    #555 4px,
-    #555 8px
-  );
-}
-
-.export-panel-gbc2bpp .gbc2bpp-palette-note {
-  font-size: 11px;
-  color: #888;
-  font-style: italic;
-  margin-bottom: 15px;
-}
-
-.export-panel-gbc2bpp .gbc2bpp-tiles-info,
-.export-panel-gbc2bpp .gbc2bpp-pal-info {
-  margin-left: 10px;
-  color: #aaa;
+.gbc2bpp-warning-message {
+  font-weight: normal;
 }
 
 /**
@@ -136,4 +117,3 @@ body.console-gbc .export-panel-gbc2bpp .gbc2bpp-spec-link {
 body.console-gbc .notification {
   border-left-color: #8B5CF6;
 }
-

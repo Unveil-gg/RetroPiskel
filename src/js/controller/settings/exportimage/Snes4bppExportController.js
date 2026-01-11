@@ -22,6 +22,9 @@
 (function () {
   var ns = $.namespace('pskl.controller.settings.exportimage');
 
+  /** @const {number} Max colors per sprite (15 + transparent). */
+  var MAX_COLORS = 15;
+
   ns.Snes4bppExportController = function (piskelController) {
     this.piskelController = piskelController;
     this.colorMap = {};       // Maps color int -> index (0-15)
@@ -48,7 +51,7 @@
   };
 
   /**
-   * Updates color map and download info display.
+   * Updates color map, download info, and color warning display.
    * @private
    */
   ns.Snes4bppExportController.prototype.validateAndDisplay_ = function () {
@@ -56,15 +59,25 @@
     var height = this.piskelController.getHeight();
     var frameCount = this.piskelController.getFrameCount();
 
-    // Build color map for export (up to 15 colors + transparent)
+    // Get current colors and check if over limit
     var colors = pskl.app.currentColorsService.getCurrentColors();
+    var colorCount = colors.length;
+    var hasTooManyColors = colorCount > MAX_COLORS;
+
+    // Show/hide color warning
+    var warning = document.querySelector('.snes4bpp-color-warning');
+    if (warning) {
+      warning.style.display = hasTooManyColors ? 'flex' : 'none';
+    }
+
+    // Build color map for export (up to 15 colors + transparent)
     this.colorMap = {};
     this.paletteColors = [];
     this.colorMap[0] = 0;  // Transparent maps to index 0
     this.paletteColors.push(null);  // Index 0 = transparent
 
     // Map up to 15 non-transparent colors
-    var maxColors = Math.min(colors.length, 15);
+    var maxColors = Math.min(colorCount, MAX_COLORS);
     for (var i = 0; i < maxColors; i++) {
       var colorInt = pskl.utils.colorToInt(colors[i]);
       this.colorMap[colorInt] = i + 1;
@@ -84,52 +97,13 @@
     var tilesInfo = document.querySelector('.snes4bpp-tiles-info');
     var palInfo = document.querySelector('.snes4bpp-pal-info');
 
-    tilesInfo.innerHTML = totalTileBytes + ' bytes' +
-      (frameCount > 1 ? ' (' + frameCount + ' frames)' : '');
-    palInfo.innerHTML = paletteBytes + ' bytes (16 colors)';
-
-    // Update palette preview
-    this.updatePalettePreview_();
-  };
-
-  /**
-   * Updates the palette color preview display.
-   * @private
-   */
-  ns.Snes4bppExportController.prototype.updatePalettePreview_ = function () {
-    var preview = document.querySelector('.snes4bpp-palette-preview');
-    if (!preview) {
-      return;
+    if (tilesInfo) {
+      tilesInfo.innerHTML = totalTileBytes + ' bytes' +
+        (frameCount > 1 ? ' (' + frameCount + ' frames)' : '');
     }
-
-    preview.innerHTML = '';
-    var snesMode = pskl.app.consoleRegistry.get('snes');
-
-    for (var i = 0; i < this.paletteColors.length; i++) {
-      var swatch = document.createElement('div');
-      swatch.className = 'snes4bpp-palette-swatch';
-
-      if (i === 0) {
-        // Transparent
-        swatch.classList.add('transparent');
-        swatch.title = 'Index 0: Transparent';
-      } else {
-        var color = this.paletteColors[i];
-        var snapped = snesMode ? snesMode.snapColorToRGB555(color) : color;
-        swatch.style.backgroundColor = snapped;
-
-        // Show BGR555 values in tooltip
-        if (snesMode) {
-          var tc = window.tinycolor(snapped).toRgb();
-          var r5 = snesMode.to5Bit(tc.r);
-          var g5 = snesMode.to5Bit(tc.g);
-          var b5 = snesMode.to5Bit(tc.b);
-          swatch.title = 'Index ' + i + ': ' + snapped.toUpperCase() +
-            '\nBGR555: R=' + r5 + ' G=' + g5 + ' B=' + b5;
-        }
-      }
-
-      preview.appendChild(swatch);
+    if (palInfo) {
+      palInfo.innerHTML = paletteBytes + ' bytes (' + colorCount +
+        '/' + MAX_COLORS + ' colors)';
     }
   };
 

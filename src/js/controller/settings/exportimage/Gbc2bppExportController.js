@@ -16,6 +16,9 @@
 (function () {
   var ns = $.namespace('pskl.controller.settings.exportimage');
 
+  /** @const {number} Max colors per sprite (3 + transparent). */
+  var MAX_COLORS = 3;
+
   ns.Gbc2bppExportController = function (piskelController) {
     this.piskelController = piskelController;
     this.colorMap = {};  // Maps color int -> index (0-3)
@@ -42,7 +45,7 @@
   };
 
   /**
-   * Updates color map and download info display.
+   * Updates color map, download info, and color warning display.
    * @private
    */
   ns.Gbc2bppExportController.prototype.validateAndDisplay_ = function () {
@@ -50,14 +53,25 @@
     var height = this.piskelController.getHeight();
     var frameCount = this.piskelController.getFrameCount();
 
-    // Build color map for export
+    // Get current colors and check if over limit
     var colors = pskl.app.currentColorsService.getCurrentColors();
+    var colorCount = colors.length;
+    var hasTooManyColors = colorCount > MAX_COLORS;
+
+    // Show/hide color warning
+    var warning = document.querySelector('.gbc2bpp-color-warning');
+    if (warning) {
+      warning.style.display = hasTooManyColors ? 'flex' : 'none';
+    }
+
+    // Build color map for export
     this.colorMap = {};
     this.paletteColors = [];
     this.colorMap[0] = 0;  // Transparent maps to index 0
     this.paletteColors.push(null);  // Index 0 = transparent
 
-    for (var i = 0; i < Math.min(colors.length, 3); i++) {
+    var maxColors = Math.min(colorCount, MAX_COLORS);
+    for (var i = 0; i < maxColors; i++) {
       var colorInt = pskl.utils.colorToInt(colors[i]);
       this.colorMap[colorInt] = i + 1;
       this.paletteColors.push(colors[i]);
@@ -76,52 +90,13 @@
     var tilesInfo = document.querySelector('.gbc2bpp-tiles-info');
     var palInfo = document.querySelector('.gbc2bpp-pal-info');
 
-    tilesInfo.innerHTML = totalTileBytes + ' bytes' +
-      (frameCount > 1 ? ' (' + frameCount + ' frames)' : '');
-    palInfo.innerHTML = paletteBytes + ' bytes (4 colors)';
-
-    // Update palette preview
-    this.updatePalettePreview_();
-  };
-
-  /**
-   * Updates the palette color preview display.
-   * @private
-   */
-  ns.Gbc2bppExportController.prototype.updatePalettePreview_ = function () {
-    var preview = document.querySelector('.gbc2bpp-palette-preview');
-    if (!preview) {
-      return;
+    if (tilesInfo) {
+      tilesInfo.innerHTML = totalTileBytes + ' bytes' +
+        (frameCount > 1 ? ' (' + frameCount + ' frames)' : '');
     }
-
-    preview.innerHTML = '';
-    var gbcMode = pskl.app.consoleRegistry.get('gbc');
-
-    for (var i = 0; i < this.paletteColors.length; i++) {
-      var swatch = document.createElement('div');
-      swatch.className = 'gbc2bpp-palette-swatch';
-
-      if (i === 0) {
-        // Transparent
-        swatch.classList.add('transparent');
-        swatch.title = 'Index 0: Transparent';
-      } else {
-        var color = this.paletteColors[i];
-        var snapped = gbcMode ? gbcMode.snapColorToRGB555(color) : color;
-        swatch.style.backgroundColor = snapped;
-
-        // Show RGB555 values in tooltip
-        if (gbcMode) {
-          var tc = window.tinycolor(snapped).toRgb();
-          var r5 = gbcMode.to5Bit(tc.r);
-          var g5 = gbcMode.to5Bit(tc.g);
-          var b5 = gbcMode.to5Bit(tc.b);
-          swatch.title = 'Index ' + i + ': ' + snapped.toUpperCase() +
-            '\nRGB555: R=' + r5 + ' G=' + g5 + ' B=' + b5;
-        }
-      }
-
-      preview.appendChild(swatch);
+    if (palInfo) {
+      palInfo.innerHTML = paletteBytes + ' bytes (' + colorCount +
+        '/' + MAX_COLORS + ' colors)';
     }
   };
 
@@ -315,4 +290,3 @@
     return this.piskelController.getPiskel().getDescriptor().name;
   };
 })();
-

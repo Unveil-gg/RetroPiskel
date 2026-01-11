@@ -6,35 +6,50 @@
          target="_blank" class="snes4bpp-spec-link">Sprite Spec</a>
     </div>
 
-    <div class="export-panel-section">
-      <div class="snes4bpp-section-title">Palette Preview (16 colors)</div>
-      <div class="snes4bpp-palette-preview"></div>
-      <div class="snes4bpp-palette-note">
-        Colors auto-snapped to BGR555 (5 bits per channel)
+    <div class="snes4bpp-color-warning" style="display: none;">
+      <div class="snes4bpp-warning-icon icon-common-warning-red">&nbsp;</div>
+      <div class="snes4bpp-warning-message">
+        Too many colors: SNES sprites support max 15 colors + transparent.
       </div>
     </div>
 
-    <div class="export-panel-section export-panel-row">
-      <button type="button" 
-              class="button button-primary snes4bpp-download-tiles-button">
-        Download .4bpp
-      </button>
-      <span class="export-info snes4bpp-tiles-info"></span>
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">4BPP Tile Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary snes4bpp-download-tiles-button">
+          Download
+        </button>
+        <span class="export-info snes4bpp-tiles-info"></span>
+      </div>
     </div>
 
-    <div class="export-panel-section export-panel-row">
-      <button type="button" 
-              class="button button-secondary snes4bpp-download-pal-button">
-        Download .pal
-      </button>
-      <span class="export-info snes4bpp-pal-info"></span>
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">Palette Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary snes4bpp-download-pal-button">
+          Download
+        </button>
+        <span class="export-info snes4bpp-pal-info"></span>
+      </div>
     </div>
 
-    <div class="export-panel-section export-panel-row">
-      <button type="button" 
-              class="button button-primary snes4bpp-download-both-button">
-        Download Both
-      </button>
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">Combined Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary snes4bpp-download-both-button">
+          Download
+        </button>
+        <span class="export-info">4BPP tiles and palette in separate files</span>
+      </div>
     </div>
   </div>
 </script>

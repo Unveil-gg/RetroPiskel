@@ -6,36 +6,50 @@
          target="_blank" class="gbc2bpp-spec-link">Tile Spec</a>
     </div>
 
-    <div class="export-panel-section">
-      <div class="gbc2bpp-section-title">Palette Preview</div>
-      <div class="gbc2bpp-palette-preview"></div>
-      <div class="gbc2bpp-palette-note">
-        Colors auto-snapped to RGB555 (5 bits per channel)
+    <div class="gbc2bpp-color-warning" style="display: none;">
+      <div class="gbc2bpp-warning-icon icon-common-warning-red">&nbsp;</div>
+      <div class="gbc2bpp-warning-message">
+        Too many colors: GBC sprites support max 3 colors + transparent.
       </div>
     </div>
 
-    <div class="export-panel-section export-panel-row">
-      <button type="button" 
-              class="button button-primary gbc2bpp-download-tiles-button">
-        Download .2bpp
-      </button>
-      <span class="export-info gbc2bpp-tiles-info"></span>
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">2BPP Tile Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary gbc2bpp-download-tiles-button">
+          Download
+        </button>
+        <span class="export-info gbc2bpp-tiles-info"></span>
+      </div>
     </div>
 
-    <div class="export-panel-section export-panel-row">
-      <button type="button" 
-              class="button button-secondary gbc2bpp-download-pal-button">
-        Download .pal
-      </button>
-      <span class="export-info gbc2bpp-pal-info"></span>
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">Palette Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary gbc2bpp-download-pal-button">
+          Download
+        </button>
+        <span class="export-info gbc2bpp-pal-info"></span>
+      </div>
     </div>
 
-    <div class="export-panel-section export-panel-row">
-      <button type="button" 
-              class="button button-primary gbc2bpp-download-both-button">
-        Download Both
-      </button>
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">Combined Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary gbc2bpp-download-both-button">
+          Download
+        </button>
+        <span class="export-info">2BPP tiles and palette in separate files</span>
+      </div>
     </div>
   </div>
 </script>
-

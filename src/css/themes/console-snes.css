@@ -74,53 +74,32 @@ body.console-snes .cursor-coordinates {
   padding: 10px;
 }
 
-.export-panel-snes4bpp .snes4bpp-section-title {
-  font-weight: bold;
-  color: #9933CC;
-  margin-bottom: 8px;
-  font-size: 12px;
-}
-
-.export-panel-snes4bpp .snes4bpp-palette-preview {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3px;
-  margin-bottom: 8px;
-  max-width: 280px;
-}
-
-.export-panel-snes4bpp .snes4bpp-palette-swatch {
-  width: 24px;
-  height: 24px;
-  border: 2px solid #5a4670;
-  border-radius: 3px;
-}
-
-.export-panel-snes4bpp .snes4bpp-palette-swatch.transparent {
-  background: repeating-linear-gradient(
-    45deg,
-    #333 0px,
-    #333 4px,
-    #555 4px,
-    #555 8px
-  );
-}
-
-.export-panel-snes4bpp .snes4bpp-palette-note {
-  font-size: 11px;
-  color: #888;
-  font-style: italic;
-  margin-bottom: 15px;
-}
-
-.export-panel-snes4bpp .snes4bpp-tiles-info,
-.export-panel-snes4bpp .snes4bpp-pal-info {
-  margin-left: 10px;
-  color: #aaa;
+.export-panel-snes4bpp .export-info {
+  margin-left: 6px;
 }
 
 .export-panel-snes4bpp .snes4bpp-spec-link {
   color: #DDA0DD;
+}
+
+/**
+ * SNES color warning (too many colors)
+ */
+.snes4bpp-color-warning {
+  display: none;
+  align-items: center;
+  border: 1px solid red;
+  padding: 5px;
+  margin: 5px 0;
+}
+
+.snes4bpp-warning-icon {
+  flex-shrink: 0;
+  margin-right: 5px;
+}
+
+.snes4bpp-warning-message {
+  font-weight: normal;
 }
 
 /**
