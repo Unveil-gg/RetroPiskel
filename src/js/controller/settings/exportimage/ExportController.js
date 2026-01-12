@@ -56,6 +56,11 @@
       template : 'templates/settings/export/sms4bpp.html',
       controller : ns.Sms4bppExportController,
       consoles : ['sms']  // Only available in SMS mode
+    },
+    'gba4bpp' : {
+      template : 'templates/settings/export/gba4bpp.html',
+      controller : ns.Gba4bppExportController,
+      consoles : ['gba']  // Only available in GBA mode
     }
   };
 

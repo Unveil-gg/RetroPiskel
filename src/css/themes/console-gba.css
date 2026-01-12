@@ -1,0 +1,111 @@
+/**
+ * Game Boy Advance (4bpp) Console Theme
+ *
+ * Inspired by the original GBA "Indigo" hardware color:
+ * - Deep indigo/teal tones from the iconic GBA shell
+ * - Cyan accents evoking the GBA's brighter, more capable screen
+ * - Clean, modern feel matching the 32-bit handheld era
+ *
+ * The GBA represented a leap in handheld gaming with its ARM processor
+ * and vibrant 240x160 screen. This theme uses cool indigo-cyan tones
+ * that distinguish it from the purple SNES/GBC themes.
+ */
+
+body.console-gba {
+  /* Indigo-cyan accent inspired by GBA Indigo hardware */
+  --highlight-color: #00CED1;
+  --console-accent: #20B2AA;
+  --console-accent-text: #7FFFD4;
+  --console-accent-dim: #008B8B;
+
+  /* Deep indigo background tones */
+  --console-bg-dark: #0a1520;
+  --console-bg-medium: #122535;
+  --console-bg-light: #1a3548;
+  --console-border: #2d5a6e;
+
+  /* Light cyan-white text for visibility */
+  --console-text: #e0f0f8;
+}
+
+/**
+ * GBA-specific export tab visibility.
+ * Show 4BPP tab only when GBA mode is active.
+ */
+body.console-gba .export-tab[data-tab-id="gba4bpp"] {
+  display: block;
+}
+
+/**
+ * Drawing canvas gets a subtle indigo tint
+ */
+body.console-gba .drawing-canvas-container {
+  background: #081018;
+}
+
+/**
+ * Frame list and preview styling
+ */
+body.console-gba .frames-list-container {
+  border-color: var(--console-border);
+}
+
+body.console-gba .preview-tile {
+  border-color: var(--console-border);
+}
+
+/**
+ * Palette colors styling
+ */
+body.console-gba .palettes-list-container .palette-color {
+  border-color: #008B8B;
+}
+
+/**
+ * GBA accent for specific elements
+ */
+body.console-gba .cursor-coordinates {
+  color: #7FFFD4;
+}
+
+/**
+ * GBA Export Panel Styling
+ */
+.export-panel-gba4bpp {
+  padding: 10px;
+}
+
+.export-panel-gba4bpp .export-info {
+  margin-left: 6px;
+}
+
+.export-panel-gba4bpp .gba4bpp-spec-link {
+  color: #7FFFD4;
+}
+
+/**
+ * GBA color warning (too many colors)
+ */
+.gba4bpp-color-warning {
+  display: none;
+  align-items: center;
+  border: 1px solid red;
+  padding: 5px;
+  margin: 5px 0;
+}
+
+.gba4bpp-warning-icon {
+  flex-shrink: 0;
+  margin-right: 5px;
+}
+
+.gba4bpp-warning-message {
+  font-weight: normal;
+}
+
+/**
+ * Color snapped notification styling for GBA
+ */
+body.console-gba .notification {
+  border-left-color: #20B2AA;
+}
