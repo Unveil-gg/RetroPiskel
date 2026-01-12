@@ -1,14 +1,12 @@
 <script type="text/html" id="templates/settings/export.html">
   <div class="settings-section settings-section-export">
     <div class="settings-title">Export</div>
-    <div class="settings-item export-scale" title="Scale the animation for export"
-        rel="tooltip"
-        data-placement="top">
+    <div class="settings-item export-scale" title="Adjust export size (PNG, GIF, ZIP only)">
       <label for="scale-input">Scale</label>
       <input type="range" class="scale-input" name="scale-input" min="1"  max="32" step="1"/>
       <span class="scale-text"></span>
     </div>
-    <div class="settings-item export-resize">
+    <div class="settings-item export-resize" title="Adjust export size (PNG, GIF, ZIP only)">
       <span class="resize-label">Resolution</span>
       <input type="text" class="textfield  resize-field  resize-width" autocomplete="off" name="resize-width"/>
       <div class="resize-label">x</div>

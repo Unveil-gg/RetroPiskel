@@ -286,11 +286,11 @@
     this.updateScaleControlsState_(tabId);
   };
 
-  /** @const {string} Original tooltip for scale control. */
-  var SCALE_TOOLTIP_ENABLED = 'Scale the animation for export';
+  /** @const {string} Tooltip when export size controls are enabled. */
+  var SIZE_TOOLTIP_ENABLED = 'Adjust export size (PNG, GIF, ZIP only)';
 
-  /** @const {string} Tooltip when scale is disabled. */
-  var SCALE_TOOLTIP_DISABLED = 'Scale applies to PNG, GIF, ZIP only';
+  /** @const {string} Tooltip when export size controls are disabled. */
+  var SIZE_TOOLTIP_DISABLED = 'Export size only applies to PNG, GIF, ZIP';
 
   /**
    * Updates the enabled/disabled state of scale and resolution controls.
@@ -302,15 +302,16 @@
     // Default to disabled if tabId is null/undefined
     var isScaleEnabled = tabId && SCALE_ENABLED_TABS.indexOf(tabId) !== -1;
 
+    // Update tooltip on both controls
+    var tooltip = isScaleEnabled ? SIZE_TOOLTIP_ENABLED : SIZE_TOOLTIP_DISABLED;
+
     if (this.scaleContainer) {
       this.scaleContainer.classList.toggle('export-controls-disabled', !isScaleEnabled);
-      // Update tooltip to explain why it's disabled
-      this.scaleContainer.title = isScaleEnabled
-        ? SCALE_TOOLTIP_ENABLED
-        : SCALE_TOOLTIP_DISABLED;
+      this.scaleContainer.title = tooltip;
     }
     if (this.resizeContainer) {
       this.resizeContainer.classList.toggle('export-controls-disabled', !isScaleEnabled);
+      this.resizeContainer.title = tooltip;
     }
 
     // Disable/enable the actual inputs
