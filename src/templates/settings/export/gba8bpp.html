@@ -1,0 +1,55 @@
+<script type="text/html" id="templates/settings/export/gba8bpp.html">
+  <div class="export-panel-gba8bpp">
+    <div class="export-panel-header export-info">
+      Export as GBA format (8BPP linear tiles + BGR555 palette).
+      <a href="https://www.coranac.com/tonc/text/regobj.htm" 
+         target="_blank" class="gba8bpp-spec-link">Sprite Spec</a>
+    </div>
+
+    <div class="gba8bpp-color-warning" style="display: none;">
+      <div class="gba8bpp-warning-icon icon-common-warning-red">&nbsp;</div>
+      <div class="gba8bpp-warning-message">
+        Too many colors: GBA 8BPP sprites support max 255 colors + transparent.
+      </div>
+    </div>
+
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">8BPP Tile Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary gba8bpp-download-tiles-button">
+          Download
+        </button>
+        <span class="export-info gba8bpp-tiles-info"></span>
+      </div>
+    </div>
+
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">Palette Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary gba8bpp-download-pal-button">
+          Download
+        </button>
+        <span class="export-info gba8bpp-pal-info"></span>
+      </div>
+    </div>
+
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">Combined Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary gba8bpp-download-both-button">
+          Download
+        </button>
+        <span class="export-info">8BPP tiles and palette in separate files</span>
+      </div>
+    </div>
+  </div>
+</script>

@@ -60,7 +60,12 @@
     'gba4bpp' : {
       template : 'templates/settings/export/gba4bpp.html',
       controller : ns.Gba4bppExportController,
-      consoles : ['gba']  // Only available in GBA mode
+      consoles : ['gba']  // Only available in GBA 4bpp mode
+    },
+    'gba8bpp' : {
+      template : 'templates/settings/export/gba8bpp.html',
+      controller : ns.Gba8bppExportController,
+      consoles : ['gba8bpp']  // Only available in GBA 8bpp mode
     }
   };
 

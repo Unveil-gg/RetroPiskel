@@ -163,7 +163,8 @@
 .export-tab[data-tab-id="snes4bpp"],
 .export-tab[data-tab-id="genesis4bpp"],
 .export-tab[data-tab-id="sms4bpp"],
-.export-tab[data-tab-id="gba4bpp"] {
+.export-tab[data-tab-id="gba4bpp"],
+.export-tab[data-tab-id="gba8bpp"] {
   display: none;
 }
 

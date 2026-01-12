@@ -80,6 +80,7 @@
   "js/consoles/genesis/GenesisConsoleMode.js",
   "js/consoles/sms/SMSConsoleMode.js",
   "js/consoles/gba/GBAConsoleMode.js",
+  "js/consoles/gba/GBA8bppConsoleMode.js",
 
   // Models
   "js/model/Frame.js",
@@ -158,6 +159,7 @@
   "js/controller/settings/exportimage/Genesis4bppExportController.js",
   "js/controller/settings/exportimage/Sms4bppExportController.js",
   "js/controller/settings/exportimage/Gba4bppExportController.js",
+  "js/controller/settings/exportimage/Gba8bppExportController.js",
   "js/controller/settings/exportimage/ExportController.js",
   "js/controller/settings/resize/ResizeController.js",
   "js/controller/settings/resize/DefaultSizeController.js",

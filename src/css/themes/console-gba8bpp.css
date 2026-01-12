@@ -1,0 +1,110 @@
+/**
+ * Game Boy Advance (8bpp) Console Theme
+ *
+ * Inspired by the GBA SP "Flame" color variant:
+ * - Warm coral/orange tones representing the expanded color capabilities
+ * - Rich, vibrant feel matching the 256-color mode
+ * - Distinct from the cooler 4bpp indigo theme
+ *
+ * 8bpp mode allows for much richer sprites with up to 256 colors,
+ * so this warmer theme reflects that expanded creative freedom.
+ */
+
+body.console-gba8bpp {
+  /* Coral-orange accent inspired by GBA SP Flame */
+  --highlight-color: #FF6347;
+  --console-accent: #E05A3A;
+  --console-accent-text: #FFA07A;
+  --console-accent-dim: #B8472E;
+
+  /* Warm brown-orange background tones */
+  --console-bg-dark: #1a1210;
+  --console-bg-medium: #2d1f1a;
+  --console-bg-light: #3d2a22;
+  --console-border: #6e4535;
+
+  /* Warm white text for visibility */
+  --console-text: #f8ece8;
+}
+
+/**
+ * GBA 8bpp-specific export tab visibility.
+ * Show 8BPP tab only when GBA 8bpp mode is active.
+ */
+body.console-gba8bpp .export-tab[data-tab-id="gba8bpp"] {
+  display: block;
+}
+
+/**
+ * Drawing canvas gets a subtle warm tint
+ */
+body.console-gba8bpp .drawing-canvas-container {
+  background: #140e0c;
+}
+
+/**
+ * Frame list and preview styling
+ */
+body.console-gba8bpp .frames-list-container {
+  border-color: var(--console-border);
+}
+
+body.console-gba8bpp .preview-tile {
+  border-color: var(--console-border);
+}
+
+/**
+ * Palette colors styling
+ */
+body.console-gba8bpp .palettes-list-container .palette-color {
+  border-color: #B8472E;
+}
+
+/**
+ * GBA 8bpp accent for specific elements
+ */
+body.console-gba8bpp .cursor-coordinates {
+  color: #FFA07A;
+}
+
+/**
+ * GBA 8bpp Export Panel Styling
+ */
+.export-panel-gba8bpp {
+  padding: 10px;
+}
+
+.export-panel-gba8bpp .export-info {
+  margin-left: 6px;
+}
+
+.export-panel-gba8bpp .gba8bpp-spec-link {
+  color: #FFA07A;
+}
+
+/**
+ * GBA 8bpp color warning (too many colors)
+ */
+.gba8bpp-color-warning {
+  display: none;
+  align-items: center;
+  border: 1px solid red;
+  padding: 5px;
+  margin: 5px 0;
+}
+
+.gba8bpp-warning-icon {
+  flex-shrink: 0;
+  margin-right: 5px;
+}
+
+.gba8bpp-warning-message {
+  font-weight: normal;
+}
+
+/**
+ * Color snapped notification styling for GBA 8bpp
+ */
+body.console-gba8bpp .notification {
+  border-left-color: #E05A3A;
+}

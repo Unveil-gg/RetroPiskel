@@ -184,6 +184,7 @@
       this.consoleRegistry.register(pskl.consoles.createGenesisMode());
       this.consoleRegistry.register(pskl.consoles.createSMSMode());
       this.consoleRegistry.register(pskl.consoles.createGBAMode());
+      this.consoleRegistry.register(pskl.consoles.createGBA8bppMode());
       this.consoleRegistry.init();
 
       this.drawingLoop = new pskl.rendering.DrawingLoop();
