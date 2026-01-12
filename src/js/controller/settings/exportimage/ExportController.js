@@ -138,12 +138,12 @@
     this.validateCurrentTab_();
 
     // Listen for console mode changes
-    $.subscribe(Events.CONSOLE_MODE_CHANGED,
-      this.onConsoleModeChanged_.bind(this));
+    this.boundOnConsoleModeChanged_ = this.onConsoleModeChanged_.bind(this);
+    $.subscribe(Events.CONSOLE_MODE_CHANGED, this.boundOnConsoleModeChanged_);
   };
 
   ns.ExportController.prototype.destroy = function () {
-    $.unsubscribe(Events.CONSOLE_MODE_CHANGED, this.onConsoleModeChanged_);
+    $.unsubscribe(Events.CONSOLE_MODE_CHANGED, this.boundOnConsoleModeChanged_);
     this.sizeInputWidget.destroy();
     this.tabsWidget.destroy();
     this.superclass.destroy.call(this);
