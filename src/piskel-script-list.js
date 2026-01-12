@@ -82,6 +82,7 @@
   "js/consoles/gamegear/GameGearConsoleMode.js",
   "js/consoles/gba/GBAConsoleMode.js",
   "js/consoles/gba/GBA8bppConsoleMode.js",
+  "js/consoles/dreamcast/DreamcastConsoleMode.js",
 
   // Models
   "js/model/Frame.js",
@@ -162,6 +163,7 @@
   "js/controller/settings/exportimage/Gg4bppExportController.js",
   "js/controller/settings/exportimage/Gba4bppExportController.js",
   "js/controller/settings/exportimage/Gba8bppExportController.js",
+  "js/controller/settings/exportimage/DreamcastPvrExportController.js",
   "js/controller/settings/exportimage/ExportController.js",
   "js/controller/settings/resize/ResizeController.js",
   "js/controller/settings/resize/DefaultSizeController.js",

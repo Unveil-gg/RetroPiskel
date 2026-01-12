@@ -1,0 +1,192 @@
+/**
+ * Sega Dreamcast Console Theme
+ *
+ * Inspired by the iconic Dreamcast hardware and branding:
+ * - Signature orange from the Dreamcast swirl logo
+ * - Clean white/gray tones from the console shell
+ * - Warm, inviting aesthetic of the late 90s Sega era
+ *
+ * The Dreamcast represented Sega's bold final console push,
+ * so this theme uses vibrant orange with warm undertones.
+ */
+
+body.console-dreamcast {
+  /* Signature Dreamcast orange accent */
+  --highlight-color: #FF6600;
+  --console-accent: #FF6600;
+  --console-accent-text: #FF9944;
+  --console-accent-dim: #CC5200;
+
+  /* Warm dark tones inspired by the console's era */
+  --console-bg-dark: #0a0808;
+  --console-bg-medium: #141210;
+  --console-bg-light: #1e1a18;
+  --console-border: #4a3830;
+
+  /* Warm off-white text */
+  --console-text: #e8e0d8;
+}
+
+/**
+ * Dreamcast-specific export tab visibility.
+ * Show PVR tab only when Dreamcast mode is active.
+ */
+body.console-dreamcast .export-tab[data-tab-id="dreamcastpvr"] {
+  display: block;
+}
+
+/**
+ * Drawing canvas gets a warm dark tint
+ */
+body.console-dreamcast .drawing-canvas-container {
+  background: #080606;
+}
+
+/**
+ * Frame list and preview styling
+ */
+body.console-dreamcast .frames-list-container {
+  border-color: var(--console-border);
+}
+
+body.console-dreamcast .preview-tile {
+  border-color: var(--console-border);
+}
+
+/**
+ * Palette colors styling
+ */
+body.console-dreamcast .palettes-list-container .palette-color {
+  border-color: #CC5200;
+}
+
+/**
+ * Dreamcast accent for specific elements
+ */
+body.console-dreamcast .cursor-coordinates {
+  color: #FF9944;
+}
+
+/**
+ * Dreamcast Export Panel Styling
+ */
+.export-panel-dreamcastpvr .dreamcast-spec-link {
+  color: #FF9944;
+}
+
+.export-panel-dreamcastpvr .button {
+  margin-right: 5px;
+}
+
+/**
+ * Dreamcast dimension warning (not power of 2)
+ */
+.dreamcast-dimension-warning {
+  display: none;
+  align-items: center;
+  border: 1px solid #FF6600;
+  background: rgba(255, 102, 0, 0.1);
+  padding: 8px 10px;
+  margin: 8px 0;
+  border-radius: 3px;
+}
+
+.dreamcast-dimension-warning.error {
+  border-color: #CC3300;
+  background: rgba(204, 51, 0, 0.15);
+}
+
+.dreamcast-warning-icon {
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+.dreamcast-warning-message {
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/**
+ * Format selector styling
+ */
+.dreamcast-format-select {
+  background: var(--console-bg-light);
+  border: 1px solid var(--console-border);
+  color: var(--console-text);
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.dreamcast-format-select:focus {
+  border-color: var(--console-accent);
+  outline: none;
+}
+
+/**
+ * Export options row
+ */
+.dreamcast-option-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+}
+
+.dreamcast-option-label {
+  min-width: 100px;
+  font-size: 12px;
+  color: var(--console-text);
+}
+
+/**
+ * Checkbox styling for Dreamcast options
+ */
+.dreamcast-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--console-text);
+  cursor: pointer;
+}
+
+.dreamcast-checkbox-label input[type="checkbox"] {
+  accent-color: var(--console-accent);
+}
+
+/**
+ * Info text styling
+ */
+.dreamcast-info-text {
+  font-size: 11px;
+  color: #888;
+  margin-top: 4px;
+}
+
+/**
+ * Color snapped notification styling for Dreamcast
+ */
+body.console-dreamcast .notification {
+  border-left-color: #FF6600;
+}
+
+/**
+ * Swirl decoration (optional, for header/branding)
+ */
+.dreamcast-swirl {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: conic-gradient(
+    from 0deg,
+    #FF6600 0deg,
+    #FF9944 90deg,
+    #FF6600 180deg,
+    #CC5200 270deg,
+    #FF6600 360deg
+  );
+  border-radius: 50%;
+  margin-right: 6px;
+}

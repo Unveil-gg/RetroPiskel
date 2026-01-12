@@ -186,6 +186,7 @@
       this.consoleRegistry.register(pskl.consoles.createGameGearMode());
       this.consoleRegistry.register(pskl.consoles.createGBAMode());
       this.consoleRegistry.register(pskl.consoles.createGBA8bppMode());
+      this.consoleRegistry.register(pskl.consoles.createDreamcastMode());
       this.consoleRegistry.init();
 
       this.drawingLoop = new pskl.rendering.DrawingLoop();

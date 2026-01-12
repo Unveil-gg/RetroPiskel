@@ -165,7 +165,8 @@
 .export-tab[data-tab-id="sms4bpp"],
 .export-tab[data-tab-id="gg4bpp"],
 .export-tab[data-tab-id="gba4bpp"],
-.export-tab[data-tab-id="gba8bpp"] {
+.export-tab[data-tab-id="gba8bpp"],
+.export-tab[data-tab-id="dreamcastpvr"] {
   display: none;
 }
 

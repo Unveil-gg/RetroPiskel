@@ -71,6 +71,11 @@
       template : 'templates/settings/export/gba8bpp.html',
       controller : ns.Gba8bppExportController,
       consoles : ['gba8bpp']  // Only available in GBA 8bpp mode
+    },
+    'dreamcastpvr' : {
+      template : 'templates/settings/export/dreamcastpvr.html',
+      controller : ns.DreamcastPvrExportController,
+      consoles : ['dreamcast']  // Only available in Dreamcast mode
     }
   };
 

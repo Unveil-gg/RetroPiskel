@@ -1,0 +1,75 @@
+<script type="text/html" id="templates/settings/export/dreamcastpvr.html">
+  <div class="export-panel-dreamcastpvr">
+    <div class="export-panel-header export-info">
+      Export as Sega Dreamcast PVR texture format.
+      <a href="https://dreamcast.wiki/Twiddling" 
+         target="_blank" class="dreamcast-spec-link">Twiddling Spec</a>
+    </div>
+
+    <div class="dreamcast-dimension-warning" style="display: none;">
+      <div class="dreamcast-warning-icon icon-common-warning-red">&nbsp;</div>
+      <div class="dreamcast-warning-message">
+        Dimensions must be power of 2 (8, 16, 32, 64, 128, 256, 512, 1024).
+      </div>
+    </div>
+
+    <div class="export-panel-section">
+      <div style="padding-bottom: 8px">
+        <span class="highlight">Format Options:</span>
+      </div>
+      
+      <div style="padding-bottom: 8px">
+        <div style="padding-bottom: 4px">Pixel Format:</div>
+        <select class="dreamcast-format-select">
+          <option value="ARGB1555">ARGB1555 (1-bit alpha)</option>
+          <option value="RGB565">RGB565 (no alpha)</option>
+          <option value="ARGB4444">ARGB4444 (4-bit alpha)</option>
+        </select>
+      </div>
+
+      <div class="dreamcast-option-row">
+        <label class="dreamcast-checkbox-label">
+          <input type="checkbox" class="dreamcast-twiddle-checkbox" checked>
+          Twiddle pixels (Morton order)
+        </label>
+      </div>
+
+      <div class="dreamcast-option-row">
+        <label class="dreamcast-checkbox-label">
+          <input type="checkbox" class="dreamcast-gbix-checkbox">
+          Include GBIX header
+        </label>
+      </div>
+
+      <div class="dreamcast-info-text">
+        Dimensions: <span class="dreamcast-dimension-info">--</span>
+      </div>
+    </div>
+
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">PVR Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary dreamcast-download-button">
+          Download
+        </button>
+        <span class="export-info">Twiddled .pvr for KallistiOS</span>
+      </div>
+    </div>
+
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">Raw 16-bit Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary dreamcast-download-raw-button">
+          Download
+        </button>
+        <span class="export-info">Linear .bin for custom pipelines</span>
+      </div>
+    </div>
+  </div>
+</script>
