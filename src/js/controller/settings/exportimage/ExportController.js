@@ -57,6 +57,11 @@
       controller : ns.Sms4bppExportController,
       consoles : ['sms']  // Only available in SMS mode
     },
+    'gg4bpp' : {
+      template : 'templates/settings/export/gg4bpp.html',
+      controller : ns.Gg4bppExportController,
+      consoles : ['gamegear']  // Only available in Game Gear mode
+    },
     'gba4bpp' : {
       template : 'templates/settings/export/gba4bpp.html',
       controller : ns.Gba4bppExportController,

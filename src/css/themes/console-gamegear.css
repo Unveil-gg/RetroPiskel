@@ -1,0 +1,103 @@
+/**
+ * Sega Game Gear Console Theme
+ *
+ * Inspired by the Sega Game Gear hardware and branding:
+ * - Teal/cyan accents inspired by the turquoise buttons
+ *   found on certain Game Gear models and accessories
+ * - Deep blacks reflecting the handheld's sleek design
+ * - Distinct from Genesis (which uses deeper blue)
+ *
+ * The Game Gear was Sega's portable answer to the Game Boy,
+ * featuring a vibrant backlit screen and colorful design.
+ */
+
+body.console-gamegear {
+  /* Teal/cyan accent - distinct from Genesis blue */
+  --highlight-color: #00A8A8;
+  --console-accent: #00A8A8;
+  --console-accent-text: #5CDEDE;
+  --console-accent-dim: #007878;
+
+  /* Deep charcoal with subtle teal tint */
+  --console-bg-dark: #08090a;
+  --console-bg-medium: #101214;
+  --console-bg-light: #181a1e;
+  --console-border: #2a4048;
+
+  /* Clean light text for visibility */
+  --console-text: #d4dce0;
+}
+
+/**
+ * Game Gear-specific export tab visibility.
+ * Show 4BPP tab only when Game Gear mode is active.
+ */
+body.console-gamegear .export-tab[data-tab-id="gg4bpp"] {
+  display: block;
+}
+
+/**
+ * Drawing canvas gets a subtle dark tint
+ */
+body.console-gamegear .drawing-canvas-container {
+  background: #060808;
+}
+
+/**
+ * Frame list and preview styling
+ */
+body.console-gamegear .frames-list-container {
+  border-color: var(--console-border);
+}
+
+body.console-gamegear .preview-tile {
+  border-color: var(--console-border);
+}
+
+/**
+ * Palette colors styling
+ */
+body.console-gamegear .palettes-list-container .palette-color {
+  border-color: #007878;
+}
+
+/**
+ * Game Gear accent for specific elements
+ */
+body.console-gamegear .cursor-coordinates {
+  color: #5CDEDE;
+}
+
+/**
+ * GG Export Panel Styling
+ */
+.export-panel-gg4bpp .gg4bpp-spec-link {
+  color: #5CDEDE;
+}
+
+/**
+ * GG color warning (too many colors)
+ */
+.gg4bpp-color-warning {
+  display: none;
+  align-items: center;
+  border: 1px solid red;
+  padding: 5px;
+  margin: 5px 0;
+}
+
+.gg4bpp-warning-icon {
+  flex-shrink: 0;
+  margin-right: 5px;
+}
+
+.gg4bpp-warning-message {
+  font-weight: normal;
+}
+
+/**
+ * Color snapped notification styling for Game Gear
+ */
+body.console-gamegear .notification {
+  border-left-color: #00A8A8;
+}

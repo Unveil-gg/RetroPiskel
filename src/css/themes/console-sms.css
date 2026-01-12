@@ -70,14 +70,6 @@ body.console-sms .cursor-coordinates {
 /**
  * SMS Export Panel Styling
  */
-.export-panel-sms4bpp {
-  padding: 10px;
-}
-
-.export-panel-sms4bpp .export-info {
-  margin-left: 6px;
-}
-
 .export-panel-sms4bpp .sms4bpp-spec-link {
   color: #FF6666;
 }

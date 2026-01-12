@@ -1,0 +1,55 @@
+<script type="text/html" id="templates/settings/export/gg4bpp.html">
+  <div class="export-panel-gg4bpp">
+    <div class="export-panel-header export-info">
+      Export as Sega Game Gear format (4BPP tiles + 12-bit CRAM palette).
+      <a href="https://www.smspower.org/Development/Palette" 
+         target="_blank" class="gg4bpp-spec-link">Palette Spec</a>
+    </div>
+
+    <div class="gg4bpp-color-warning" style="display: none;">
+      <div class="gg4bpp-warning-icon icon-common-warning-red">&nbsp;</div>
+      <div class="gg4bpp-warning-message">
+        Too many colors: Game Gear sprites support max 15 colors + transparent.
+      </div>
+    </div>
+
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">4BPP Tile Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary gg4bpp-download-tiles-button">
+          Download
+        </button>
+        <span class="export-info gg4bpp-tiles-info"></span>
+      </div>
+    </div>
+
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">Palette Export (RGB444):</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary gg4bpp-download-pal-button">
+          Download
+        </button>
+        <span class="export-info gg4bpp-pal-info"></span>
+      </div>
+    </div>
+
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">Combined Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary gg4bpp-download-both-button">
+          Download
+        </button>
+        <span class="export-info">4BPP tiles and palette in separate files</span>
+      </div>
+    </div>
+  </div>
+</script>

@@ -70,14 +70,6 @@ body.console-snes .cursor-coordinates {
 /**
  * SNES Export Panel Styling
  */
-.export-panel-snes4bpp {
-  padding: 10px;
-}
-
-.export-panel-snes4bpp .export-info {
-  margin-left: 6px;
-}
-
 .export-panel-snes4bpp .snes4bpp-spec-link {
   color: #DDA0DD;
 }

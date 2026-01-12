@@ -70,14 +70,6 @@ body.console-gba8bpp .cursor-coordinates {
 /**
  * GBA 8bpp Export Panel Styling
  */
-.export-panel-gba8bpp {
-  padding: 10px;
-}
-
-.export-panel-gba8bpp .export-info {
-  margin-left: 6px;
-}
-
 .export-panel-gba8bpp .gba8bpp-spec-link {
   color: #FFA07A;
 }

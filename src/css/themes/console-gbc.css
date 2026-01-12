@@ -74,13 +74,6 @@ body.console-gbc .export-panel-gbc2bpp .gbc2bpp-spec-link {
 /**
  * GBC Export Panel Styling
  */
-.export-panel-gbc2bpp {
-  padding: 10px;
-}
-
-.export-panel-gbc2bpp .export-info {
-  margin-left: 6px;
-}
 
 /**
  * GBC color warning (too many colors)

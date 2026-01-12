@@ -71,14 +71,6 @@ body.console-gba .cursor-coordinates {
 /**
  * GBA Export Panel Styling
  */
-.export-panel-gba4bpp {
-  padding: 10px;
-}
-
-.export-panel-gba4bpp .export-info {
-  margin-left: 6px;
-}
-
 .export-panel-gba4bpp .gba4bpp-spec-link {
   color: #7FFFD4;
 }

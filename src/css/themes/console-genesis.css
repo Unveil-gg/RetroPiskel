@@ -70,14 +70,6 @@ body.console-genesis .cursor-coordinates {
 /**
  * Genesis Export Panel Styling
  */
-.export-panel-genesis4bpp {
-  padding: 10px;
-}
-
-.export-panel-genesis4bpp .export-info {
-  margin-left: 6px;
-}
-
 .export-panel-genesis4bpp .genesis4bpp-spec-link {
   color: #66B3FF;
 }

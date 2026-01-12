@@ -53,6 +53,7 @@
   "css/themes/console-snes.css",
   "css/themes/console-genesis.css",
   "css/themes/console-sms.css",
+  "css/themes/console-gamegear.css",
   "css/themes/console-gba.css",
   "css/themes/console-gba8bpp.css"
 ];

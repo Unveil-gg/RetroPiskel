@@ -79,6 +79,7 @@
   "js/consoles/snes/SNESConsoleMode.js",
   "js/consoles/genesis/GenesisConsoleMode.js",
   "js/consoles/sms/SMSConsoleMode.js",
+  "js/consoles/gamegear/GameGearConsoleMode.js",
   "js/consoles/gba/GBAConsoleMode.js",
   "js/consoles/gba/GBA8bppConsoleMode.js",
 
@@ -158,6 +159,7 @@
   "js/controller/settings/exportimage/Snes4bppExportController.js",
   "js/controller/settings/exportimage/Genesis4bppExportController.js",
   "js/controller/settings/exportimage/Sms4bppExportController.js",
+  "js/controller/settings/exportimage/Gg4bppExportController.js",
   "js/controller/settings/exportimage/Gba4bppExportController.js",
   "js/controller/settings/exportimage/Gba8bppExportController.js",
   "js/controller/settings/exportimage/ExportController.js",
