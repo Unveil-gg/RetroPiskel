@@ -2,6 +2,12 @@
   var ns = $.namespace('pskl.controller.settings.exportimage');
 
   /**
+   * Tabs that use the Scale/Resolution controls.
+   * Console-specific tabs export at 1:1 and ignore these controls.
+   */
+  var SCALE_ENABLED_TABS = ['png', 'gif', 'zip'];
+
+  /**
    * Base export tabs available in all modes.
    */
   var baseTabs = {
@@ -138,6 +144,8 @@
 
   ns.ExportController.prototype.init = function () {
     // Initialize zoom controls
+    this.scaleContainer = document.querySelector('.export-scale');
+    this.resizeContainer = document.querySelector('.export-resize');
     this.scaleInput = document.querySelector('.export-scale .scale-input');
     this.addEventListener(this.scaleInput, 'change', this.onScaleChange_);
     this.addEventListener(this.scaleInput, 'input', this.onScaleChange_);
@@ -162,6 +170,9 @@
     // Validate current tab is available for active console mode
     this.validateCurrentTab_();
 
+    // Update scale controls for initial tab
+    this.updateScaleControlsState_(this.tabsWidget.currentTab);
+
     // Listen for console mode changes
     this.boundOnConsoleModeChanged_ = this.onConsoleModeChanged_.bind(this);
     $.subscribe(Events.CONSOLE_MODE_CHANGED, this.boundOnConsoleModeChanged_);
@@ -175,14 +186,43 @@
   };
 
   /**
+   * Gets the console-specific export tab for the current console mode.
+   * @return {string|null} Tab ID or null if no console-specific tab exists
+   * @private
+   */
+  function getConsoleSpecificTab() {
+    var activeMode = pskl.app.consoleRegistry &&
+                     pskl.app.consoleRegistry.getActive();
+    var activeModeId = activeMode ? activeMode.id : 'default';
+
+    // Find a console tab that matches the current mode
+    var tabIds = Object.keys(consoleTabs);
+    for (var i = 0; i < tabIds.length; i++) {
+      var tabId = tabIds[i];
+      if (consoleTabs[tabId].consoles.indexOf(activeModeId) !== -1) {
+        return tabId;
+      }
+    }
+    return null;
+  }
+
+  /**
    * Validates current tab is available, falls back to default if not.
+   * Fallback priority: console-specific tab > GIF tab
    * @private
    */
   ns.ExportController.prototype.validateCurrentTab_ = function () {
     var currentTab = this.tabsWidget.currentTab;
-    if (currentTab && !isTabAvailable(currentTab)) {
-      this.tabsWidget.selectTab('gif');
+
+    // If current tab is valid and available, keep it
+    if (currentTab && isTabAvailable(currentTab)) {
+      return;
     }
+
+    // Try console-specific tab first, then fall back to GIF
+    var consoleTab = getConsoleSpecificTab();
+    var fallbackTab = consoleTab || 'gif';
+    this.tabsWidget.selectTab(fallbackTab);
   };
 
   ns.ExportController.prototype.onScaleChange_ = function () {
@@ -233,5 +273,55 @@
 
     // Validate current tab is still available
     this.validateCurrentTab_();
+
+    // Update scale controls for current tab
+    this.updateScaleControlsState_(this.tabsWidget.currentTab);
+  };
+
+  /**
+   * Callback from Tabs widget when a tab is selected.
+   * @param {string} tabId - The selected tab ID
+   */
+  ns.ExportController.prototype.onTabChanged = function (tabId) {
+    this.updateScaleControlsState_(tabId);
+  };
+
+  /** @const {string} Original tooltip for scale control. */
+  var SCALE_TOOLTIP_ENABLED = 'Scale the animation for export';
+
+  /** @const {string} Tooltip when scale is disabled. */
+  var SCALE_TOOLTIP_DISABLED = 'Scale applies to PNG, GIF, ZIP only';
+
+  /**
+   * Updates the enabled/disabled state of scale and resolution controls.
+   * These controls only apply to PNG, GIF, and ZIP exports.
+   * @param {string} tabId - Current tab ID
+   * @private
+   */
+  ns.ExportController.prototype.updateScaleControlsState_ = function (tabId) {
+    // Default to disabled if tabId is null/undefined
+    var isScaleEnabled = tabId && SCALE_ENABLED_TABS.indexOf(tabId) !== -1;
+
+    if (this.scaleContainer) {
+      this.scaleContainer.classList.toggle('export-controls-disabled', !isScaleEnabled);
+      // Update tooltip to explain why it's disabled
+      this.scaleContainer.title = isScaleEnabled
+        ? SCALE_TOOLTIP_ENABLED
+        : SCALE_TOOLTIP_DISABLED;
+    }
+    if (this.resizeContainer) {
+      this.resizeContainer.classList.toggle('export-controls-disabled', !isScaleEnabled);
+    }
+
+    // Disable/enable the actual inputs
+    if (this.scaleInput) {
+      this.scaleInput.disabled = !isScaleEnabled;
+    }
+    if (this.widthInput) {
+      this.widthInput.disabled = !isScaleEnabled;
+    }
+    if (this.heightInput) {
+      this.heightInput.disabled = !isScaleEnabled;
+    }
   };
 })();

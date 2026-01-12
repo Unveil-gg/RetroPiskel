@@ -107,6 +107,20 @@
   line-height: 23px;
 }
 
+/**
+ * Disabled state for Scale/Resolution controls.
+ * These controls only apply to PNG, GIF, and ZIP exports.
+ * Console-specific exports (CHR, 2BPP, 4BPP, PVR, etc.) use 1:1 pixels.
+ */
+.export-controls-disabled {
+  opacity: 0.4;
+}
+
+.export-controls-disabled input,
+.export-controls-disabled label {
+  cursor: not-allowed;
+}
+
 .export-panel-header {
   padding: 10px 5px 0px;
 }

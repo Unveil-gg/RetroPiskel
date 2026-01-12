@@ -48,6 +48,11 @@
       selectedTab.classList.remove('selected');
     }
     this.tabListEl.querySelector('[data-tab-id="' + tabId + '"]').classList.add('selected');
+
+    // Notify parent controller of tab change if callback exists
+    if (this.parentController && this.parentController.onTabChanged) {
+      this.parentController.onTabChanged(tabId);
+    }
   };
 
   ns.Tabs.prototype.onTabsClicked_ = function (e) {
