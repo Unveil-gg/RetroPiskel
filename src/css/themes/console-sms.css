@@ -1,0 +1,110 @@
+/**
+ * Sega Master System Console Theme
+ *
+ * Inspired by the Sega Master System hardware and branding:
+ * - Classic Sega red from the logo
+ * - Deep blacks reflecting the 8-bit era console design
+ * - Clean, bold colors matching Sega's style
+ *
+ * The Master System was known for its distinctive red/black
+ * color scheme on the console itself and game boxes.
+ */
+
+body.console-sms {
+  /* Classic Sega red accent */
+  --highlight-color: #CC0000;
+  --console-accent: #CC0000;
+  --console-accent-text: #FF6666;
+  --console-accent-dim: #990000;
+
+  /* Deep blacks inspired by SMS hardware */
+  --console-bg-dark: #0a0a0a;
+  --console-bg-medium: #141418;
+  --console-bg-light: #1e1e24;
+  --console-border: #3a3a48;
+
+  /* Clean light text for visibility */
+  --console-text: #d8d8e0;
+}
+
+/**
+ * SMS-specific export tab visibility.
+ * Show 4BPP tab only when SMS mode is active.
+ */
+body.console-sms .export-tab[data-tab-id="sms4bpp"] {
+  display: block;
+}
+
+/**
+ * Drawing canvas gets a subtle dark tint
+ */
+body.console-sms .drawing-canvas-container {
+  background: #080808;
+}
+
+/**
+ * Frame list and preview styling
+ */
+body.console-sms .frames-list-container {
+  border-color: var(--console-border);
+}
+
+body.console-sms .preview-tile {
+  border-color: var(--console-border);
+}
+
+/**
+ * Palette colors styling
+ */
+body.console-sms .palettes-list-container .palette-color {
+  border-color: #990000;
+}
+
+/**
+ * SMS accent for specific elements
+ */
+body.console-sms .cursor-coordinates {
+  color: #FF6666;
+}
+
+/**
+ * SMS Export Panel Styling
+ */
+.export-panel-sms4bpp {
+  padding: 10px;
+}
+
+.export-panel-sms4bpp .export-info {
+  margin-left: 6px;
+}
+
+.export-panel-sms4bpp .sms4bpp-spec-link {
+  color: #FF6666;
+}
+
+/**
+ * SMS color warning (too many colors)
+ */
+.sms4bpp-color-warning {
+  display: none;
+  align-items: center;
+  border: 1px solid red;
+  padding: 5px;
+  margin: 5px 0;
+}
+
+.sms4bpp-warning-icon {
+  flex-shrink: 0;
+  margin-right: 5px;
+}
+
+.sms4bpp-warning-message {
+  font-weight: normal;
+}
+
+/**
+ * Color snapped notification styling for SMS
+ */
+body.console-sms .notification {
+  border-left-color: #CC0000;
+}

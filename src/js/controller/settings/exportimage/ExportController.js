@@ -51,6 +51,11 @@
       template : 'templates/settings/export/genesis4bpp.html',
       controller : ns.Genesis4bppExportController,
       consoles : ['genesis']  // Only available in Genesis mode
+    },
+    'sms4bpp' : {
+      template : 'templates/settings/export/sms4bpp.html',
+      controller : ns.Sms4bppExportController,
+      consoles : ['sms']  // Only available in SMS mode
     }
   };
 

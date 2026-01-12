@@ -51,5 +51,6 @@
   "css/themes/console-gameboy.css",
   "css/themes/console-gbc.css",
   "css/themes/console-snes.css",
-  "css/themes/console-genesis.css"
+  "css/themes/console-genesis.css",
+  "css/themes/console-sms.css"
 ];

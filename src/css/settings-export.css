@@ -161,7 +161,8 @@
 .export-tab[data-tab-id="gb2bpp"],
 .export-tab[data-tab-id="gbc2bpp"],
 .export-tab[data-tab-id="snes4bpp"],
-.export-tab[data-tab-id="genesis4bpp"] {
+.export-tab[data-tab-id="genesis4bpp"],
+.export-tab[data-tab-id="sms4bpp"] {
   display: none;
 }
 
