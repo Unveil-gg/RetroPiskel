@@ -74,10 +74,6 @@ body.console-dreamcast .cursor-coordinates {
   color: #FF9944;
 }
 
-.export-panel-dreamcastpvr .button {
-  margin-right: 5px;
-}
-
 /**
  * Dreamcast dimension warning (not power of 2)
  */

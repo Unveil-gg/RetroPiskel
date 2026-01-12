@@ -162,6 +162,23 @@
   padding-right: 0;
 }
 
+/**
+ * Console export panel buttons - consistent margin between button and info text.
+ * Covers: CHR, GB 2BPP, GBC, SNES, Genesis, SMS, Game Gear, GBA, GBA 8BPP, Dreamcast
+ */
+.export-panel-chr .button,
+.export-panel-gb2bpp .button,
+.export-panel-gbc2bpp .button,
+.export-panel-snes4bpp .button,
+.export-panel-genesis4bpp .button,
+.export-panel-sms4bpp .button,
+.export-panel-gg4bpp .button,
+.export-panel-gba4bpp .button,
+.export-panel-gba8bpp .button,
+.export-panel-dreamcastpvr .button {
+  margin-right: 5px;
+}
+
 /*******************************/
 /* Console-Specific Export Tabs */
 /*******************************/
