@@ -1,0 +1,27 @@
+/**
+ * MSX Console Theme
+ *
+ * Classic MSX-inspired color scheme.
+ * Colors inspired by the MSX computer aesthetic (dark blues, clean lines).
+ * Accent color is MSX blue from TMS9918A palette index 4.
+ */
+
+body.console-msx {
+  --highlight-color: #5455ED;
+  --console-accent: #5455ED;
+  --console-accent-text: #7D76FC;
+  --console-accent-dim: #3A3BA8;
+  --console-bg-dark: #1A1A20;
+  --console-bg-medium: #252530;
+  --console-bg-light: #353542;
+  --console-border: #4A4A5A;
+  --console-text: #D0D0E0;
+}
+
+/**
+ * MSX-specific export tab visibility.
+ * Show MSX 1BPP tab only when MSX mode is active.
+ */
+body.console-msx .export-tab[data-tab-id="msx1bpp"] {
+  display: block;
+}

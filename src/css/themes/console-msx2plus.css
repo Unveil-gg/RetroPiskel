@@ -1,0 +1,27 @@
+/**
+ * MSX2+ Console Theme
+ *
+ * MSX2+-inspired color scheme.
+ * Colors inspired by the MSX2+ era and turbo R aesthetic.
+ * Accent color is a cool cyan/teal representing the advanced V9958 VDP.
+ */
+
+body.console-msx2plus {
+  --highlight-color: #00A0D0;
+  --console-accent: #00A0D0;
+  --console-accent-text: #60D0F0;
+  --console-accent-dim: #007090;
+  --console-bg-dark: #101018;
+  --console-bg-medium: #181820;
+  --console-bg-light: #242430;
+  --console-border: #404050;
+  --console-text: #E0E0F0;
+}
+
+/**
+ * MSX2+-specific export tab visibility.
+ * Show MSX2+ 4BPP tab only when MSX2+ mode is active.
+ */
+body.console-msx2plus .export-tab[data-tab-id="msx2plus4bpp"] {
+  display: block;
+}

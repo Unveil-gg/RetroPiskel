@@ -56,5 +56,8 @@
   "css/themes/console-gamegear.css",
   "css/themes/console-gba.css",
   "css/themes/console-gba8bpp.css",
-  "css/themes/console-dreamcast.css"
+  "css/themes/console-dreamcast.css",
+  "css/themes/console-msx.css",
+  "css/themes/console-msx2.css",
+  "css/themes/console-msx2plus.css"
 ];

@@ -1,0 +1,27 @@
+/**
+ * MSX2 Console Theme
+ *
+ * MSX2-inspired color scheme.
+ * Colors inspired by the MSX2 era computers and Panasonic FS-A1 aesthetic.
+ * Accent color is a warm orange/red typical of MSX2 branding.
+ */
+
+body.console-msx2 {
+  --highlight-color: #E84820;
+  --console-accent: #E84820;
+  --console-accent-text: #FF8866;
+  --console-accent-dim: #A83010;
+  --console-bg-dark: #181818;
+  --console-bg-medium: #222222;
+  --console-bg-light: #2E2E2E;
+  --console-border: #484848;
+  --console-text: #E8E8E8;
+}
+
+/**
+ * MSX2-specific export tab visibility.
+ * Show MSX2 4BPP tab only when MSX2 mode is active.
+ */
+body.console-msx2 .export-tab[data-tab-id="msx24bpp"] {
+  display: block;
+}

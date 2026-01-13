@@ -83,6 +83,9 @@
   "js/consoles/gba/GBAConsoleMode.js",
   "js/consoles/gba/GBA8bppConsoleMode.js",
   "js/consoles/dreamcast/DreamcastConsoleMode.js",
+  "js/consoles/msx/MSXConsoleMode.js",
+  "js/consoles/msx2/MSX2ConsoleMode.js",
+  "js/consoles/msx2plus/MSX2PlusConsoleMode.js",
 
   // Models
   "js/model/Frame.js",
