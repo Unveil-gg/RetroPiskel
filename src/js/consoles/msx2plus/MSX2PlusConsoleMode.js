@@ -1,6 +1,9 @@
 /**
  * MSX2PlusConsoleMode - MSX2+ (V9958 VDP) console mode.
  *
+ * Theme: "Space Manbow" - Cosmic purple inspired by Konami's
+ * 1989 shooter showpiece that pushed the V9958 to its limits.
+ *
  * Provides constraints for MSX2+ sprite creation:
  * - RGB333 color space (512 colors, 3 bits per channel)
  * - YJK mode available (19,268 colors) - SCREEN 10/11/12
@@ -38,15 +41,15 @@
       defaultSize: {width: 16, height: 16},  // Common MSX2+ sprite size
       exportTabs: ['msx2plus4bpp'],
       themeVariables: {
-        '--highlight-color': '#00A0D0',
-        '--console-accent': '#00A0D0',
-        '--console-accent-text': '#60D0F0',
-        '--console-accent-dim': '#007090',
-        '--console-bg-dark': '#101018',
-        '--console-bg-medium': '#181820',
-        '--console-bg-light': '#242430',
-        '--console-border': '#404050',
-        '--console-text': '#E0E0F0'
+        '--highlight-color': '#8040FF',
+        '--console-accent': '#8040FF',
+        '--console-accent-text': '#B080FF',
+        '--console-accent-dim': '#5020C0',
+        '--console-bg-dark': '#08080E',
+        '--console-bg-medium': '#100E18',
+        '--console-bg-light': '#1A1824',
+        '--console-border': '#302848',
+        '--console-text': '#E0D8F0'
       },
       badgeText: 'MSX2+'
     });

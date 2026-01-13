@@ -1,21 +1,21 @@
 /**
- * MSX2+ Console Theme
+ * MSX2+ Console Theme - "Space Manbow"
  *
- * MSX2+-inspired color scheme.
- * Colors inspired by the MSX2+ era and turbo R aesthetic.
- * Accent color is a cool cyan/teal representing the advanced V9958 VDP.
+ * Inspired by Space Manbow (1989), the MSX2+ graphical showpiece.
+ * Konami's cosmic shooter pushed the V9958 to its limits.
+ * Deep space purples and stellar glow evoke nebulae and starfields.
  */
 
 body.console-msx2plus {
-  --highlight-color: #00A0D0;
-  --console-accent: #00A0D0;
-  --console-accent-text: #60D0F0;
-  --console-accent-dim: #007090;
-  --console-bg-dark: #101018;
-  --console-bg-medium: #181820;
-  --console-bg-light: #242430;
-  --console-border: #404050;
-  --console-text: #E0E0F0;
+  --highlight-color: #8040FF;
+  --console-accent: #8040FF;
+  --console-accent-text: #B080FF;
+  --console-accent-dim: #5020C0;
+  --console-bg-dark: #08080E;
+  --console-bg-medium: #100E18;
+  --console-bg-light: #1A1824;
+  --console-border: #302848;
+  --console-text: #E0D8F0;
 }
 
 /**
@@ -24,4 +24,31 @@ body.console-msx2plus {
  */
 body.console-msx2plus .export-tab[data-tab-id="msx2plus4bpp"] {
   display: block;
+}
+
+/**
+ * MSX2+ Export Panel Styling
+ */
+.export-panel-msx2plus4bpp .msx2plus4bpp-spec-link {
+  color: #B080FF;
+}
+
+/**
+ * MSX2+ color warning (too many colors)
+ */
+.msx2plus4bpp-color-warning {
+  display: none;
+  align-items: center;
+  border: 1px solid #8040FF;
+  padding: 5px;
+  margin: 5px 0;
+}
+
+.msx2plus4bpp-warning-icon {
+  flex-shrink: 0;
+  margin-right: 5px;
+}
+
+.msx2plus4bpp-warning-message {
+  font-weight: normal;
 }

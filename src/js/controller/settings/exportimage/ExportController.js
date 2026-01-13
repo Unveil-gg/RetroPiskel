@@ -82,6 +82,21 @@
       template : 'templates/settings/export/dreamcastpvr.html',
       controller : ns.DreamcastPvrExportController,
       consoles : ['dreamcast']  // Only available in Dreamcast mode
+    },
+    'msx1bpp' : {
+      template : 'templates/settings/export/msx1bpp.html',
+      controller : ns.Msx1bppExportController,
+      consoles : ['msx']  // Only available in MSX mode
+    },
+    'msx24bpp' : {
+      template : 'templates/settings/export/msx24bpp.html',
+      controller : ns.Msx24bppExportController,
+      consoles : ['msx2']  // Only available in MSX2 mode
+    },
+    'msx2plus4bpp' : {
+      template : 'templates/settings/export/msx2plus4bpp.html',
+      controller : ns.Msx2plus4bppExportController,
+      consoles : ['msx2plus']  // Only available in MSX2+ mode
     }
   };
 

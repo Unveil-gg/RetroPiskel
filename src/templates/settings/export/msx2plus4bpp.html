@@ -1,0 +1,55 @@
+<script type="text/html" id="templates/settings/export/msx2plus4bpp.html">
+  <div class="export-panel-msx2plus4bpp">
+    <div class="export-panel-header export-info">
+      Export as MSX2+ format (4BPP tiles + V9958 palette).
+      <a href="https://www.msx.org/wiki/V9958" 
+         target="_blank" class="msx2plus4bpp-spec-link">V9958 Spec</a>
+    </div>
+
+    <div class="msx2plus4bpp-color-warning" style="display: none;">
+      <div class="msx2plus4bpp-warning-icon icon-common-warning-red">&nbsp;</div>
+      <div class="msx2plus4bpp-warning-message">
+        Too many colors: MSX2+ sprites support max 15 colors + transparent.
+      </div>
+    </div>
+
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">4BPP Tile Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary msx2plus4bpp-download-tiles-button">
+          Download
+        </button>
+        <span class="export-info msx2plus4bpp-tiles-info"></span>
+      </div>
+    </div>
+
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">Palette Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary msx2plus4bpp-download-pal-button">
+          Download
+        </button>
+        <span class="export-info msx2plus4bpp-pal-info"></span>
+      </div>
+    </div>
+
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">Combined Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary msx2plus4bpp-download-both-button">
+          Download
+        </button>
+        <span class="export-info">4BPP tiles and palette in separate files</span>
+      </div>
+    </div>
+  </div>
+</script>

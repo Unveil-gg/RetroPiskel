@@ -1,21 +1,21 @@
 /**
- * MSX2 Console Theme
+ * MSX2 Console Theme - "Metal Gear"
  *
- * MSX2-inspired color scheme.
- * Colors inspired by the MSX2 era computers and Panasonic FS-A1 aesthetic.
- * Accent color is a warm orange/red typical of MSX2 branding.
+ * Inspired by Metal Gear (1987), born on MSX2.
+ * Hideo Kojima's stealth masterpiece defined the platform.
+ * Military tactical green evokes Outer Heaven and shadow ops.
  */
 
 body.console-msx2 {
-  --highlight-color: #E84820;
-  --console-accent: #E84820;
-  --console-accent-text: #FF8866;
-  --console-accent-dim: #A83010;
-  --console-bg-dark: #181818;
-  --console-bg-medium: #222222;
-  --console-bg-light: #2E2E2E;
-  --console-border: #484848;
-  --console-text: #E8E8E8;
+  --highlight-color: #4A7C30;
+  --console-accent: #4A7C30;
+  --console-accent-text: #8BC060;
+  --console-accent-dim: #2A4C18;
+  --console-bg-dark: #0C0E0C;
+  --console-bg-medium: #141814;
+  --console-bg-light: #1E241E;
+  --console-border: #3A4A38;
+  --console-text: #D0D8C8;
 }
 
 /**
@@ -24,4 +24,31 @@ body.console-msx2 {
  */
 body.console-msx2 .export-tab[data-tab-id="msx24bpp"] {
   display: block;
+}
+
+/**
+ * MSX2 Export Panel Styling
+ */
+.export-panel-msx24bpp .msx24bpp-spec-link {
+  color: #8BC060;
+}
+
+/**
+ * MSX2 color warning (too many colors)
+ */
+.msx24bpp-color-warning {
+  display: none;
+  align-items: center;
+  border: 1px solid #4A7C30;
+  padding: 5px;
+  margin: 5px 0;
+}
+
+.msx24bpp-warning-icon {
+  flex-shrink: 0;
+  margin-right: 5px;
+}
+
+.msx24bpp-warning-message {
+  font-weight: normal;
 }

@@ -1,6 +1,9 @@
 /**
  * MSXConsoleMode - MSX1 (TMS9918A) console mode.
  *
+ * Theme: "Konami Golden Era" - Gold accents inspired by Konami's
+ * legendary MSX library (Gradius, Castlevania, Penguin Adventure).
+ *
  * Provides constraints for MSX1 sprite creation:
  * - Fixed 16-color TMS9918A palette (not programmable)
  * - Max 1 color + transparent per sprite (monochrome sprites)
@@ -65,15 +68,15 @@
       defaultSize: {width: 16, height: 16},  // Common MSX sprite (16x16)
       exportTabs: ['msx1bpp'],
       themeVariables: {
-        '--highlight-color': '#5455ED',
-        '--console-accent': '#5455ED',
-        '--console-accent-text': '#7D76FC',
-        '--console-accent-dim': '#3A3BA8',
-        '--console-bg-dark': '#1A1A20',
-        '--console-bg-medium': '#252530',
-        '--console-bg-light': '#353542',
-        '--console-border': '#4A4A5A',
-        '--console-text': '#D0D0E0'
+        '--highlight-color': '#D4A820',
+        '--console-accent': '#D4A820',
+        '--console-accent-text': '#FFD860',
+        '--console-accent-dim': '#9A7810',
+        '--console-bg-dark': '#0A0A14',
+        '--console-bg-medium': '#12121E',
+        '--console-bg-light': '#1E1E2C',
+        '--console-border': '#3A3A58',
+        '--console-text': '#E8E0D0'
       },
       badgeText: 'MSX'
     });

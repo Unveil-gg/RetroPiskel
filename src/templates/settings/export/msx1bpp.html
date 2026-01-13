@@ -1,0 +1,55 @@
+<script type="text/html" id="templates/settings/export/msx1bpp.html">
+  <div class="export-panel-msx1bpp">
+    <div class="export-panel-header export-info">
+      Export as MSX1 format (1BPP pattern + color table).
+      <a href="https://www.msx.org/wiki/Category:VDP" 
+         target="_blank" class="msx1bpp-spec-link">VDP Spec</a>
+    </div>
+
+    <div class="msx1bpp-color-warning" style="display: none;">
+      <div class="msx1bpp-warning-icon icon-common-warning-red">&nbsp;</div>
+      <div class="msx1bpp-warning-message">
+        Too many colors: MSX1 sprites are monochrome (1 color + transparent).
+      </div>
+    </div>
+
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">1BPP Pattern Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary msx1bpp-download-pattern-button">
+          Download
+        </button>
+        <span class="export-info msx1bpp-pattern-info"></span>
+      </div>
+    </div>
+
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">Color Table Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary msx1bpp-download-color-button">
+          Download
+        </button>
+        <span class="export-info msx1bpp-color-info"></span>
+      </div>
+    </div>
+
+    <div class="export-panel-section">
+      <div style="padding-bottom: 5px">
+        <span class="highlight">Combined Export:</span>
+      </div>
+      <div class="export-panel-row">
+        <button type="button" 
+                class="button button-primary msx1bpp-download-both-button">
+          Download
+        </button>
+        <span class="export-info">Pattern and color table in separate files</span>
+      </div>
+    </div>
+  </div>
+</script>

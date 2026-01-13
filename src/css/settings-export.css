@@ -164,7 +164,8 @@
 
 /**
  * Console export panel buttons - consistent margin between button and info text.
- * Covers: CHR, GB 2BPP, GBC, SNES, Genesis, SMS, Game Gear, GBA, GBA 8BPP, Dreamcast
+ * Covers: CHR, GB 2BPP, GBC, SNES, Genesis, SMS, Game Gear, GBA, GBA 8BPP,
+ *         Dreamcast, MSX, MSX2, MSX2+
  */
 .export-panel-chr .button,
 .export-panel-gb2bpp .button,
@@ -175,7 +176,10 @@
 .export-panel-gg4bpp .button,
 .export-panel-gba4bpp .button,
 .export-panel-gba8bpp .button,
-.export-panel-dreamcastpvr .button {
+.export-panel-dreamcastpvr .button,
+.export-panel-msx1bpp .button,
+.export-panel-msx24bpp .button,
+.export-panel-msx2plus4bpp .button {
   margin-right: 5px;
 }
 
@@ -197,7 +201,10 @@
 .export-tab[data-tab-id="gg4bpp"],
 .export-tab[data-tab-id="gba4bpp"],
 .export-tab[data-tab-id="gba8bpp"],
-.export-tab[data-tab-id="dreamcastpvr"] {
+.export-tab[data-tab-id="dreamcastpvr"],
+.export-tab[data-tab-id="msx1bpp"],
+.export-tab[data-tab-id="msx24bpp"],
+.export-tab[data-tab-id="msx2plus4bpp"] {
   display: none;
 }
 

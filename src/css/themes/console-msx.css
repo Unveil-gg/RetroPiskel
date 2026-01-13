@@ -1,21 +1,21 @@
 /**
- * MSX Console Theme
+ * MSX Console Theme - "Konami Golden Era"
  *
- * Classic MSX-inspired color scheme.
- * Colors inspired by the MSX computer aesthetic (dark blues, clean lines).
- * Accent color is MSX blue from TMS9918A palette index 4.
+ * Inspired by Konami's legendary MSX game library and golden-age branding.
+ * Gradius, Castlevania, Penguin Adventure - the classics that defined MSX.
+ * Gold accent evokes the prestige of Konami's box art and title screens.
  */
 
 body.console-msx {
-  --highlight-color: #5455ED;
-  --console-accent: #5455ED;
-  --console-accent-text: #7D76FC;
-  --console-accent-dim: #3A3BA8;
-  --console-bg-dark: #1A1A20;
-  --console-bg-medium: #252530;
-  --console-bg-light: #353542;
-  --console-border: #4A4A5A;
-  --console-text: #D0D0E0;
+  --highlight-color: #D4A820;
+  --console-accent: #D4A820;
+  --console-accent-text: #FFD860;
+  --console-accent-dim: #9A7810;
+  --console-bg-dark: #0A0A14;
+  --console-bg-medium: #12121E;
+  --console-bg-light: #1E1E2C;
+  --console-border: #3A3A58;
+  --console-text: #E8E0D0;
 }
 
 /**
@@ -24,4 +24,31 @@ body.console-msx {
  */
 body.console-msx .export-tab[data-tab-id="msx1bpp"] {
   display: block;
+}
+
+/**
+ * MSX Export Panel Styling
+ */
+.export-panel-msx1bpp .msx1bpp-spec-link {
+  color: #FFD860;
+}
+
+/**
+ * MSX color warning (too many colors)
+ */
+.msx1bpp-color-warning {
+  display: none;
+  align-items: center;
+  border: 1px solid #D4A820;
+  padding: 5px;
+  margin: 5px 0;
+}
+
+.msx1bpp-warning-icon {
+  flex-shrink: 0;
+  margin-right: 5px;
+}
+
+.msx1bpp-warning-message {
+  font-weight: normal;
 }

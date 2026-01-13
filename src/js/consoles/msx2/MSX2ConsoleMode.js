@@ -1,6 +1,9 @@
 /**
  * MSX2ConsoleMode - MSX2 (V9938 VDP) console mode.
  *
+ * Theme: "Metal Gear" - Military tactical green inspired by
+ * Hideo Kojima's stealth masterpiece, born on MSX2 in 1987.
+ *
  * Provides constraints for MSX2 sprite creation:
  * - RGB333 color space (512 colors, 3 bits per channel)
  * - Max 15 colors + transparent per sprite (SCREEN 5: 4bpp)
@@ -33,15 +36,15 @@
       defaultSize: {width: 16, height: 16},  // Common MSX2 sprite size
       exportTabs: ['msx24bpp'],
       themeVariables: {
-        '--highlight-color': '#E84820',
-        '--console-accent': '#E84820',
-        '--console-accent-text': '#FF8866',
-        '--console-accent-dim': '#A83010',
-        '--console-bg-dark': '#181818',
-        '--console-bg-medium': '#222222',
-        '--console-bg-light': '#2E2E2E',
-        '--console-border': '#484848',
-        '--console-text': '#E8E8E8'
+        '--highlight-color': '#4A7C30',
+        '--console-accent': '#4A7C30',
+        '--console-accent-text': '#8BC060',
+        '--console-accent-dim': '#2A4C18',
+        '--console-bg-dark': '#0C0E0C',
+        '--console-bg-medium': '#141814',
+        '--console-bg-light': '#1E241E',
+        '--console-border': '#3A4A38',
+        '--console-text': '#D0D8C8'
       },
       badgeText: 'MSX2'
     });
