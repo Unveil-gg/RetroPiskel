@@ -1,6 +1,8 @@
 RetroPiskel
 ===========
 
+[![Discord](https://img.shields.io/badge/discord-join%20server-5865F2.svg?logo=discord&logoColor=white)](https://discord.gg/gaZ5XuPhz)
+
 Retro console sprite editor - Based on [Piskel](https://github.com/piskelapp/piskel)
 
 ![RetroPiskel Screenshot](docs/screenshot.png)
